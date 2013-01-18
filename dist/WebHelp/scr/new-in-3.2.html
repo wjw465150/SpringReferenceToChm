@@ -1,0 +1,321 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0014)about:internet -->
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title>4. New Features and Enhancements in Spring Framework 3.2</title><link rel="stylesheet" href="css/manual-multipage.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Spring Framework Reference Documentation"><link rel="up" href="spring-whats-new.html" title="Part&nbsp;II.&nbsp;What's New in Spring 3"><link rel="prev" href="new-in-3.1.html" title="3.&nbsp;New Features and Enhancements in Spring Framework 3.1"><link rel="next" href="spring-core.html" title="Part&nbsp;III.&nbsp;Core Technologies"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><script language="JavaScript" type="text/JavaScript">
+function syn(){
+if(parent.nav.tree){
+ if(parent.nav.tree.loaded){
+  parent.nav.tree.selectNode(58);
+ }else{
+  setTimeout("syn()",500);
+}
+  }else{
+  setTimeout("syn()",500);
+  }}
+if(parent!=self){
+  setTimeout("syn()",100);
+}else{
+  parent.location.href = "../index.htm#page=new-in-3.2.html";
+}
+originalOnload = window.onload;
+if(originalOnload==null){
+window.onload = function(){parent.contentLoaded = true;};
+}else{
+window.onload = function(){originalOnload();parent.contentLoaded = true;};
+}
+</script> 
+<div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">4.&nbsp;New Features and Enhancements in Spring Framework 3.2</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="new-in-3.1.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;II.&nbsp;What's New in Spring 3</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="spring-core.html">Next</a></td></tr></table><hr></div><div class="chapter" title="4.&nbsp;New Features and Enhancements in Spring Framework 3.2"><div class="titlepage"><div><div><h2 class="title"><a name="new-in-3.2"></a>4.&nbsp;New Features and Enhancements in Spring Framework 3.2</h2></div></div></div>
+  
+
+  <p>This section covers what's new in Spring Framework 3.2. See also
+  <a class="xref" href="migration-3.2.html" title="Appendix&nbsp;C.&nbsp;Migrating to Spring Framework 3.2">Appendix&nbsp;C, <i>Migrating to Spring Framework 3.2</i></a></p>
+
+  <div class="section" title="4.1&nbsp;Support for Servlet 3 based asynchronous request processing"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-webmvc-async"></a>4.1&nbsp;Support for Servlet 3 based asynchronous request processing</h2></div></div></div>
+    
+
+    <p>The Spring MVC programming model now provides explicit Servlet 3
+    async support. <code class="interfacename">@RequestMapping</code> methods can
+    return one of:</p>
+
+    <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+        <p><code class="interfacename">java.util.concurrent.Callable</code> to
+        complete processing in a separate thread managed by a task executor
+        within Spring MVC.</p>
+      </li><li class="listitem">
+        <p><code class="classname">org.springframework.web.context.request.async.DeferredResult</code>
+        to complete processing at a later time from a thread not known to
+        Spring MVC &#8212; for example, in response to some external event (JMS,
+        AMQP, etc.)</p>
+      </li><li class="listitem">
+        <p><code class="classname">org.springframework.web.context.request.async.AsyncTask</code>
+        to wrap a <code class="interfacename">Callable</code> and customize the
+        timeout value or the task executor to use.</p>
+      </li></ul></div>
+
+    <p>See <a class="xref" href="mvc.html#mvc-ann-async" title="17.3.4&nbsp;Asynchronous Request Processing">Section&nbsp;17.3.4, &#8220;Asynchronous Request Processing&#8221;</a>.</p>
+
+  </div>
+
+  <div class="section" title="4.2&nbsp;Spring MVC Test framework"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-spring-mvc-test"></a>4.2&nbsp;Spring MVC Test framework</h2></div></div></div>
+    
+
+    <p>First-class support for testing Spring MVC applications with a
+    fluent API and without a Servlet container. Server-side tests involve use
+    of the <code class="classname">DispatcherServlet</code> while client-side REST
+    tests rely on the <code class="classname">RestTemplate</code>. See <a class="xref" href="testing.html#spring-mvc-test-framework" title="11.3.6&nbsp;Spring MVC Test Framework">Section&nbsp;11.3.6, &#8220;Spring MVC Test Framework&#8221;</a>.</p>
+  </div>
+
+  <div class="section" title="4.3&nbsp;Content negotiation improvements"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-webmvc-content-negotiation"></a>4.3&nbsp;Content negotiation improvements</h2></div></div></div>
+    
+
+    <p>A <code class="interfacename">ContentNeogtiationStrategy</code> is now
+    available for resolving the requested media types from an incoming
+    request. The available implementations are based on the file extension,
+    query parameter, the 'Accept' header, or a fixed content type.
+    Equivalent options were previously available only in the
+    ContentNegotiatingViewResolver but are now available throughout.</p>
+
+    <p><code class="classname">ContentNegotiationManager</code> is the central
+    class to use when configuring content negotiation options.
+    For more details see <a class="xref" href="mvc.html#mvc-config-content-negotiation" title="17.15.4&nbsp;Configuring Content Negotiation">Section&nbsp;17.15.4, &#8220;Configuring Content Negotiation&#8221;</a>.</p>
+
+    <p>The introduction of <code class="classname">ContentNegotiationManger</code>
+    also enables selective suffix pattern matching for incoming requests.
+    For more details, see the Javadoc of
+    <a class="ulink" href="http://static.springsource.org/spring-framework/docs/3.2.0.BUILD-SNAPSHOT/api/org/springframework/web/servlet/mvc/method/annotation/RequestMappingHandlerMapping.html#setUseRegisteredSuffixPatternMatch(boolean)" target="_top">RequestMappingHandlerMapping.setUseRegisteredSuffixPatternMatch</a>.</p>
+  </div>
+
+  <div class="section" title="4.4&nbsp;@ControllerAdvice annotation"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-webmvc-controller-advice"></a>4.4&nbsp;<code class="interfacename">@ControllerAdvice</code> annotation</h2></div></div></div>
+    
+
+    <p>Classes annotated with
+    <code class="interfacename">@ControllerAdvice</code> can contain
+    <code class="interfacename">@ExceptionHandler</code>,
+    <code class="interfacename">@InitBinder</code>, and
+    <code class="interfacename">@ModelAttribute</code> methods and those will
+    apply to <code class="interfacename">@RequestMapping</code> methods across
+    controller hierarchies as opposed to the controller hierarchy within which
+    they are declared. <code class="interfacename">@ControllerAdvice</code> is a
+    component annotation allowing implementation classes to be auto-detected
+    through classpath scanning.</p>
+  </div>
+
+  <div class="section" title="4.5&nbsp;Matrix variables"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-matrix-variables"></a>4.5&nbsp;Matrix variables</h2></div></div></div>
+    
+
+    <p>A new <code class="interfacename">@MatrixVariable</code> annotation adds
+    support for extracting matrix variables from the request URI. For more
+    details see <a class="xref" href="mvc.html#mvc-ann-matrix-variables" title="Matrix Variables">the section called &#8220;Matrix Variables&#8221;</a>.</p>
+  </div>
+
+  <div class="section" title="4.6&nbsp;Abstract base class for code-based Servlet 3+ container initialization"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-dispatcher-servlet-initializer"></a>4.6&nbsp;Abstract base class for code-based Servlet 3+ container
+    initialization</h2></div></div></div>
+    
+
+    <p>An abstract base class implementation of the
+    <code class="interfacename">WebApplicationInitializer</code> interface is
+    provided to simplify code-based registration of a DispatcherServlet and
+    filters mapped to it. The new class is named
+    <code class="classname">AbstractDispatcherServletInitializer</code> and its
+    sub-class
+    <code class="classname">AbstractAnnotationConfigDispatcherServletInitializer</code>
+    can be used with Java-based Spring configuration. For more details see
+    <a class="xref" href="mvc.html#mvc-container-config" title="17.14&nbsp;Code-based Servlet container initialization">Section&nbsp;17.14, &#8220;Code-based Servlet container initialization&#8221;</a>.</p>
+  </div>
+
+  <div class="section" title="4.7&nbsp;ResponseEntityExceptionHandler class"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-webmvc-exception-handler-support"></a>4.7&nbsp;<code class="classname">ResponseEntityExceptionHandler</code> class</h2></div></div></div>
+    
+
+    <p>A convenient base class with an
+    <code class="interfacename">@ExceptionHandler</code> method that handles
+    standard Spring MVC exceptions and returns a
+    <code class="classname">ResponseEntity</code> that allowing customizing and
+    writing the response with HTTP message converters. This servers as an
+    alternative to the <code class="classname">DefaultHandlerExceptionResolver</code>,
+    which does the same but returns a <code class="classname">ModelAndView</code>
+    instead.</p>
+
+    <p>See the revised <a class="xref" href="mvc.html#mvc-exceptionhandlers" title="17.11&nbsp;Handling exceptions">Section&nbsp;17.11, &#8220;Handling exceptions&#8221;</a> including
+    information on customizing the default Servlet container error
+    page.</p>
+  </div>
+
+  <div class="section" title="4.8&nbsp;Support for generic types in the RestTemplate and in @RequestBody arguments"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-webmvc-generic-types-rest-template"></a>4.8&nbsp;Support for generic types in the
+    <code class="classname">RestTemplate</code> and in
+    <code class="interfacename">@RequestBody</code> arguments</h2></div></div></div>
+    
+
+    <p>The <code class="classname">RestTemplate</code> can now read an HTTP
+    response to a generic type (e.g. <code class="code">List&lt;Account&gt;</code>). There
+    are three new <code class="code">exchange()</code> methods that accept
+    <code class="classname">ParameterizedTypeReference</code>, a new class that
+    enables capturing and passing generic type info.</p>
+
+    <p>In support of this feature, the
+    <code class="interfacename">HttpMessageConverter</code> is extended by
+    <code class="interfacename">GenericHttpMessageConverter</code> adding a method
+    for reading content given a specified parameterized type. The new
+    interface is implemented by the
+    <code class="classname">MappingJacksonHttpMessageConverter</code> and also by a
+    new <code class="classname">Jaxb2CollectionHttpMessageConverter</code> that can
+    read read a generic <code class="interfacename">Collection</code> where the
+    generic type is a JAXB type annotated with
+    <code class="interfacename">@XmlRootElement</code> or
+    <code class="interfacename">@XmlType</code>.</p>
+  </div>
+
+  <div class="section" title="4.9&nbsp;Jackson JSON 2 and related improvements"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-webmvc-jackson-json"></a>4.9&nbsp;Jackson JSON 2 and related improvements</h2></div></div></div>
+    
+
+    <p>The Jackson JSON 2 library is now supported. Due to packaging
+    changes in the Jackson library, there are separate classes in Spring MVC
+    as well. Those are
+    <code class="classname">MappingJackson2HttpMessageConverter</code> and
+    <code class="classname">MappingJackson2JsonView</code>. Other related
+    configuration improvements include support for pretty printing as well as
+    a <code class="classname">JacksonObjectMapperFactoryBean</code> for convenient
+    customization of an <code class="classname">ObjectMapper</code> in XML
+    configuration.</p>
+  </div>
+
+  <div class="section" title="4.10&nbsp;Tiles 3"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-webmvc-tiles3"></a>4.10&nbsp;Tiles 3</h2></div></div></div>
+    
+
+    <p>Tiles 3 is now supported in addition to Tiles 2.x. Configuring
+    it should be very similar to the Tiles 2 configuration, i.e. the
+    combination of <code class="classname">TilesConfigurer</code>,
+    <code class="classname">TilesViewResolver</code> and <code class="classname">TilesView</code>
+    except using the <code class="code">tiles3</code> instead of the <code class="code">tiles2</code>
+    package.</p>
+
+    <p>Also note that besides the version number change, the tiles
+    dependencies have also changed. You will need to have a subset or all of
+    <code class="filename">tiles-request-api</code>, <code class="filename">tiles-api</code>,
+    <code class="filename">tiles-core</code>, <code class="filename">tiles-servlet</code>,
+    <code class="filename">tiles-jsp</code>, <code class="filename">tiles-el</code>.
+    </p>
+  </div>
+
+  <div class="section" title="4.11&nbsp;@RequestBody improvements"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-webmvc-request-body-arg-with-binding-result"></a>4.11&nbsp;<code class="interfacename">@RequestBody</code> improvements</h2></div></div></div>
+    
+
+    <p>An <code class="interfacename">@RequestBody</code> or an
+    <code class="interfacename">@RequestPart</code> argument can now be followed
+    by an <code class="interfacename">Errors</code> argument making it possible to
+    handle validation errors (as a result of an
+    <code class="interfacename">@Valid</code> annotation) locally within the
+    <code class="interfacename">@RequestMapping</code> method.
+    <code class="interfacename">@RequestBody</code> now also supports a required
+    flag.</p>
+  </div>
+
+  <div class="section" title="4.12&nbsp;HTTP PATCH method"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-webmvc-http-patch"></a>4.12&nbsp;HTTP PATCH method</h2></div></div></div>
+    
+
+    <p>The HTTP request method <code class="code">PATCH</code> may now be used in
+    <code class="interfacename">@RequestMapping</code> methods as well as in the
+    <code class="classname">RestTemplate</code> in conjunction with Apache
+    HttpComponents HttpClient version 4.2 or later. The JDK
+    <code class="classname">HttpURLConnection</code> does not support the
+    <code class="code">PATCH</code> method.</p>
+  </div>
+
+  <div class="section" title="4.13&nbsp;Excluded patterns in mapped interceptors"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-webmvc-mapped-interceptor-exclude-patterns"></a>4.13&nbsp;Excluded patterns in mapped interceptors</h2></div></div></div>
+    
+
+    <p>Mapped interceptors now support URL patterns to be excluded. The MVC
+    namespace and the MVC JavaConfig both expose these options.</p>
+  </div>
+
+  <div class="section" title="4.14&nbsp;Using meta-annotations for injection points and for bean definition methods"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-meta-annotations"></a>4.14&nbsp;Using meta-annotations for injection points and for bean definition methods</h2></div></div></div>
+    
+
+    <p>As of 3.2, Spring allows for <code class="interfacename">@Autowired</code> and
+    <code class="interfacename">@Value</code> to be used as meta-annotations,
+    e.g. to build custom injection annotations in combination with specific qualifiers.
+    Analogously, you may build custom <code class="interfacename">@Bean</code> definition
+    annotations for <code class="interfacename">@Configuration</code> classes,
+    e.g. in combination with specific qualifiers, @Lazy, @Primary, etc.</p>
+  </div>
+
+  <div class="section" title="4.15&nbsp;Initial support for JCache 0.5"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-jcache"></a>4.15&nbsp;Initial support for JCache 0.5</h2></div></div></div>
+    
+
+    <p>Spring provides a CacheManager adapter for JCache, building against the JCache 0.5
+    preview release. Full JCache support is coming next year, along with Java EE 7 final.</p>
+  </div>
+
+  <div class="section" title="4.16&nbsp;Support for @DateTimeFormat without Joda Time"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-date-time-format-without-joda"></a>4.16&nbsp;Support for <code class="interfacename">@DateTimeFormat</code> without
+    Joda Time</h2></div></div></div>
+    
+
+    <p>The <code class="interfacename">@DateTimeFormat</code> annotation can
+    now be used without needing a dependency on the Joda Time library. If Joda
+    Time is not present the JDK <code class="classname">SimpleDateFormat</code> will
+    be used to parse and print date patterns. When Joda Time is present it
+    will continue to be used in preference to
+    <code class="classname">SimpleDateFormat</code>.</p>
+  </div>
+
+  <div class="section" title="4.17&nbsp;Global date &amp; time formatting"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-global-date-time-format"></a>4.17&nbsp;Global date &amp; time formatting</h2></div></div></div>
+    
+
+    <p>It is now possible to define global formats that will be used when
+    parsing and printing date and time types. See <a class="xref" href="validation.html#format-configuring-formatting-globaldatetimeformat" title="7.7&nbsp;Configuring a global date &amp; time format">Section&nbsp;7.7, &#8220;Configuring a global date &amp; time format&#8221;</a> for
+    details.</p>
+  </div>
+
+  <div class="section" title="4.18&nbsp;New Testing Features"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-testing"></a>4.18&nbsp;New Testing Features</h2></div></div></div>
+    
+
+    <p>In addition to the aforementioned inclusion of the <a class="link" href="testing.html#spring-mvc-test-framework" title="11.3.6&nbsp;Spring MVC Test Framework">Spring MVC Test Framework</a> in
+    the <code class="literal">spring-test</code> module, the <span class="emphasis"><em>Spring
+    TestContext Framework</em></span> has been revised with support for
+    integration testing web applications as well as configuring application
+    contexts with context initializers. For further details, consult the
+    following.</p>
+
+    <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+        <p>Configuring and <a class="link" href="testing.html#testcontext-ctx-management-web" title="Loading a WebApplicationContext">loading a
+        WebApplicationContext</a> in integration tests</p>
+      </li><li class="listitem">
+        <p>Testing <a class="link" href="testing.html#testcontext-web-scoped-beans" title="Testing request and session scoped beans">request and
+        session scoped beans</a></p>
+      </li><li class="listitem">
+        <p>Improvements to <a class="link" href="testing.html#mock-objects-servlet" title="Servlet API">Servlet API
+        mocks</a></p>
+      </li><li class="listitem">
+        <p>Configuring test application contexts with <a class="link" href="testing.html#testcontext-ctx-management-initializers" title="Context configuration with context initializers">ApplicationContextInitializers</a></p>
+      </li></ul></div>
+  </div>
+
+  <div class="section" title="4.19&nbsp;Concurrency refinements across the framework"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-concurrency"></a>4.19&nbsp;Concurrency refinements across the framework</h2></div></div></div>
+    
+
+    <p>Spring Framework 3.2 includes fine-tuning of concurrent data structures
+    in many parts of the framework, minimizing locks and generally improving the
+    arrangements for highly concurrent creation of scoped/prototype beans.</p>
+  </div>
+
+  <div class="section" title="4.20&nbsp;New Gradle-based build and move to GitHub"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-build"></a>4.20&nbsp;New Gradle-based build and move to GitHub</h2></div></div></div>
+    
+
+    <p>Building and contributing to the framework has never been simpler with
+    our move to a Gradle-based build system and source control at GitHub.
+    See the <a class="ulink" href="https://github.com/SpringSource/spring-framework#building-from-source" target="_top">
+    building from source</a> section of the README and the
+    <a class="ulink" href="https://github.com/SpringSource/spring-framework/blob/master/CONTRIBUTING.md" target="_top">
+    contributor guidelines</a> for complete details.</p>
+  </div>
+
+  <div class="section" title="4.21&nbsp;Refined Java SE 7 / OpenJDK 7 support"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-java7"></a>4.21&nbsp;Refined Java SE 7 / OpenJDK 7 support</h2></div></div></div>
+    
+
+    <p>Last but not least, Spring Framework 3.2 comes with refined Java 7 support
+    within the framework as well as through upgraded third-party dependencies:
+    specifically, CGLIB 3.0, ASM 4.0 (both of which come as inlined dependencies with
+    Spring now) and AspectJ 1.7 support (next to the existing AspectJ 1.6 support).</p>
+  </div>
+
+</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="new-in-3.1.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="spring-whats-new.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="spring-core.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.&nbsp;New Features and Enhancements in Spring Framework 3.1&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Part&nbsp;III.&nbsp;Core Technologies</td></tr></table></div></body></html>

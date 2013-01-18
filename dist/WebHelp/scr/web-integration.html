@@ -1,0 +1,1120 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0014)about:internet -->
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title>19. Integrating with other web frameworks</title><link rel="stylesheet" href="css/manual-multipage.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Spring Framework Reference Documentation"><link rel="up" href="spring-web.html" title="Part&nbsp;V.&nbsp;The Web"><link rel="prev" href="view.html" title="18.&nbsp;View technologies"><link rel="next" href="portlet.html" title="20.&nbsp;Portlet MVC Framework"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><script language="JavaScript" type="text/JavaScript">
+function syn(){
+if(parent.nav.tree){
+ if(parent.nav.tree.loaded){
+  parent.nav.tree.selectNode(748);
+ }else{
+  setTimeout("syn()",500);
+}
+  }else{
+  setTimeout("syn()",500);
+  }}
+if(parent!=self){
+  setTimeout("syn()",100);
+}else{
+  parent.location.href = "../index.htm#page=web-integration.html";
+}
+originalOnload = window.onload;
+if(originalOnload==null){
+window.onload = function(){parent.contentLoaded = true;};
+}else{
+window.onload = function(){originalOnload();parent.contentLoaded = true;};
+}
+</script> 
+<div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">19.&nbsp;Integrating with other web frameworks</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="view.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;V.&nbsp;The Web</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="portlet.html">Next</a></td></tr></table><hr></div><div class="chapter" title="19.&nbsp;Integrating with other web frameworks"><div class="titlepage"><div><div><h2 class="title"><a name="web-integration"></a>19.&nbsp;Integrating with other web frameworks</h2></div></div></div>
+  
+
+  <div class="section" title="19.1&nbsp;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="intro"></a>19.1&nbsp;Introduction</h2></div></div></div>
+    
+
+    <p>This chapter details Spring's integration with third party web
+    frameworks such as <a class="ulink" href="http://java.sun.com/javaee/javaserverfaces/" target="_top">JSF</a>, <a class="ulink" href="http://struts.apache.org/" target="_top">Struts</a>, <a class="ulink" href="http://www.opensymphony.com/webwork/" target="_top">WebWork</a>, and <a class="ulink" href="http://tapestry.apache.org/" target="_top">Tapestry</a>.</p>
+
+    
+
+    <div class="sidebar" title="Spring Web Flow"><p class="title"><b>Spring Web Flow</b></p>
+  
+
+  <p>Spring Web Flow (SWF) aims to be the best solution for the management
+  of web application page flow.</p>
+
+  <p>SWF integrates with existing frameworks like Spring MVC, Struts, and
+  JSF, in both servlet and portlet environments. If you have a business
+  process (or processes) that would benefit from a conversational model as
+  opposed to a purely request model, then SWF may be the solution.</p>
+
+  <p>SWF allows you to capture logical page flows as self-contained modules
+  that are reusable in different situations, and as such is ideal for building
+  web application modules that guide the user through controlled navigations
+  that drive business processes.</p>
+
+  <p>For more information about SWF, consult the
+  <a class="ulink" href="http://www.springframework.org/webflow" target="_top">Spring Web Flow website</a>.
+  </p>
+</div>
+
+    <p>One of the core value propositions of the Spring Framework is that
+    of enabling <span class="emphasis"><em>choice</em></span>. In a general sense, Spring does
+    not force one to use or buy into any particular architecture, technology,
+    or methodology (although it certainly recommends some over others). This
+    freedom to pick and choose the architecture, technology, or methodology
+    that is most relevant to a developer and his or her development team is
+    arguably most evident in the web area, where Spring provides its own web
+    framework (<a class="link" href="mvc.html" title="17.&nbsp;Web MVC framework">Spring MVC</a>), while at the same time
+    providing integration with a number of popular third party web frameworks.
+    This allows one to continue to leverage any and all of the skills one may
+    have acquired in a particular web framework such as Struts, while at the
+    same time being able to enjoy the benefits afforded by Spring in other
+    areas such as data access, declarative transaction management, and
+    flexible configuration and application assembly.</p>
+
+    <p>Having dispensed with the woolly sales patter (c.f. the previous
+    paragraph), the remainder of this chapter will concentrate upon the meaty
+    details of integrating your favorite web framework with Spring. One thing
+    that is often commented upon by developers coming to Java from other
+    languages is the seeming super-abundance of web frameworks available in
+    Java. There are indeed a great number of web frameworks in the Java
+    space; in fact there are far too many to cover with any semblance of
+    detail in a single chapter. This chapter thus picks four of the more
+    popular web frameworks in Java, starting with the Spring configuration
+    that is common to all of the supported web frameworks, and then detailing
+    the specific integration options for each supported web framework.</p>
+
+    <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+        <p>Please note that this chapter does not attempt to explain
+        how to use any of the supported web frameworks. For example, if you want
+        to use Struts for the presentation layer of your web application, the
+        assumption is that you are already familiar with Struts. If you need
+        further details about any of the supported web frameworks themselves,
+        please do consult <a class="xref" href="web-integration.html#web-integration-resources" title="19.7&nbsp;Further Resources">Section&nbsp;19.7, &#8220;Further Resources&#8221;</a> at the end
+        of this chapter.
+        </p>
+    </td></tr></table></div>
+
+  </div>
+
+  <div class="section" title="19.2&nbsp;Common configuration"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="web-integration-common"></a>19.2&nbsp;Common configuration</h2></div></div></div>
+    
+
+    <p>Before diving into the integration specifics of each supported web
+    framework, let us first take a look at the Spring configuration that is
+    <span class="emphasis"><em>not</em></span> specific to any one web framework. (This section
+    is equally applicable to Spring's own web framework, Spring MVC.)</p>
+
+    <p>One of the concepts (for want of a better word) espoused by
+    (Spring's) lightweight application model is that of a layered
+    architecture. Remember that in a 'classic' layered architecture, the web
+    layer is but one of many layers; it serves as one of the entry points
+    into a server side application and it delegates to service objects
+    (facades) defined in a service layer to satisfy business specific (and
+    presentation-technology agnostic) use cases. In Spring, these service
+    objects, any other business-specific objects, data access objects, etc.
+    exist in a distinct 'business context', which contains
+    <span class="emphasis"><em>no</em></span> web or presentation layer objects (presentation
+    objects such as Spring MVC controllers are typically configured in a
+    distinct 'presentation context'). This section details how one configures
+    a Spring container (a <code class="classname">WebApplicationContext</code>) that
+    contains all of the 'business beans' in one's application.</p>
+
+    <p>On to specifics: all that one need do is to declare a <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/context/ContextLoaderListener.html" target="_top"><code class="classname">ContextLoaderListener</code></a>
+    in the standard Java EE servlet <code class="literal">web.xml</code> file of one's web
+    application, and add a <code class="literal">contextConfigLocation</code>
+    &lt;context-param/&gt; section (in the same file) that defines which set
+    of Spring XML configuration files to load.</p>
+
+    <p>Find below the &lt;listener/&gt; configuration:</p>
+
+    <pre class="programlisting"><span class="hl-tag">&lt;listener&gt;</span>
+  <span class="hl-tag">&lt;listener-class&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="hl-tag">&lt;/listener-class&gt;</span>
+<span class="hl-tag">&lt;/listener&gt;</span></pre>
+
+    <p>Find below the &lt;context-param/&gt; configuration:</p>
+
+    <pre class="programlisting"><span class="hl-tag">&lt;context-param&gt;</span>
+  <span class="hl-tag">&lt;param-name&gt;</span>contextConfigLocation<span class="hl-tag">&lt;/param-name&gt;</span>
+  <span class="hl-tag">&lt;param-value&gt;</span>/WEB-INF/applicationContext*.xml<span class="hl-tag">&lt;/param-value&gt;</span>
+<span class="hl-tag">&lt;/context-param&gt;</span></pre>
+
+    <p>If you don't specify the <code class="literal">contextConfigLocation</code>
+    context parameter, the <code class="classname">ContextLoaderListener</code> will
+    look for a file called <code class="literal">/WEB-INF/applicationContext.xml</code>
+    to load. Once the context files are loaded, Spring creates a <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/context/WebApplicationContext.html" target="_top"><code class="classname">WebApplicationContext</code></a>
+    object based on the bean definitions and stores it in the
+    <code class="interfacename">ServletContext</code> of the web application.</p>
+
+    <p>All Java web frameworks are built on top of the Servlet API, and so
+    one can use the following code snippet to get access to this 'business
+    context' <code class="interfacename">ApplicationContext</code> created by the
+    <code class="classname">ContextLoaderListener</code>.</p>
+
+    <pre class="programlisting">WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);</pre>
+
+    <p>The <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/context/support/WebApplicationContextUtils.html" target="_top"><code class="classname">WebApplicationContextUtils</code></a>
+    class is for convenience, so you don't have to remember the name of the
+    <code class="interfacename">ServletContext</code> attribute. Its
+    <span class="emphasis"><em>getWebApplicationContext()</em></span> method will return
+    <code class="literal">null</code> if an object doesn't exist under the
+    <code class="literal">WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE</code>
+    key. Rather than risk getting <code class="classname">NullPointerExceptions</code>
+    in your application, it's better to use the
+    <code class="literal">getRequiredWebApplicationContext()</code> method. This method
+    throws an exception when the <code class="interfacename">ApplicationContext</code> is
+    missing.</p>
+
+    <p>Once you have a reference to the
+    <code class="classname">WebApplicationContext</code>, you can retrieve beans by
+    their name or type. Most developers retrieve beans by name and then cast them
+    to one of their implemented interfaces.</p>
+
+    <p>Fortunately, most of the frameworks in this section have simpler
+    ways of looking up beans. Not only do they make it easy to get beans from
+    a Spring container, but they also allow you to use dependency injection on
+    their controllers. Each web framework section has more detail on its
+    specific integration strategies.</p>
+  </div>
+
+  <div class="section" title="19.3&nbsp;JavaServer Faces 1.1 and 1.2"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="jsf"></a>19.3&nbsp;JavaServer Faces 1.1 and 1.2</h2></div></div></div>
+    
+
+    <p>JavaServer Faces (JSF) is the JCP's standard component-based,
+    event-driven web user interface framework. As of Java EE 5, it is an
+    official part of the Java EE umbrella.</p>
+
+    <p>For a popular JSF runtime as well as for popular JSF component
+    libraries, check out the <a class="ulink" href="http://myfaces.apache.org/" target="_top">Apache
+    MyFaces project</a>. The MyFaces project also provides common JSF
+    extensions such as <a class="ulink" href="http://myfaces.apache.org/orchestra/" target="_top">MyFaces Orchestra</a>: a
+    Spring-based JSF extension that provides rich conversation scope
+    support.</p>
+
+    <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+      <p>Spring Web Flow 2.0 provides rich JSF support through its newly
+      established Spring Faces module, both for JSF-centric usage (as
+      described in this section) and for Spring-centric usage (using JSF views
+      within a Spring MVC dispatcher). Check out the <a class="ulink" href="http://www.springframework.org/webflow" target="_top">Spring Web Flow
+      website</a> for details!</p>
+    </td></tr></table></div>
+
+    <p>The key element in Spring's JSF integration is the JSF 1.1
+    <code class="classname">VariableResolver</code> mechanism. On JSF 1.2, Spring
+    supports the <code class="classname">ELResolver</code> mechanism as a
+    next-generation version of JSF EL integration.</p>
+
+    <div class="section" title="19.3.1&nbsp;DelegatingVariableResolver (JSF 1.1/1.2)"><div class="titlepage"><div><div><h3 class="title"><a name="jsf-delegatingvariableresolver"></a>19.3.1&nbsp;DelegatingVariableResolver (JSF 1.1/1.2)</h3></div></div></div>
+      
+
+      <p>The easiest way to integrate one's Spring middle-tier with one's
+      JSF web layer is to use the <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/jsf/DelegatingVariableResolver.html" target="_top">
+      <code class="classname">DelegatingVariableResolver</code></a> class. To
+      configure this variable resolver in one's application, one will need to
+      edit one's <span class="emphasis"><em>faces-context.xml</em></span> file. After the
+      opening <code class="literal">&lt;faces-config/&gt;</code> element, add an
+      <code class="literal">&lt;application/&gt;</code> element and a
+      <code class="literal">&lt;variable-resolver/&gt;</code> element within it. The
+      value of the variable resolver should reference Spring's
+      <code class="classname">DelegatingVariableResolver</code>; for example:</p>
+
+      <pre class="programlisting"><span class="hl-tag">&lt;faces-config&gt;</span>
+  <span class="hl-tag">&lt;application&gt;</span>
+    <span class="hl-tag">&lt;variable-resolver&gt;</span>org.springframework.web.jsf.DelegatingVariableResolver<span class="hl-tag">&lt;/variable-resolver&gt;</span>
+    <span class="hl-tag">&lt;locale-config&gt;</span>
+      <span class="hl-tag">&lt;default-locale&gt;</span>en<span class="hl-tag">&lt;/default-locale&gt;</span>
+      <span class="hl-tag">&lt;supported-locale&gt;</span>en<span class="hl-tag">&lt;/supported-locale&gt;</span>
+      <span class="hl-tag">&lt;supported-locale&gt;</span>es<span class="hl-tag">&lt;/supported-locale&gt;</span>
+    <span class="hl-tag">&lt;/locale-config&gt;</span>
+    <span class="hl-tag">&lt;message-bundle&gt;</span>messages<span class="hl-tag">&lt;/message-bundle&gt;</span>
+  <span class="hl-tag">&lt;/application&gt;</span>
+<span class="hl-tag">&lt;/faces-config&gt;</span></pre>
+
+      <p>The <code class="classname">DelegatingVariableResolver</code> will first
+      delegate value lookups to the default resolver of the underlying JSF
+      implementation and then to Spring's 'business context'
+      <code class="classname">WebApplicationContext</code>. This allows one to easily
+      inject dependencies into one's JSF-managed beans.</p>
+
+      <p>Managed beans are defined in one's
+      <code class="literal">faces-config.xml</code> file. Find below an example where
+      <code class="literal">#{userManager}</code> is a bean that is retrieved from the
+      Spring 'business context'.</p>
+
+      <pre class="programlisting"><span class="hl-tag">&lt;managed-bean&gt;</span>
+  <span class="hl-tag">&lt;managed-bean-name&gt;</span>userList<span class="hl-tag">&lt;/managed-bean-name&gt;</span>
+  <span class="hl-tag">&lt;managed-bean-class&gt;</span>com.whatever.jsf.UserList<span class="hl-tag">&lt;/managed-bean-class&gt;</span>
+  <span class="hl-tag">&lt;managed-bean-scope&gt;</span>request<span class="hl-tag">&lt;/managed-bean-scope&gt;</span>
+  <span class="hl-tag">&lt;managed-property&gt;</span>
+    <span class="hl-tag">&lt;property-name&gt;</span>userManager<span class="hl-tag">&lt;/property-name&gt;</span>
+    <span class="hl-tag">&lt;value&gt;</span>#{userManager}<span class="hl-tag">&lt;/value&gt;</span>
+  <span class="hl-tag">&lt;/managed-property&gt;</span>
+<span class="hl-tag">&lt;/managed-bean&gt;</span></pre>
+    </div>
+
+    <div class="section" title="19.3.2&nbsp;SpringBeanVariableResolver (JSF 1.1/1.2)"><div class="titlepage"><div><div><h3 class="title"><a name="jsf-springbeanvariableresolver"></a>19.3.2&nbsp;SpringBeanVariableResolver (JSF 1.1/1.2)</h3></div></div></div>
+      
+
+      <p><code class="classname">SpringBeanVariableResolver</code> is a variant of
+      <code class="classname">DelegatingVariableResolver</code>. It delegates to the
+      Spring's 'business context' <code class="classname">WebApplicationContext</code>
+      <span class="emphasis"><em>first</em></span> and then to the default resolver of the
+      underlying JSF implementation. This is useful in particular when using
+      request/session-scoped beans with special Spring resolution rules, e.g.
+      Spring <code class="interfacename">FactoryBean</code>
+      implementations.</p>
+
+      <p>Configuration-wise, simply define
+      <code class="classname">SpringBeanVariableResolver</code> in your
+      <span class="emphasis"><em>faces-context.xml</em></span> file:</p>
+
+      <pre class="programlisting"><span class="hl-tag">&lt;faces-config&gt;</span>
+  <span class="hl-tag">&lt;application&gt;</span>
+    <span class="hl-tag">&lt;variable-resolver&gt;</span>org.springframework.web.jsf.SpringBeanVariableResolver<span class="hl-tag">&lt;/variable-resolver&gt;</span>
+    ...
+  <span class="hl-tag">&lt;/application&gt;</span>
+<span class="hl-tag">&lt;/faces-config&gt;</span></pre>
+    </div>
+
+    <div class="section" title="19.3.3&nbsp;SpringBeanFacesELResolver (JSF 1.2+)"><div class="titlepage"><div><div><h3 class="title"><a name="jsf-springbeanfaceselresolver"></a>19.3.3&nbsp;SpringBeanFacesELResolver (JSF 1.2+)</h3></div></div></div>
+      
+
+      <p><code class="classname">SpringBeanFacesELResolver</code> is a JSF 1.2
+      compliant <code class="classname">ELResolver</code> implementation, integrating
+      with the standard Unified EL as used by JSF 1.2 and JSP 2.1. Like
+      <code class="classname">SpringBeanVariableResolver</code>, it delegates to the
+      Spring's 'business context' <code class="classname">WebApplicationContext</code>
+      <span class="emphasis"><em>first</em></span>, then to the default resolver of the
+      underlying JSF implementation.</p>
+
+      <p>Configuration-wise, simply define
+      <code class="classname">SpringBeanFacesELResolver</code> in your JSF 1.2
+      <span class="emphasis"><em>faces-context.xml</em></span> file:</p>
+
+      <pre class="programlisting"><span class="hl-tag">&lt;faces-config&gt;</span>
+  <span class="hl-tag">&lt;application&gt;</span>
+    <span class="hl-tag">&lt;el-resolver&gt;</span>org.springframework.web.jsf.el.SpringBeanFacesELResolver<span class="hl-tag">&lt;/el-resolver&gt;</span>
+    ...
+  <span class="hl-tag">&lt;/application&gt;</span>
+<span class="hl-tag">&lt;/faces-config&gt;</span></pre>
+    </div>
+
+    <div class="section" title="19.3.4&nbsp;FacesContextUtils"><div class="titlepage"><div><div><h3 class="title"><a name="jsf-facescontextutils"></a>19.3.4&nbsp;FacesContextUtils</h3></div></div></div>
+      
+
+      <p>A custom <code class="interfacename">VariableResolver</code> works
+      well when mapping one's properties to beans in
+      <span class="emphasis"><em>faces-config.xml</em></span>, but at times one may need to grab
+      a bean explicitly. The <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/jsf/FacesContextUtils.html" target="_top">
+      <code class="classname">FacesContextUtils</code></a> class makes this easy.
+      It is similar to <code class="classname">WebApplicationContextUtils</code>,
+      except that it takes a <code class="classname">FacesContext</code> parameter
+      rather than a <code class="interfacename">ServletContext</code> parameter.</p>
+
+      <pre class="programlisting">ApplicationContext ctx = FacesContextUtils.getWebApplicationContext(FacesContext.getCurrentInstance());</pre>
+    </div>
+  </div>
+
+  <div class="section" title="19.4&nbsp;Apache Struts 1.x and 2.x"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="struts"></a>19.4&nbsp;Apache Struts 1.x and 2.x</h2></div></div></div>
+    
+
+    <p><a class="ulink" href="http://struts.apache.org" target="_top">Struts</a> used to be the
+    <span class="emphasis"><em>de facto</em></span> web framework for Java applications, mainly
+    because it was one of the first to be released (June 2001). It has now been renamed to <span class="emphasis"><em>Struts 1</em></span>
+    (as opposed to Struts 2). Many applications still use it.
+    Invented by Craig McClanahan, Struts is an open source project hosted by the Apache
+    Software Foundation. At the time, it greatly simplified the JSP/Servlet
+    programming paradigm and won over many developers who were using
+    proprietary frameworks. It simplified the programming model, it was open
+    source (and thus free as in beer), and it had a large community, which
+    allowed the project to grow and become popular among Java web
+    developers.</p>
+
+    <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+      <p><span class="emphasis"><em>The following section discusses Struts 1 a.k.a. "Struts
+      Classic".</em></span></p>
+
+      <p>Struts 2 is effectively a different product - a successor of
+      WebWork 2.2 (as discussed in <a class="xref" href="web-integration.html#webwork" title="19.5&nbsp;WebWork 2.x">Section&nbsp;19.5, &#8220;WebWork 2.x&#8221;</a>), carrying the
+      Struts brand now. Check out the Struts 2 <a class="ulink" href="http://struts.apache.org/2.x/docs/spring-plugin.html" target="_top">Spring
+      Plugin</a> for the built-in Spring integration shipped with Struts
+      2. In general, Struts 2 is closer to WebWork 2.2 than to Struts 1 in
+      terms of its Spring integration implications.</p>
+    </td></tr></table></div>
+
+    <p>To integrate your Struts 1.x application with Spring, you have two
+    options:</p>
+
+    <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+        <p>Configure Spring to manage your Actions as beans, using the
+        <code class="classname">ContextLoaderPlugin</code>, and set their dependencies
+        in a Spring context file.</p>
+      </li><li class="listitem">
+        <p>Subclass Spring's <code class="classname">ActionSupport</code> classes
+        and grab your Spring-managed beans explicitly using a
+        <span class="emphasis"><em>getWebApplicationContext()</em></span> method.</p>
+      </li></ul></div>
+
+    <div class="section" title="19.4.1&nbsp;ContextLoaderPlugin"><div class="titlepage"><div><div><h3 class="title"><a name="struts-contextloaderplugin"></a>19.4.1&nbsp;ContextLoaderPlugin</h3></div></div></div>
+      
+
+      <p>The <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/struts/ContextLoaderPlugIn.html" target="_top"><code class="classname">ContextLoaderPlugin</code></a>
+      is a Struts 1.1+ plug-in that loads a Spring context file for the Struts
+      <code class="classname">ActionServlet</code>. This context refers to the root
+      <code class="classname">WebApplicationContext</code> (loaded by the
+      <code class="classname">ContextLoaderListener</code>) as its parent. The default
+      name of the context file is the name of the mapped servlet, plus
+      <span class="emphasis"><em>-servlet.xml</em></span>. If
+      <code class="classname">ActionServlet</code> is defined in web.xml as
+      <code class="literal">&lt;servlet-name&gt;action&lt;/servlet-name&gt;</code>, the
+      default is <span class="emphasis"><em>/WEB-INF/action-servlet.xml</em></span>.</p>
+
+      <p>To configure this plug-in, add the following XML to the plug-ins
+      section near the bottom of your <span class="emphasis"><em>struts-config.xml</em></span>
+      file:</p>
+
+      <pre class="programlisting"><span class="hl-tag">&lt;plug-in</span> <span class="hl-attribute">className</span>=<span class="hl-value">"org.springframework.web.struts.ContextLoaderPlugIn"</span><span class="hl-tag">/&gt;</span></pre>
+
+      <p>The location of the context configuration files can be customized
+      using the '<code class="literal">contextConfigLocation</code>' property.</p>
+
+      <pre class="programlisting"><span class="hl-tag">&lt;plug-in</span> <span class="hl-attribute">className</span>=<span class="hl-value">"org.springframework.web.struts.ContextLoaderPlugIn"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;set-property</span> <span class="hl-attribute">property</span>=<span class="hl-value">"contextConfigLocation"</span>
+      <span class="hl-attribute">value</span>=<span class="hl-value">"/WEB-INF/action-servlet.xml,/WEB-INF/applicationContext.xml"</span><span class="hl-tag">/&gt;</span>
+<span class="hl-tag">&lt;/plug-in&gt;</span></pre>
+
+      <p>It is possible to use this plugin to load all your context files,
+      which can be useful when using testing tools like StrutsTestCase.
+      StrutsTestCase's <code class="classname">MockStrutsTestCase</code> won't
+      initialize Listeners on startup so putting all your context files in the
+      plugin is a workaround. (A <a class="ulink" href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1088866&amp;group_id=39190&amp;atid=424562" target="_top">
+      bug has been filed</a> for this issue, but has been closed as 'Wont
+      Fix').</p>
+
+      <p>After configuring this plug-in in
+      <span class="emphasis"><em>struts-config.xml</em></span>, you can configure your
+      <code class="classname">Action</code> to be managed by Spring. Spring (1.1.3+)
+      provides two ways to do this:</p>
+
+      <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+          <p>Override Struts' default
+          <code class="classname">RequestProcessor</code> with Spring's
+          <code class="classname">DelegatingRequestProcessor</code>.</p>
+        </li><li class="listitem">
+          <p>Use the <code class="classname">DelegatingActionProxy</code> class in
+          the <code class="literal">type</code> attribute of your
+          <code class="literal">&lt;action-mapping&gt;</code>.</p>
+        </li></ul></div>
+
+      <p>Both of these methods allow you to manage your Actions and their
+      dependencies in the <span class="emphasis"><em>action-servlet.xml</em></span> file. The
+      bridge between the Action in <span class="emphasis"><em>struts-config.xml</em></span> and
+      <span class="emphasis"><em>action-servlet.xml</em></span> is built with the
+      action-mapping's "path" and the bean's "name". If you have the following
+      in your <span class="emphasis"><em>struts-config.xml</em></span> file:</p>
+
+      <pre class="programlisting"><span class="hl-tag">&lt;action</span> <span class="hl-attribute">path</span>=<span class="hl-value">"/users"</span> <span class="hl-attribute">.../&gt;</span></pre>
+
+      <p>You must define that Action's bean with the "/users" name in
+      <span class="emphasis"><em>action-servlet.xml</em></span>:</p>
+
+      <pre class="programlisting"><span class="hl-tag">&lt;bean</span> <span class="hl-attribute">name</span>=<span class="hl-value">"/users"</span> <span class="hl-attribute">.../&gt;</span></pre>
+
+      <div class="section" title="DelegatingRequestProcessor"><div class="titlepage"><div><div><h4 class="title"><a name="struts-delegatingrequestprocessor"></a>DelegatingRequestProcessor</h4></div></div></div>
+        
+
+        <p>To configure the <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/struts/DelegatingRequestProcessor.html" target="_top">
+        <code class="literal">DelegatingRequestProcessor</code></a> in your
+        <span class="emphasis"><em>struts-config.xml</em></span> file, override the
+        "processorClass" property in the &lt;controller&gt; element. These
+        lines follow the &lt;action-mapping&gt; element.</p>
+
+        <pre class="programlisting"><span class="hl-tag">&lt;controller&gt;</span>
+  <span class="hl-tag">&lt;set-property</span> <span class="hl-attribute">property</span>=<span class="hl-value">"processorClass"</span>
+      <span class="hl-attribute">value</span>=<span class="hl-value">"org.springframework.web.struts.DelegatingRequestProcessor"</span><span class="hl-tag">/&gt;</span>
+<span class="hl-tag">&lt;/controller&gt;</span></pre>
+
+        <p>After adding this setting, your Action will automatically be
+        looked up in Spring's context file, no matter what the type. In fact,
+        you don't even need to specify a type. Both of the following snippets
+        will work:</p>
+
+        <pre class="programlisting"><span class="hl-tag">&lt;action</span> <span class="hl-attribute">path</span>=<span class="hl-value">"/user"</span> <span class="hl-attribute">type</span>=<span class="hl-value">"com.whatever.struts.UserAction"</span><span class="hl-tag">/&gt;</span>
+<span class="hl-tag">&lt;action</span> <span class="hl-attribute">path</span>=<span class="hl-value">"/user"</span><span class="hl-tag">/&gt;</span></pre>
+
+        <p>If you're using Struts' <span class="emphasis"><em>modules</em></span> feature,
+        your bean names must contain the module prefix. For example, an action
+        defined as <code class="literal">&lt;action path="/user"/&gt;</code> with module
+        prefix "admin" requires a bean name with <code class="literal">&lt;bean
+        name="/admin/user"/&gt;</code>.</p>
+
+        <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+          <p>If you are using Tiles in your Struts application, you must
+          configure your &lt;controller&gt; with the <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/struts/DelegatingTilesRequestProcessor.html" target="_top"><code class="classname">DelegatingTilesRequestProcessor</code></a>
+          instead.</p>
+        </td></tr></table></div>
+      </div>
+
+      <div class="section" title="DelegatingActionProxy"><div class="titlepage"><div><div><h4 class="title"><a name="struts-delegatingactionproxy"></a>DelegatingActionProxy</h4></div></div></div>
+        
+
+        <p>If you have a custom <code class="classname">RequestProcessor</code> and
+        can't use the <code class="classname">DelegatingRequestProcessor</code> or
+        <code class="classname">DelegatingTilesRequestProcessor</code> approaches, you
+        can use the <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/struts/DelegatingActionProxy.html" target="_top">
+        <code class="classname">DelegatingActionProxy</code></a> as the type in
+        your action-mapping.</p>
+
+        <pre class="programlisting"><span class="hl-tag">&lt;action</span> <span class="hl-attribute">path</span>=<span class="hl-value">"/user"</span> <span class="hl-attribute">type</span>=<span class="hl-value">"org.springframework.web.struts.DelegatingActionProxy"</span>
+    <span class="hl-attribute">name</span>=<span class="hl-value">"userForm"</span> <span class="hl-attribute">scope</span>=<span class="hl-value">"request"</span> <span class="hl-attribute">validate</span>=<span class="hl-value">"false"</span> <span class="hl-attribute">parameter</span>=<span class="hl-value">"method"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;forward</span> <span class="hl-attribute">name</span>=<span class="hl-value">"list"</span> <span class="hl-attribute">path</span>=<span class="hl-value">"/userList.jsp"</span><span class="hl-tag">/&gt;</span>
+  <span class="hl-tag">&lt;forward</span> <span class="hl-attribute">name</span>=<span class="hl-value">"edit"</span> <span class="hl-attribute">path</span>=<span class="hl-value">"/userForm.jsp"</span><span class="hl-tag">/&gt;</span>
+<span class="hl-tag">&lt;/action&gt;</span></pre>
+
+        <p>The bean definition in <span class="emphasis"><em>action-servlet.xml</em></span>
+        remains the same, whether you use a custom
+        <code class="literal">RequestProcessor</code> or the
+        <code class="classname">DelegatingActionProxy</code>.</p>
+
+        <p>If you define your <code class="classname">Action</code> in a context
+        file, the full feature set of Spring's bean container will be
+        available for it: dependency injection as well as the option to
+        instantiate a new <code class="classname">Action</code> instance for each
+        request. To activate the latter, add
+        <span class="emphasis"><em>scope="prototype"</em></span> to your Action's bean
+        definition.</p>
+
+        <pre class="programlisting"><span class="hl-tag">&lt;bean</span> <span class="hl-attribute">name</span>=<span class="hl-value">"/user"</span> <span class="hl-attribute">scope</span>=<span class="hl-value">"prototype"</span> <span class="hl-attribute">autowire</span>=<span class="hl-value">"byName"</span>
+    <span class="hl-attribute">class</span>=<span class="hl-value">"org.example.web.UserAction"</span><span class="hl-tag">/&gt;</span></pre>
+      </div>
+    </div>
+
+    <div class="section" title="19.4.2&nbsp;ActionSupport Classes"><div class="titlepage"><div><div><h3 class="title"><a name="struts-actionsupport"></a>19.4.2&nbsp;ActionSupport Classes</h3></div></div></div>
+      
+
+      <p>As previously mentioned, you can retrieve the
+      <code class="classname">WebApplicationContext</code> from the
+      <code class="interfacename">ServletContext</code> using the
+      <code class="classname">WebApplicationContextUtils</code> class. An easier way
+      is to extend Spring's <code class="classname">Action</code> classes for Struts.
+      For example, instead of subclassing Struts'
+      <code class="classname">Action</code> class, you can subclass Spring's <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/struts/ActionSupport.html" target="_top">
+      <code class="classname">ActionSupport</code></a> class.</p>
+
+      <p>The <code class="classname">ActionSupport</code> class provides additional
+      convenience methods, like
+      <span class="emphasis"><em>getWebApplicationContext()</em></span>. Below is an example of
+      how you might use this in an Action:</p>
+
+      <pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> UserAction <span class="hl-keyword">extends</span> DispatchActionSupport {
+
+    <span class="hl-keyword">public</span> ActionForward execute(ActionMapping mapping,
+                                 ActionForm form,
+                                 HttpServletRequest request,
+                                 HttpServletResponse response) <span class="hl-keyword">throws</span> Exception {
+        <span class="hl-keyword">if</span> (log.isDebugEnabled()) {
+            log.debug(<span class="hl-string">"entering 'delete' method..."</span>);
+        }
+        WebApplicationContext ctx = getWebApplicationContext();
+        UserManager mgr = (UserManager) ctx.getBean(<span class="hl-string">"userManager"</span>);
+        <span class="hl-comment">// talk to manager for business logic</span>
+        <span class="hl-keyword">return</span> mapping.findForward(<span class="hl-string">"success"</span>);
+    }
+}</pre>
+
+      <p>Spring includes subclasses for all of the standard Struts Actions
+      - the Spring versions merely have <span class="emphasis"><em>Support</em></span> appended
+      to the name: </p><div class="itemizedlist"><ul class="itemizedlist" type="disc" compact><li class="listitem">
+            <p><a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/struts/ActionSupport.html" target="_top"><code class="classname">ActionSupport</code></a>,</p>
+          </li><li class="listitem">
+            <p><a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/struts/DispatchActionSupport.html" target="_top"><code class="literal">DispatchActionSupport</code></a>,</p>
+          </li><li class="listitem">
+            <p><a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/struts/LookupDispatchActionSupport.html" target="_top"><code class="literal">LookupDispatchActionSupport</code></a>
+            and</p>
+          </li><li class="listitem">
+            <p><a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/struts/MappingDispatchActionSupport.html" target="_top"><code class="literal">MappingDispatchActionSupport</code></a>.</p>
+          </li></ul></div>
+
+      <p>The recommended strategy is to use the approach that best suits
+      your project. Subclassing makes your code more readable, and you know
+      exactly how your dependencies are resolved. In contrast, using the
+      <code class="classname">ContextLoaderPlugin</code> allows you to easily add new
+      dependencies in your context XML file. Either way, Spring provides some
+      nice options for integrating with Struts.</p>
+    </div>
+  </div>
+
+  <div class="section" title="19.5&nbsp;WebWork 2.x"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="webwork"></a>19.5&nbsp;WebWork 2.x</h2></div></div></div>
+    
+
+    <p>From the <a class="ulink" href="http://www.opensymphony.com/webwork/" target="_top">WebWork
+    homepage</a>:</p>
+
+    <p>
+        <span class="quote">&#8220;<span class="quote">
+          <span class="emphasis"><em>WebWork is a Java web-application development framework. It is
+          built specifically with developer productivity and code simplicity in
+          mind, providing robust support for building reusable UI templates, such
+          as form controls, UI themes, internationalization, dynamic form
+          parameter mapping to JavaBeans, robust client and server side
+          validation, and much more.</em></span>
+        </span>&#8221;</span>
+    </p>
+
+    <p>Web work's architecture and concepts are easy to
+    understand, and the framework also has an extensive tag library as well as
+    nicely decoupled validation.</p>
+
+    <p>One of the key enablers in WebWork's technology stack is <a class="ulink" href="http://www.opensymphony.com/webwork/wikidocs/IoC%20Overview.html" target="_top">an
+    IoC container</a> to manage Webwork Actions, handle the "wiring" of
+    business objects, etc. Prior to WebWork version 2.2, WebWork used its own
+    proprietary IoC container (and provided integration points so that one
+    could integrate an IoC container such as Spring's into the mix). However,
+    as of WebWork version 2.2, the default IoC container that is used within
+    WebWork <span class="emphasis"><em>is</em></span> Spring. This is obviously great news if
+    one is a Spring developer, because it means that one is immediately
+    familiar with the basics of IoC configuration, idioms, and suchlike within
+    WebWork.</p>
+
+    <p>Now in the interests of adhering to the DRY (Don't Repeat Yourself)
+    principle, it would be foolish to document the Spring-WebWork integration
+    in light of the fact that the WebWork team have already written such a
+    writeup. Please consult the <a class="ulink" href="http://www.opensymphony.com/webwork/wikidocs/Spring.html" target="_top">Spring-WebWork
+    integration page</a> on the <a class="ulink" href="http://wiki.opensymphony.com/display/WW/WebWork" target="_top">WebWork wiki</a>
+    for the full lowdown.</p>
+
+    <p>Note that the Spring-WebWork integration code was developed (and
+    continues to be maintained and improved) by the WebWork developers
+    themselves. So please refer first to the WebWork site and forums if you are
+    having issues with the integration. But feel free to
+    post comments and queries regarding the Spring-WebWork integration on the
+    <a class="ulink" href="http://forum.springframework.org/forumdisplay.php?f=25" target="_top">Spring
+    support forums</a>, too.</p>
+  </div>
+
+  <div class="section" title="19.6&nbsp;Tapestry 3.x and 4.x"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tapestry"></a>19.6&nbsp;Tapestry 3.x and 4.x</h2></div></div></div>
+    
+
+    <p>From the <a class="ulink" href="http://tapestry.apache.org/" target="_top">Tapestry
+    homepage</a>:</p>
+
+    <p>
+        <span class="quote">&#8220;<span class="quote">
+          <span class="emphasis"><em>Tapestry is an open-source framework for creating dynamic,
+          robust, highly scalable web applications in Java. Tapestry complements
+          and builds upon the standard Java Servlet API, and so it works in any
+          servlet container or application server.</em></span>
+        </span>&#8221;</span>
+    </p>
+
+    <p>While Spring has its own <a class="link" href="mvc.html" title="17.&nbsp;Web MVC framework">powerful web
+    layer</a>, there are a number of unique advantages to building an
+    enterprise Java application using a combination of Tapestry for the web
+    user interface and the Spring container for the lower layers. This section
+    of the web integration chapter attempts to detail a few best practices for
+    combining these two frameworks.</p>
+
+    <p>A <span class="emphasis"><em>typical</em></span> layered enterprise Java application
+    built with Tapestry and Spring will consist of a top user interface (UI)
+    layer built with Tapestry, and a number of lower layers, all wired together
+    by one or more Spring containers. Tapestry's own reference documentation
+    contains the following snippet of best practice advice. (Text that the
+    author of this Spring section has added is contained within
+    <code class="literal">[]</code> brackets.)</p>
+
+    <p>
+        <span class="quote">&#8220;<span class="quote">
+          <span class="emphasis"><em>A very successful design pattern in Tapestry is to keep pages
+          and components very simple, and <span class="bold"><strong>delegate</strong></span> as much logic as possible out to
+          HiveMind [or Spring, or whatever] services. Listener methods should
+          ideally do little more than marshal together the correct information
+          and pass it over to a service.</em></span>
+        </span>&#8221;</span>
+    </p>
+
+    <p>The key question then is: how does one supply Tapestry pages with
+    collaborating services? The answer, ideally, is that one would want to
+    dependency inject those services directly into one's Tapestry pages. In
+    Tapestry, one can effect this dependency injection by a variety of
+    means. This section is only going to enumerate the dependency injection
+    means afforded by Spring. The real beauty of the rest of this
+    Spring-Tapestry integration is that the elegant and flexible design of
+    Tapestry itself makes doing this dependency injection of Spring-managed
+    beans a cinch. (Another nice thing is that this Spring-Tapestry
+    integration code was written - and continues to be maintained - by the
+    Tapestry creator <a class="ulink" href="http://howardlewisship.com/blog/" target="_top">Howard M.
+    Lewis Ship</a>, so hats off to him for what is really some silky
+    smooth integration).</p>
+
+    <div class="section" title="19.6.1&nbsp;Injecting Spring-managed beans"><div class="titlepage"><div><div><h3 class="title"><a name="tapestry-di"></a>19.6.1&nbsp;Injecting Spring-managed beans</h3></div></div></div>
+      
+
+      <p>Assume we have the following simple Spring container definition
+      (in the ubiquitous XML format):</p>
+
+      <pre class="programlisting"><span class="hl-directive" style="color: maroon">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="hl-tag">&lt;beans</span> <span class="hl-attribute">xmlns</span>=<span class="hl-value">"http://www.springframework.org/schema/beans"</span>
+       <span class="hl-attribute">xmlns:xsi</span>=<span class="hl-value">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="bold"><strong>xmlns:jee="http://www.springframework.org/schema/jee"</strong></span>
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+<span class="bold"><strong>http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd"</strong></span>&gt;
+
+<span class="hl-tag">&lt;beans&gt;</span>
+    <span class="hl-comment">&lt;!-- the DataSource --&gt;</span>
+    <span class="hl-tag">&lt;jee:jndi-lookup</span> <span class="hl-attribute">id</span>=<span class="hl-value">"dataSource"</span> <span class="hl-attribute">jndi-name</span>=<span class="hl-value">"java:DefaultDS"</span><span class="hl-tag">/&gt;</span>
+
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"hibSessionFactory"</span>
+          <span class="hl-attribute">class</span>=<span class="hl-value">"org.springframework.orm.hibernate3.LocalSessionFactoryBean"</span><span class="hl-tag">&gt;</span>
+        <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"dataSource"</span> <span class="hl-attribute">ref</span>=<span class="hl-value">"dataSource"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;/bean&gt;</span>
+
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"transactionManager"</span>
+          <span class="hl-attribute">class</span>=<span class="hl-value">"org.springframework.transaction.jta.JtaTransactionManager"</span><span class="hl-tag">/&gt;</span>
+
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"mapper"</span>
+          <span class="hl-attribute">class</span>=<span class="hl-value">"com.whatever.dataaccess.mapper.hibernate.MapperImpl"</span><span class="hl-tag">&gt;</span>
+        <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"sessionFactory"</span> <span class="hl-attribute">ref</span>=<span class="hl-value">"hibSessionFactory"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;/bean&gt;</span>
+
+    <span class="hl-comment">&lt;!-- (transactional) AuthenticationService --&gt;</span>
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"authenticationService"</span>
+          <span class="hl-attribute">class</span>=<span class="hl-value">"org.springframework.transaction.interceptor.TransactionProxyFactoryBean"</span><span class="hl-tag">&gt;</span>
+        <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"transactionManager"</span> <span class="hl-attribute">ref</span>=<span class="hl-value">"transactionManager"</span><span class="hl-tag">/&gt;</span>
+        <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"target"</span><span class="hl-tag">&gt;</span>
+            <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">class</span>=<span class="hl-value">"com.whatever.services.service.user.AuthenticationServiceImpl"</span><span class="hl-tag">&gt;</span>
+                <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"mapper"</span> <span class="hl-attribute">ref</span>=<span class="hl-value">"mapper"</span><span class="hl-tag">/&gt;</span>
+            <span class="hl-tag">&lt;/bean&gt;</span>
+        <span class="hl-tag">&lt;/property&gt;</span>
+        <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"proxyInterfacesOnly"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"true"</span><span class="hl-tag">/&gt;</span>
+        <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"transactionAttributes"</span><span class="hl-tag">&gt;</span>
+            <span class="hl-tag">&lt;value&gt;</span>
+                *=PROPAGATION_REQUIRED
+            <span class="hl-tag">&lt;/value&gt;</span>
+        <span class="hl-tag">&lt;/property&gt;</span>
+    <span class="hl-tag">&lt;/bean&gt;</span>
+
+    <span class="hl-comment">&lt;!-- (transactional) UserService --&gt;</span>
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"userService"</span>
+          <span class="hl-attribute">class</span>=<span class="hl-value">"org.springframework.transaction.interceptor.TransactionProxyFactoryBean"</span><span class="hl-tag">&gt;</span>
+        <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"transactionManager"</span> <span class="hl-attribute">ref</span>=<span class="hl-value">"transactionManager"</span><span class="hl-tag">/&gt;</span>
+        <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"target"</span><span class="hl-tag">&gt;</span>
+             <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">class</span>=<span class="hl-value">"com.whatever.services.service.user.UserServiceImpl"</span><span class="hl-tag">&gt;</span>
+                 <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"mapper"</span> <span class="hl-attribute">ref</span>=<span class="hl-value">"mapper"</span><span class="hl-tag">/&gt;</span>
+             <span class="hl-tag">&lt;/bean&gt;</span>
+        <span class="hl-tag">&lt;/property&gt;</span>
+        <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"proxyInterfacesOnly"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"true"</span><span class="hl-tag">/&gt;</span>
+        <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"transactionAttributes"</span><span class="hl-tag">&gt;</span>
+            <span class="hl-tag">&lt;value&gt;</span>
+                *=PROPAGATION_REQUIRED
+            <span class="hl-tag">&lt;/value&gt;</span>
+        <span class="hl-tag">&lt;/property&gt;</span>
+    <span class="hl-tag">&lt;/bean&gt;</span>
+
+ <span class="hl-tag">&lt;/beans&gt;</span></pre>
+
+      <p>Inside the Tapestry application, the above bean definitions need
+      to be <a class="link" href="web-integration.html#web-integration-common" title="19.2&nbsp;Common configuration">loaded into a Spring
+      container</a>, and any relevant Tapestry pages need to be supplied
+      (injected) with the <code class="literal">authenticationService</code> and
+      <code class="literal">userService</code> beans, which implement the
+      <code class="interfacename">AuthenticationService</code> and
+      <code class="interfacename">UserService</code> interfaces,
+      respectively.</p>
+
+      <p>At this point, the application context is available to a web
+      application by calling Spring's static utility function
+      <code class="literal">WebApplicationContextUtils.getApplicationContext(servletContext)</code>,
+      where servletContext is the standard
+      <code class="interfacename">ServletContext</code> from the Java EE Servlet
+      specification. As such, one simple mechanism for a page to get an
+      instance of the <code class="interfacename">UserService</code>, for example,
+      would be with code such as:</p>
+
+      <pre class="programlisting">WebApplicationContext appContext = WebApplicationContextUtils.getApplicationContext(
+    getRequestCycle().getRequestContext().getServlet().getServletContext());
+UserService userService = (UserService) appContext.getBean(<span class="hl-string">"userService"</span>);
+<em class="lineannotation"><span class="lineannotation">// ... some code which uses UserService</span></em></pre>
+
+      <p>This mechanism does work. Having said that, it can be made a lot
+      less verbose by encapsulating most of the functionality in a method in
+      the base class for the page or component. However, in some respects it
+      goes against the IoC principle; ideally you would like the page to not
+      have to ask the context for a specific bean by name, and in fact, the
+      page would ideally not know about the context at all.</p>
+
+      <p>Luckily, there is a mechanism to allow this. We rely upon the fact
+      that Tapestry already has a mechanism to declaratively add properties to
+      a page, and it is in fact the preferred approach to manage all
+      properties on a page in this declarative fashion, so that Tapestry can
+      properly manage their lifecycle as part of the page and component
+      lifecycle.</p>
+
+      <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+        <p>This next section is applicable to Tapestry 3.x. If you are
+        using Tapestry version 4.x, please consult the section entitled <a class="xref" href="web-integration.html#tapestry-4-style-di" title="Dependency Injecting Spring Beans into Tapestry pages - Tapestry 4.x style">the section called &#8220;Dependency Injecting Spring Beans into Tapestry pages -
+        Tapestry 4.x style&#8221;</a>.</p>
+      </td></tr></table></div>
+
+      <div class="section" title="Dependency Injecting Spring Beans into Tapestry pages"><div class="titlepage"><div><div><h4 class="title"><a name="tapestry-pre4-style-di"></a>Dependency Injecting Spring Beans into Tapestry pages</h4></div></div></div>
+        
+
+        <p>First we need to make the
+        <code class="interfacename">ApplicationContext</code> available to the Tapestry
+        page or Component without having to have the
+        <code class="interfacename">ServletContext</code>; this is because at the stage in
+        the page's/component's lifecycle when we need to access the
+        <code class="interfacename">ApplicationContext</code>, the
+        <code class="interfacename">ServletContext</code> won't be easily available to the
+        page, so we can't use
+        <code class="literal">WebApplicationContextUtils.getApplicationContext(servletContext)</code>
+        directly. One way is by defining a custom version of the Tapestry
+        <code class="interfacename">IEngine</code> which exposes this for
+        us:</p>
+
+        <pre class="programlisting"><span class="hl-keyword">package</span> com.whatever.web.xportal;
+
+<span class="hl-comment">// import ...</span>
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> MyEngine <span class="hl-keyword">extends</span> org.apache.tapestry.engine.BaseEngine {
+
+    <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String APPLICATION_CONTEXT_KEY = <span class="hl-string">"appContext"</span>;
+
+    <b class="hl-tag" style="color: blue">/**
+     * @see org.apache.tapestry.engine.AbstractEngine#setupForRequest(org.apache.tapestry.request.RequestContext)
+     */</b>
+    <span class="hl-keyword">protected</span> <span class="hl-keyword">void</span> setupForRequest(RequestContext context) {
+        <span class="hl-keyword">super</span>.setupForRequest(context);
+
+        <span class="hl-comment">// insert ApplicationContext in global, if not there</span>
+        Map global = (Map) getGlobal();
+        ApplicationContext ac = (ApplicationContext) global.get(APPLICATION_CONTEXT_KEY);
+        <span class="hl-keyword">if</span> (ac == null) {
+            ac = WebApplicationContextUtils.getWebApplicationContext(
+                context.getServlet().getServletContext()
+            );
+            global.put(APPLICATION_CONTEXT_KEY, ac);
+        }
+    }
+}</pre>
+
+        <p>This engine class places the Spring Application Context as an
+        attribute called "appContext" in this Tapestry app's 'Global' object.
+        Make sure to register the fact that this special IEngine instance
+        should be used for this Tapestry application, with an entry in the
+        Tapestry application definition file. For example:</p>
+
+        <pre class="programlisting"><em class="lineannotation"><span class="lineannotation">file: xportal.application:</span></em>
+<span class="hl-directive" style="color: maroon">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<b class="hl-tag" style="color: blue">&lt;!DOCTYPE application PUBLIC
+    "-//Apache Software Foundation//Tapestry Specification 3.0//EN"
+    "http://jakarta.apache.org/tapestry/dtd/Tapestry_3_0.dtd"&gt;</b>
+<span class="hl-tag">&lt;application</span>
+    <span class="hl-attribute">name</span>=<span class="hl-value">"Whatever xPortal"</span>
+    <span class="hl-attribute">engine-class</span>=<span class="hl-value">"com.whatever.web.xportal.MyEngine"</span><span class="hl-tag">&gt;</span>
+<span class="hl-tag">&lt;/application&gt;</span></pre>
+      </div>
+
+      <div class="section" title="Component definition files"><div class="titlepage"><div><div><h4 class="title"><a name="tapestry-componentdefs"></a>Component definition files</h4></div></div></div>
+        
+
+        <p>Now in our page or component definition file (*.page or *.jwc),
+        we simply add property-specification elements to grab the beans we
+        need out of the <code class="interfacename">ApplicationContext</code>, and
+        create page or component properties for them. For example:</p>
+
+        <pre class="programlisting">    <span class="hl-tag">&lt;property-specification</span> <span class="hl-attribute">name</span>=<span class="hl-value">"userService"</span>
+                            <span class="hl-attribute">type</span>=<span class="hl-value">"com.whatever.services.service.user.UserService"</span><span class="hl-tag">&gt;</span>
+        global.appContext.getBean("userService")
+    <span class="hl-tag">&lt;/property-specification&gt;</span>
+    <span class="hl-tag">&lt;property-specification</span> <span class="hl-attribute">name</span>=<span class="hl-value">"authenticationService"</span>
+                            <span class="hl-attribute">type</span>=<span class="hl-value">"com.whatever.services.service.user.AuthenticationService"</span><span class="hl-tag">&gt;</span>
+        global.appContext.getBean("authenticationService")
+    <span class="hl-tag">&lt;/property-specification&gt;</span></pre>
+
+        <p>The OGNL expression inside the property-specification specifies
+        the initial value for the property, as a bean obtained from the
+        context. The entire page definition might look like this:</p>
+
+        <pre class="programlisting"><span class="hl-directive" style="color: maroon">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<b class="hl-tag" style="color: blue">&lt;!DOCTYPE page-specification PUBLIC
+    "-//Apache Software Foundation//Tapestry Specification 3.0//EN"
+    "http://jakarta.apache.org/tapestry/dtd/Tapestry_3_0.dtd"&gt;</b>
+
+<span class="hl-tag">&lt;page-specification</span> <span class="hl-attribute">class</span>=<span class="hl-value">"com.whatever.web.xportal.pages.Login"</span><span class="hl-tag">&gt;</span>
+
+    <span class="hl-tag">&lt;property-specification</span> <span class="hl-attribute">name</span>=<span class="hl-value">"username"</span> <span class="hl-attribute">type</span>=<span class="hl-value">"java.lang.String"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;property-specification</span> <span class="hl-attribute">name</span>=<span class="hl-value">"password"</span> <span class="hl-attribute">type</span>=<span class="hl-value">"java.lang.String"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;property-specification</span> <span class="hl-attribute">name</span>=<span class="hl-value">"error"</span> <span class="hl-attribute">type</span>=<span class="hl-value">"java.lang.String"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;property-specification</span> <span class="hl-attribute">name</span>=<span class="hl-value">"callback"</span> <span class="hl-attribute">type</span>=<span class="hl-value">"org.apache.tapestry.callback.ICallback"</span> <span class="hl-attribute">persistent</span>=<span class="hl-value">"yes"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;property-specification</span> <span class="hl-attribute">name</span>=<span class="hl-value">"userService"</span>
+                            <span class="hl-attribute">type</span>=<span class="hl-value">"com.whatever.services.service.user.UserService"</span><span class="hl-tag">&gt;</span>
+        global.appContext.getBean("userService")
+    <span class="hl-tag">&lt;/property-specification&gt;</span>
+    <span class="hl-tag">&lt;property-specification</span> <span class="hl-attribute">name</span>=<span class="hl-value">"authenticationService"</span>
+                            <span class="hl-attribute">type</span>=<span class="hl-value">"com.whatever.services.service.user.AuthenticationService"</span><span class="hl-tag">&gt;</span>
+        global.appContext.getBean("authenticationService")
+    <span class="hl-tag">&lt;/property-specification&gt;</span>
+
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">name</span>=<span class="hl-value">"delegate"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"com.whatever.web.xportal.PortalValidationDelegate"</span><span class="hl-tag">/&gt;</span>
+
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">name</span>=<span class="hl-value">"validator"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"org.apache.tapestry.valid.StringValidator"</span> <span class="hl-attribute">lifecycle</span>=<span class="hl-value">"page"</span><span class="hl-tag">&gt;</span>
+        <span class="hl-tag">&lt;set-property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"required"</span> <span class="hl-attribute">expression</span>=<span class="hl-value">"true"</span><span class="hl-tag">/&gt;</span>
+        <span class="hl-tag">&lt;set-property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"clientScriptingEnabled"</span> <span class="hl-attribute">expression</span>=<span class="hl-value">"true"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;/bean&gt;</span>
+
+    <span class="hl-tag">&lt;component</span> <span class="hl-attribute">id</span>=<span class="hl-value">"inputUsername"</span> <span class="hl-attribute">type</span>=<span class="hl-value">"ValidField"</span><span class="hl-tag">&gt;</span>
+        <span class="hl-tag">&lt;static-binding</span> <span class="hl-attribute">name</span>=<span class="hl-value">"displayName"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"Username"</span><span class="hl-tag">/&gt;</span>
+        <span class="hl-tag">&lt;binding</span> <span class="hl-attribute">name</span>=<span class="hl-value">"value"</span> <span class="hl-attribute">expression</span>=<span class="hl-value">"username"</span><span class="hl-tag">/&gt;</span>
+        <span class="hl-tag">&lt;binding</span> <span class="hl-attribute">name</span>=<span class="hl-value">"validator"</span> <span class="hl-attribute">expression</span>=<span class="hl-value">"beans.validator"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;/component&gt;</span>
+
+    <span class="hl-tag">&lt;component</span> <span class="hl-attribute">id</span>=<span class="hl-value">"inputPassword"</span> <span class="hl-attribute">type</span>=<span class="hl-value">"ValidField"</span><span class="hl-tag">&gt;</span>
+        <span class="hl-tag">&lt;binding</span> <span class="hl-attribute">name</span>=<span class="hl-value">"value"</span> <span class="hl-attribute">expression</span>=<span class="hl-value">"password"</span><span class="hl-tag">/&gt;</span>
+       <span class="hl-tag">&lt;binding</span> <span class="hl-attribute">name</span>=<span class="hl-value">"validator"</span> <span class="hl-attribute">expression</span>=<span class="hl-value">"beans.validator"</span><span class="hl-tag">/&gt;</span>
+       <span class="hl-tag">&lt;static-binding</span> <span class="hl-attribute">name</span>=<span class="hl-value">"displayName"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"Password"</span><span class="hl-tag">/&gt;</span>
+       <span class="hl-tag">&lt;binding</span> <span class="hl-attribute">name</span>=<span class="hl-value">"hidden"</span> <span class="hl-attribute">expression</span>=<span class="hl-value">"true"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;/component&gt;</span>
+
+<span class="hl-tag">&lt;/page-specification&gt;</span></pre>
+      </div>
+
+      <div class="section" title="Adding abstract accessors"><div class="titlepage"><div><div><h4 class="title"><a name="tapestry-getters"></a>Adding abstract accessors</h4></div></div></div>
+        
+
+        <p>Now in the Java class definition for the page or component
+        itself, all we need to do is add an abstract getter method for the
+        properties we have defined (in order to be able to access the
+        properties).</p>
+
+        <pre class="programlisting"><span class="hl-comment">// our UserService implementation; will come from page definition</span>
+<span class="hl-keyword">public</span> <span class="hl-keyword">abstract</span> UserService getUserService();
+<span class="hl-comment">// our AuthenticationService implementation; will come from page definition</span>
+<span class="hl-keyword">public</span> <span class="hl-keyword">abstract</span> AuthenticationService getAuthenticationService();</pre>
+
+        <p>For the sake of completeness, the entire Java class, for a login
+        page in this example, might look like this:</p>
+
+        <pre class="programlisting"><span class="hl-keyword">package</span> com.whatever.web.xportal.pages;
+
+<b class="hl-tag" style="color: blue">/**
+ *  Allows the user to login, by providing username and password.
+ *  After successfully logging in, a cookie is placed on the client browser
+ *  that provides the default username for future logins (the cookie
+ *  persists for a week).
+ */</b>
+<span class="hl-keyword">public</span> <span class="hl-keyword">abstract</span> <span class="hl-keyword">class</span> Login <span class="hl-keyword">extends</span> BasePage <span class="hl-keyword">implements</span> ErrorProperty, PageRenderListener {
+
+    <b class="hl-tag" style="color: blue">/** the key under which the authenticated user object is stored in the visit as */</b>
+    <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String USER_KEY = <span class="hl-string">"user"</span>;
+
+    <b class="hl-tag" style="color: blue">/** The name of the cookie that identifies a user **/</b>
+    <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String COOKIE_NAME = Login.<span class="hl-keyword">class</span>.getName() + <span class="hl-string">".username"</span>;
+    <span class="hl-keyword">private</span> <span class="hl-keyword">final</span> <span class="hl-keyword">static</span> <span class="hl-keyword">int</span> ONE_WEEK = <span class="hl-number">7</span> * <span class="hl-number">24</span> * <span class="hl-number">60</span> * <span class="hl-number">60</span>;
+
+    <span class="hl-keyword">public</span> <span class="hl-keyword">abstract</span> String getUsername();
+    <span class="hl-keyword">public</span> <span class="hl-keyword">abstract</span> <span class="hl-keyword">void</span> setUsername(String username);
+
+    <span class="hl-keyword">public</span> <span class="hl-keyword">abstract</span> String getPassword();
+    <span class="hl-keyword">public</span> <span class="hl-keyword">abstract</span> <span class="hl-keyword">void</span> setPassword(String password);
+
+    <span class="hl-keyword">public</span> <span class="hl-keyword">abstract</span> ICallback getCallback();
+    <span class="hl-keyword">public</span> <span class="hl-keyword">abstract</span> <span class="hl-keyword">void</span> setCallback(ICallback value);
+
+    <span class="hl-keyword">public</span> <span class="hl-keyword">abstract</span> UserService getUserService();
+    <span class="hl-keyword">public</span> <span class="hl-keyword">abstract</span> AuthenticationService getAuthenticationService();
+
+    <span class="hl-keyword">protected</span> IValidationDelegate getValidationDelegate() {
+        <span class="hl-keyword">return</span> (IValidationDelegate) getBeans().getBean(<span class="hl-string">"delegate"</span>);
+    }
+
+    <span class="hl-keyword">protected</span> <span class="hl-keyword">void</span> setErrorField(String componentId, String message) {
+        IFormComponent field = (IFormComponent) getComponent(componentId);
+        IValidationDelegate delegate = getValidationDelegate();
+        delegate.setFormComponent(field);
+        delegate.record(<span class="hl-keyword">new</span> ValidatorException(message));
+    }
+
+    <b class="hl-tag" style="color: blue">/**
+     *  Attempts to login.
+     * &lt;p&gt;
+     *  If the user name is not known, or the password is invalid, then an error
+     *  message is displayed.
+     **/</b>
+    <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> attemptLogin(IRequestCycle cycle) {
+
+        String password = getPassword();
+
+        <span class="hl-comment">// Do a little extra work to clear out the password.</span>
+        setPassword(null);
+        IValidationDelegate delegate = getValidationDelegate();
+
+        delegate.setFormComponent((IFormComponent) getComponent(<span class="hl-string">"inputPassword"</span>));
+        delegate.recordFieldInputValue(null);
+
+        <span class="hl-comment">// An error, from a validation field, may already have occurred.</span>
+        <span class="hl-keyword">if</span> (delegate.getHasErrors()) {
+            <span class="hl-keyword">return</span>;
+        }
+
+        <span class="hl-keyword">try</span> {
+            User user = getAuthenticationService().login(getUsername(), getPassword());
+           loginUser(user, cycle);
+        }
+        <span class="hl-keyword">catch</span> (FailedLoginException ex) {
+            <span class="hl-keyword">this</span>.setError(<span class="hl-string">"Login failed: "</span> + ex.getMessage());
+            <span class="hl-keyword">return</span>;
+        }
+    }
+
+    <b class="hl-tag" style="color: blue">/**
+     *  Sets up the {@link User} as the logged in user, creates
+     *  a cookie for their username (for subsequent logins),
+     *  and redirects to the appropriate page, or
+     *  a specified page).
+     **/</b>
+    <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> loginUser(User user, IRequestCycle cycle) {
+
+        String username = user.getUsername();
+
+        <span class="hl-comment">// Get the visit object; this will likely force the</span>
+        <span class="hl-comment">// creation of the visit object and an HttpSession</span>
+        Map visit = (Map) getVisit();
+        visit.put(USER_KEY, user);
+
+        <span class="hl-comment">// After logging in, go to the MyLibrary page, unless otherwise specified</span>
+        ICallback callback = getCallback();
+
+        <span class="hl-keyword">if</span> (callback == null) {
+            cycle.activate(<span class="hl-string">"Home"</span>);
+        }
+        <span class="hl-keyword">else</span> {
+            callback.performCallback(cycle);
+        }
+
+        IEngine engine = getEngine();
+        Cookie cookie = <span class="hl-keyword">new</span> Cookie(COOKIE_NAME, username);
+        cookie.setPath(engine.getServletPath());
+        cookie.setMaxAge(ONE_WEEK);
+
+        <span class="hl-comment">// Record the user's username in a cookie</span>
+        cycle.getRequestContext().addCookie(cookie);
+        engine.forgetPage(getPageName());
+    }
+
+    <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> pageBeginRender(PageEvent event) {
+        <span class="hl-keyword">if</span> (getUsername() == null) {
+            setUsername(getRequestCycle().getRequestContext().getCookieValue(COOKIE_NAME));
+        }
+    }
+}</pre>
+      </div>
+
+      <div class="section" title="Dependency Injecting Spring Beans into Tapestry pages - Tapestry 4.x style"><div class="titlepage"><div><div><h4 class="title"><a name="tapestry-4-style-di"></a>Dependency Injecting Spring Beans into Tapestry pages -
+        Tapestry 4.x style</h4></div></div></div>
+        
+
+        <p>Effecting the dependency injection of Spring-managed beans into
+        Tapestry pages in Tapestry version 4.x is <span class="emphasis"><em>so</em></span> much
+        simpler. All that is needed is a single <a class="ulink" href="http://howardlewisship.com/tapestry-javaforge/tapestry-spring/" target="_top">add-on
+        library</a>, and some (small) amount of (essentially boilerplate)
+        configuration. Simply package and deploy this library with the (any of
+        the) other libraries required by your web application (typically in
+        <code class="literal">WEB-INF/lib</code>).</p>
+
+        <p>You will then need to create and expose the Spring container
+        using the <a class="link" href="web-integration.html#web-integration-common" title="19.2&nbsp;Common configuration">method detailed
+        previously</a>. You can then inject Spring-managed beans into
+        Tapestry very easily; if we are using Java 5, consider the
+        <code class="classname">Login</code> page from above: we simply need to
+        annotate the appropriate getter methods in order to dependency inject
+        the Spring-managed <code class="literal">userService</code> and
+        <code class="literal">authenticationService</code> objects (lots of the class
+        definition has been elided for clarity).</p>
+
+        <pre class="programlisting"><span class="hl-keyword">package</span> com.whatever.web.xportal.pages;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">abstract</span> <span class="hl-keyword">class</span> Login <span class="hl-keyword">extends</span> BasePage <span class="hl-keyword">implements</span> ErrorProperty, PageRenderListener {
+
+    <i><span class="hl-annotation" style="color: gray">@InjectObject("spring:userService")</span></i>
+    <span class="hl-keyword">public</span> <span class="hl-keyword">abstract</span> UserService getUserService();
+
+    <i><span class="hl-annotation" style="color: gray">@InjectObject("spring:authenticationService")</span></i>
+    <span class="hl-keyword">public</span> <span class="hl-keyword">abstract</span> AuthenticationService getAuthenticationService();
+
+}</pre>
+
+        <p>We are almost done. All that remains is the HiveMind
+        configuration that exposes the Spring container stored in the
+        <code class="interfacename">ServletContext</code> as a HiveMind service;
+        for example:</p>
+
+        <pre class="programlisting"><span class="hl-directive" style="color: maroon">&lt;?xml version="1.0"?&gt;</span>
+<span class="hl-tag">&lt;module</span> <span class="hl-attribute">id</span>=<span class="hl-value">"com.javaforge.tapestry.spring"</span> <span class="hl-attribute">version</span>=<span class="hl-value">"0.1.1"</span><span class="hl-tag">&gt;</span>
+
+    <span class="hl-tag">&lt;service-point</span> <span class="hl-attribute">id</span>=<span class="hl-value">"SpringApplicationInitializer"</span>
+        <span class="hl-attribute">interface</span>=<span class="hl-value">"org.apache.tapestry.services.ApplicationInitializer"</span>
+        <span class="hl-attribute">visibility</span>=<span class="hl-value">"private"</span><span class="hl-tag">&gt;</span>
+        <span class="hl-tag">&lt;invoke-factory&gt;</span>
+            <span class="hl-tag">&lt;construct</span> <span class="hl-attribute">class</span>=<span class="hl-value">"com.javaforge.tapestry.spring.SpringApplicationInitializer"</span><span class="hl-tag">&gt;</span>
+                <span class="hl-tag">&lt;set-object</span> <span class="hl-attribute">property</span>=<span class="hl-value">"beanFactoryHolder"</span>
+                    <span class="hl-attribute">value</span>=<span class="hl-value">"service:hivemind.lib.DefaultSpringBeanFactoryHolder"</span><span class="hl-tag"> /&gt;</span>
+            <span class="hl-tag">&lt;/construct&gt;</span>
+        <span class="hl-tag">&lt;/invoke-factory&gt;</span>
+    <span class="hl-tag">&lt;/service-point&gt;</span>
+
+    <span class="hl-comment">&lt;!-- Hook the Spring setup into the overall application initialization. --&gt;</span>
+    <span class="hl-tag">&lt;contribution</span>
+        <span class="hl-attribute">configuration-id</span>=<span class="hl-value">"tapestry.init.ApplicationInitializers"</span><span class="hl-tag">&gt;</span>
+        <span class="hl-tag">&lt;command</span> <span class="hl-attribute">id</span>=<span class="hl-value">"spring-context"</span>
+            <span class="hl-attribute">object</span>=<span class="hl-value">"service:SpringApplicationInitializer"</span><span class="hl-tag"> /&gt;</span>
+    <span class="hl-tag">&lt;/contribution&gt;</span>
+
+<span class="hl-tag">&lt;/module&gt;</span></pre>
+
+        <p>If you are using Java 5 (and thus have access to annotations),
+        then that really is it.</p>
+
+        <p>If you are not using Java 5, then one obviously doesn't annotate
+        one's Tapestry page classes with annotations; instead, one simply uses
+        good old fashioned XML to declare the dependency injection; for
+        example, inside the <code class="literal">.page</code> or
+        <code class="literal">.jwc</code> file for the <code class="classname">Login</code> page
+        (or component):</p>
+
+        <pre class="programlisting"><span class="hl-tag">&lt;inject</span> <span class="hl-attribute">property</span>=<span class="hl-value">"userService"</span> <span class="hl-attribute">object</span>=<span class="hl-value">"spring:userService"</span><span class="hl-tag">/&gt;</span>
+<span class="hl-tag">&lt;inject</span> <span class="hl-attribute">property</span>=<span class="hl-value">"authenticationService"</span> <span class="hl-attribute">object</span>=<span class="hl-value">"spring:authenticationService"</span><span class="hl-tag">/&gt;</span></pre>
+
+        <p>In this example, we've managed to allow service beans defined in a
+        Spring container to be provided to the Tapestry page in a declarative
+        fashion. The page class does not know where the service implementations
+        are coming from, and in fact it is easy to slip in another implementation,
+        for example, during testing. This inversion of control is one of the prime
+        goals and benefits of the Spring Framework, and we have managed to extend
+        it throughout the stack in this Tapestry application.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section" title="19.7&nbsp;Further Resources"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="web-integration-resources"></a>19.7&nbsp;Further Resources</h2></div></div></div>
+    
+
+    <p>Find below links to further resources about the various web
+    frameworks described in this chapter.</p>
+
+    <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+        <p>The <a class="ulink" href="http://java.sun.com/javaee/javaserverfaces/" target="_top">JSF</a>
+        homepage</p>
+      </li><li class="listitem">
+        <p>The <a class="ulink" href="http://struts.apache.org/" target="_top">Struts</a>
+        homepage</p>
+      </li><li class="listitem">
+        <p>The <a class="ulink" href="http://www.opensymphony.com/webwork/" target="_top">WebWork</a>
+        homepage</p>
+      </li><li class="listitem">
+        <p>The <a class="ulink" href="http://tapestry.apache.org/" target="_top">Tapestry</a>
+        homepage</p>
+      </li></ul></div>
+  </div>
+</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="view.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="spring-web.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="portlet.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">18.&nbsp;View technologies&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;20.&nbsp;Portlet MVC Framework</td></tr></table></div></body></html>

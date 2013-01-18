@@ -1,0 +1,171 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0014)about:internet -->
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title>13. DAO support</title><link rel="stylesheet" href="css/manual-multipage.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Spring Framework Reference Documentation"><link rel="up" href="spring-data-tier.html" title="Part&nbsp;IV.&nbsp;Data Access"><link rel="prev" href="transaction.html" title="12.&nbsp;Transaction Management"><link rel="next" href="jdbc.html" title="14.&nbsp;Data access with JDBC"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><script language="JavaScript" type="text/JavaScript">
+function syn(){
+if(parent.nav.tree){
+ if(parent.nav.tree.loaded){
+  parent.nav.tree.selectNode(467);
+ }else{
+  setTimeout("syn()",500);
+}
+  }else{
+  setTimeout("syn()",500);
+  }}
+if(parent!=self){
+  setTimeout("syn()",100);
+}else{
+  parent.location.href = "../index.htm#page=dao.html";
+}
+originalOnload = window.onload;
+if(originalOnload==null){
+window.onload = function(){parent.contentLoaded = true;};
+}else{
+window.onload = function(){originalOnload();parent.contentLoaded = true;};
+}
+</script> 
+<div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">13.&nbsp;DAO support</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="transaction.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;IV.&nbsp;Data Access</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="jdbc.html">Next</a></td></tr></table><hr></div><div class="chapter" title="13.&nbsp;DAO support"><div class="titlepage"><div><div><h2 class="title"><a name="dao"></a>13.&nbsp;DAO support</h2></div></div></div>
+  
+
+  <div class="section" title="13.1&nbsp;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="dao-introduction"></a>13.1&nbsp;Introduction</h2></div></div></div>
+    
+
+    <p>The Data Access Object (DAO) support in Spring is aimed at making it
+    easy to work with data access technologies like JDBC, Hibernate, JPA or
+    JDO in a consistent way. This allows one to switch between the
+    aforementioned persistence technologies fairly easily and it also allows
+    one to code without worrying about catching exceptions that are specific
+    to each technology.</p>
+  </div>
+
+  <div class="section" title="13.2&nbsp;Consistent exception hierarchy"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="dao-exceptions"></a>13.2&nbsp;Consistent exception hierarchy</h2></div></div></div>
+    
+
+    <p>Spring provides a convenient translation from technology-specific
+    exceptions like <code class="classname">SQLException</code> to its own exception
+    class hierarchy with the <code class="classname">DataAccessException</code> as the
+    root exception. These exceptions wrap the original exception so there is
+    never any risk that one might lose any information as to what might have
+    gone wrong.</p>
+
+    <p>In addition to JDBC exceptions, Spring can also wrap
+    Hibernate-specific exceptions, converting them from proprietary, checked
+    exceptions (in the case of versions of Hibernate prior to Hibernate 3.0),
+    to a set of focused runtime exceptions (the same is true for JDO and JPA
+    exceptions). This allows one to handle most persistence exceptions, which
+    are non-recoverable, only in the appropriate layers, without having
+    annoying boilerplate catch-and-throw blocks and exception declarations in
+    one's DAOs. (One can still trap and handle exceptions anywhere one needs
+    to though.) As mentioned above, JDBC exceptions (including
+    database-specific dialects) are also converted to the same hierarchy,
+    meaning that one can perform some operations with JDBC within a consistent
+    programming model.</p>
+
+    <p>The above holds true for the various template classes in Springs
+    support for various ORM frameworks. If one uses the interceptor-based
+    classes then the application must care about handling
+    <code class="classname">HibernateExceptions</code> and
+    <code class="classname">JDOExceptions</code> itself, preferably via delegating to
+    <code class="classname">SessionFactoryUtils</code>'
+    <code class="methodname">convertHibernateAccessException(..)</code> or
+    <code class="methodname">convertJdoAccessException()</code> methods respectively.
+    These methods convert the exceptions to ones that are compatible with the
+    exceptions in the <code class="literal">org.springframework.dao</code> exception
+    hierarchy. As <code class="classname">JDOExceptions</code> are unchecked, they can
+    simply get thrown too, sacrificing generic DAO abstraction in terms of
+    exceptions though.</p>
+
+    <p>The exception hierarchy that Spring provides can be seen below.
+    (Please note that the class hierarchy detailed in the image shows only a
+    subset of the entire <code class="classname">DataAccessException</code>
+    hierarchy.)</p>
+
+    <div class="mediaobject" align="center"><img src="images/DataAccessException.gif" align="middle"></div>
+  </div>
+
+  <div class="section" title="13.3&nbsp;Annotations used for configuring DAO or Repository classes"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="dao-annotations"></a>13.3&nbsp;Annotations used for configuring DAO or Repository classes</h2></div></div></div>
+    
+
+    <p>The best way to guarantee that your Data Access Objects (DAOs) or
+    repositories provide exception translation is to use the
+    <code class="interfacename">@Repository</code> annotation. This annotation
+    also allows the component scanning support to find and configure your DAOs
+    and repositories without having to provide XML configuration entries for
+    them.</p>
+
+    <pre class="programlisting"><span class="bold"><strong>@Repository</strong></span>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> SomeMovieFinder <span class="hl-keyword">implements</span> MovieFinder {
+
+    <span class="hl-comment">// ...</span>
+
+}</pre>
+
+    <p>Any DAO or repository implementation will need to access to a
+    persistence resource, depending on the persistence technology used; for
+    example, a JDBC-based repository will need access to a JDBC
+    <code class="interfacename">DataSource</code>; a JPA-based repository will need
+    access to an <code class="interfacename">EntityManager</code>. The easiest way
+    to accomplish this is to have this resource dependency injected using one of
+    the <code class="interfacename">@Autowired,</code>, <code class="interfacename">@Inject</code>,
+    <code class="interfacename">@Resource</code> or
+    <code class="interfacename">@PersistenceContext</code> annotations. Here is an
+    example for a JPA repository:</p>
+
+    <pre class="programlisting"><i><span class="hl-annotation" style="color: gray">@Repository</span></i>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> JpaMovieFinder <span class="hl-keyword">implements</span> MovieFinder {
+
+    <i><span class="hl-annotation" style="color: gray">@PersistenceContext</span></i>
+    <span class="hl-keyword">private</span> EntityManager entityManager;
+
+    <span class="hl-comment">// ...</span>
+
+}</pre>
+
+    <p>If you are using the classic Hibernate APIs than you can inject the
+    SessionFactory:</p>
+
+    <pre class="programlisting"><i><span class="hl-annotation" style="color: gray">@Repository</span></i>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> HibernateMovieFinder <span class="hl-keyword">implements</span> MovieFinder {
+
+    <span class="hl-keyword">private</span> SessionFactory sessionFactory;
+
+    <i><span class="hl-annotation" style="color: gray">@Autowired</span></i>
+    <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setSessionFactory(SessionFactory sessionFactory) {
+        <span class="hl-keyword">this</span>.sessionFactory = sessionFactory;
+    }
+
+    <span class="hl-comment">// ...</span>
+
+}</pre>
+
+    <p>Last example we will show here is for typical JDBC support. You
+    would have the <code class="classname">DataSource</code> injected into an
+    initialization method where you would create a
+    <code class="classname">JdbcTemplate</code> and other data access support classes
+    like <code class="classname">SimpleJdbcCall</code> etc using this
+    <code class="classname">DataSource</code>.</p>
+
+    <pre class="programlisting"><i><span class="hl-annotation" style="color: gray">@Repository</span></i>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> JdbcMovieFinder <span class="hl-keyword">implements</span> MovieFinder {
+
+    <span class="hl-keyword">private</span> JdbcTemplate jdbcTemplate;
+
+    <i><span class="hl-annotation" style="color: gray">@Autowired</span></i>
+    <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> init(DataSource dataSource) {
+        <span class="hl-keyword">this</span>.jdbcTemplate = <span class="hl-keyword">new</span> JdbcTemplate(dataSource);
+    }
+
+    <span class="hl-comment">// ...</span>
+
+}</pre>
+
+    <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+      <p>Please see the specific coverage of each persistence technology
+      for details on how to configure the application context to take
+      advantage of these annotations.</p>
+    </td></tr></table></div>
+
+    <p></p>
+  </div>
+</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="transaction.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="spring-data-tier.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="jdbc.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">12.&nbsp;Transaction Management&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;14.&nbsp;Data access with JDBC</td></tr></table></div></body></html>

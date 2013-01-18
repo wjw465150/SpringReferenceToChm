@@ -1,0 +1,348 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0014)about:internet -->
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title>C. Migrating to Spring Framework 3.2</title><link rel="stylesheet" href="css/manual-multipage.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Spring Framework Reference Documentation"><link rel="up" href="spring-appendices.html" title="Part&nbsp;VII.&nbsp;Appendices"><link rel="prev" href="classic-aop-spring.html" title="Appendix&nbsp;B.&nbsp;Classic Spring AOP Usage"><link rel="next" href="xsd-config.html" title="Appendix&nbsp;D.&nbsp;XML Schema-based configuration"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><script language="JavaScript" type="text/JavaScript">
+function syn(){
+if(parent.nav.tree){
+ if(parent.nav.tree.loaded){
+  parent.nav.tree.selectNode(1063);
+ }else{
+  setTimeout("syn()",500);
+}
+  }else{
+  setTimeout("syn()",500);
+  }}
+if(parent!=self){
+  setTimeout("syn()",100);
+}else{
+  parent.location.href = "../index.htm#page=migration-3.2.html";
+}
+originalOnload = window.onload;
+if(originalOnload==null){
+window.onload = function(){parent.contentLoaded = true;};
+}else{
+window.onload = function(){originalOnload();parent.contentLoaded = true;};
+}
+</script> 
+<div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Appendix&nbsp;C.&nbsp;Migrating to Spring Framework 3.2</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="classic-aop-spring.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;VII.&nbsp;Appendices</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="xsd-config.html">Next</a></td></tr></table><hr></div><div class="appendix" title="Appendix&nbsp;C.&nbsp;Migrating to Spring Framework 3.2"><div class="titlepage"><div><div><h2 class="title"><a name="migration-3.2"></a>Appendix&nbsp;C.&nbsp;Migrating to Spring Framework 3.2</h2></div></div></div>
+  
+
+  <p>In this appendix we discuss what users will want to know when upgrading to
+  Spring Framework 3.2. For a general overview of features, please see
+  <a class="xref" href="new-in-3.2.html" title="4.&nbsp;New Features and Enhancements in Spring Framework 3.2">Chapter&nbsp;4, <i>New Features and Enhancements in Spring Framework 3.2</i></a></p>
+
+  <div class="section" title="C.1&nbsp;Newly optional dependencies"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="migration-3.2-new-optional-deps"></a>C.1&nbsp;Newly optional dependencies</h2></div></div></div>
+    
+    <p>Certain inter-module dependencies are now <code class="literal">optional</code> at the
+    Maven POM level where they were once required. For example, <code class="literal">spring-tx</code>
+    and its dependence on <code class="literal">spring-context</code>. This may result in <code class="literal">
+    ClassNotFoundErrors</code> or other similar problems for users that have been relying
+    on transitive dependency management to pull in affected downstream <code class="literal">spring-*
+    </code>. To resolve this problem, simply add the appropriate missing jars to your
+    build configuration.</p>
+  </div>
+
+  <div class="section" title="C.2&nbsp;EHCache support moved to spring-context-support"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="migration-3.2-ehcache-support"></a>C.2&nbsp;EHCache support moved to spring-context-support</h2></div></div></div>
+    
+    <p>Along with Spring's new JCache support, the EHCache support classes in the
+    <code class="literal">org.springframework.cache.ehcache</code> package moved from the
+    <code class="literal">spring-context</code> module to <code class="literal">spring-context-support</code>.</p>
+  </div>
+
+  <div class="section" title="C.3&nbsp;Inlining of spring-asm jar"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="migration-3.2-inline-asm"></a>C.3&nbsp;Inlining of spring-asm jar</h2></div></div></div>
+    
+    <p>In versions 3.0 and 3.1, we published a discrete <code class="literal">spring-asm</code>
+    containing repackaged <code class="literal">org.objectweb.asm</code> 3.x sources. As of Spring
+    Framework 3.2, we have upgraded to <code class="literal">org.objectweb.asm</code> 4.0 and done
+    away with the separate module jar, favoring inlining these classes directly within
+    <code class="literal">spring-core</code>. This should cause no migration issue for most users;
+    but on the off chance that you have <code class="literal">spring-asm</code> declared directly
+    within your project's build script, you'll want to remove it when upgrading to
+    Spring Framework 3.2.</p>
+  </div>
+
+  <div class="section" title="C.4&nbsp;Explicit CGLIB dependency no longer required"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="migration-3.2-inline-cglib"></a>C.4&nbsp;Explicit CGLIB dependency no longer required</h2></div></div></div>
+    
+    <p>In prior versions, users of Spring's subclass-based AOP proxies (e.g. via
+    <code class="literal">proxy-target-class="true"</code>) and <code class="literal">@Configuration</code>
+    class support were required to declare an explicit dependency on CGLIB 2.2. As of
+    Spring Framework 3.2, we now repackage and inline the newly-released CGLIB 3.0.</p>
+    <p>This means greater convenience for users, as well as correct functionality for
+    Java 7 users who are creating subclass proxies of types that contain <code class="literal">
+    invokedynamic</code> bytecode instructions. Repackaging CGLIB internally ensures
+    no classpath conflicts with other third party frameworks that may depend on other
+    versions of CGLIB.</p>
+  </div>
+
+  <div class="section" title="C.5&nbsp;For OSGi users"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="migration-3.2-osgi-users"></a>C.5&nbsp;For OSGi users</h2></div></div></div>
+    
+    <p>OSGi metadata is no longer published within individual Spring Framework
+    jar MANIFEST.MF files. Please see this
+    <a class="ulink" href="http://www.springsource.org/springframework-ebr" target="_top">announcement</a>
+    for more information about how users can get OSGi-ready versions of Spring
+    Framework 3.2 jars.</p>
+  </div>
+
+  <div class="section" title="C.6&nbsp;MVC Java Config and MVC Namespace"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="migration-3.2-compatibility-mvc-config"></a>C.6&nbsp;MVC Java Config and MVC Namespace</h2></div></div></div>
+    
+
+    <p>As explained in <a class="xref" href="mvc.html#mvc-config-content-negotiation" title="17.15.4&nbsp;Configuring Content Negotiation">Section&nbsp;17.15.4, &#8220;Configuring Content Negotiation&#8221;</a>, both
+    the MVC Java config and the MVC namespace register extensions such as
+    <code class="filename">.json</code> and <code class="filename">.xml</code> if the
+    corresponding classpath dependencies are present. That means controller
+    methods may now return JSON or XML formatted content if those
+    extensions are present in the request URI,
+    even if the 'Accept' header doesn't request those media types.</p>
+
+    <p>The newly added support for matrix variables is explained in
+    <a class="xref" href="mvc.html#mvc-ann-matrix-variables" title="Matrix Variables">the section called &#8220;Matrix Variables&#8221;</a>. To preserve backward
+    compatibility, by default, semicolon content is removed from incoming
+    request URIs and therefore <code class="interfacename">@MatrixVariable</code>
+    cannot be used without additional configuration. However, when using
+    the MVC Java config and the MVC namespace, semicolon content is left
+    in the URI so that matrix variables are automatically supported.
+    The removal of semicolon content is controlled through the
+    <code class="classname">UrlPathHelper</code> property of
+    <code class="classname">RequestMappingHandlerMapping</code>.</p>
+  </div>
+
+  <div class="section" title="C.7&nbsp;Decoding of URI Variable Values"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="migration-3.2-compatibility-uri-variable-values"></a>C.7&nbsp;Decoding of URI Variable Values</h2></div></div></div>
+    
+    <p>URI variable values now get decoded when
+    <code class="code">UrlPathHelper.setUrlDecode</code> is set to <code class="code">false</code>.
+    See <a class="ulink" href="https://jira.springsource.org/browse/SPR-9098" target="_top">SPR-9098</a>.</p>
+  </div>
+
+  <div class="section" title="C.8&nbsp;HTTP PATCH method"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="migration-3.2-compatibility-http-patch"></a>C.8&nbsp;HTTP PATCH method</h2></div></div></div>
+    
+    <p>The <code class="classname">DispatcherServlet</code> now allows the
+    HTTP PATCH method where previously it didn't.</p>
+  </div>
+
+  <div class="section" title="C.9&nbsp;Tiles 3"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="migration-3.2-compatibility-tiles3"></a>C.9&nbsp;Tiles 3</h2></div></div></div>
+    
+
+    <p>Besides the version number change, the set of Tiles
+    dependencies has also changed. You will need to have a subset or all of
+    <code class="filename">tiles-request-api</code>, <code class="filename">tiles-api</code>,
+    <code class="filename">tiles-core</code>, <code class="filename">tiles-servlet</code>,
+    <code class="filename">tiles-jsp</code>, <code class="filename">tiles-el</code>.
+    </p>
+  </div>
+
+  <div class="section" title="C.10&nbsp;Spring MVC Test standalone project"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="migration-3.2-compatibility-spring-mvc-test"></a>C.10&nbsp;Spring MVC Test standalone project</h2></div></div></div>
+    
+
+    <p>If migrating from the
+    <a class="ulink" href="https://github.com/SpringSource/spring-test-mvc" target="_top">spring-test-mvc</a>
+    standalone project to the <code class="filename">spring-test</code> module in
+    Spring Framework 3.2, you will need to adjust the root package
+    to be <code class="classname">org.springframework.test.web.servlet</code>.</p>
+
+    <p>You will no longer be able to use the
+    <code class="classname">MockMvcBuilders</code> <code class="code">annotationConfigSetup</code>
+    and <code class="code">xmlConfigSetup</code> options. Instead you'll need to switch
+    to using the <code class="interfacename">@WebApplicationContext</code> support
+    of <code class="filename">spring-test</code> for loading Spring configuration,
+    then inject a <code class="interfacename">WebApplicationContext</code> into
+    the test and use it to create a <code class="classname">MockMvc</code>.
+    <a class="xref" href="testing.html#spring-mvc-test-framework" title="11.3.6&nbsp;Spring MVC Test Framework">Section&nbsp;11.3.6, &#8220;Spring MVC Test Framework&#8221;</a> for details.</p>
+  </div>
+
+  <div class="section" title="C.11&nbsp;Spring Test Dependencies"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="migration-3.2-compatibility-spring-test"></a>C.11&nbsp;Spring Test Dependencies</h2></div></div></div>
+    
+
+    <p>The <code class="literal">spring-test</code> module has been upgraded to
+    depend on JUnit 4.11 (<code class="literal">junit:junit</code>), TestNG 6.5.2
+    (<code class="literal">org.testng:testng</code>), and Hamcrest Core 1.3
+    (<code class="literal">org.hamcrest:hamcrest-core</code>). Each of these
+    dependencies is declared as an <span class="emphasis"><em>optional</em></span> dependency
+    in the Maven POM. Furthermore, it is important to note that the JUnit
+    team has stopped inlining Hamcrest Core within the
+    <code class="literal">junit:junit</code> Maven artifact as of JUnit 4.11. Thus, if
+    your existing JUnit-based tests make use of Hamcrest matchers that were
+    previously available directly within the <code class="literal">junit:junit</code>
+    JAR, you will now need to explicitly declare a dependency on
+    <code class="literal">org.hamcrest:hamcrest-core</code>,
+    <code class="literal">org.hamcrest:hamcrest-library</code>, or
+    <code class="literal">org.hamcrest:hamcrest-all</code>.</p>
+  </div>
+
+  <div class="section" title="C.12&nbsp;Public API changes"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="migration-3.2-changes"></a>C.12&nbsp;Public API changes</h2></div></div></div>
+    
+
+    <div class="section" title="C.12.1&nbsp;JDiff reports"><div class="titlepage"><div><div><h3 class="title"><a name="migration-3.2-api-changes"></a>C.12.1&nbsp;JDiff reports</h3></div></div></div>
+      
+      <p>
+      Select JDiff reports are now being published to provide users with a convenient
+      means of understanding what's changed between versions. Going forward these will be
+      published between each minor version, e.g. from 3.1.3.RELEASE to 3.1.4.RELEASE; from
+      the latest maintenance version to the latest GA release, e.g.
+      <a class="ulink" href="http://static.springsource.org/spring-framework/docs/3.1.3.RELEASE_to_3.2.0.RELEASE" target="_top">
+      3.1.3.RELEASE to 3.2.0.RELEASE</a>; and in between each milestone
+      and/or RC for users who are tracking next-generation development, e.g.
+      <a class="ulink" href="http://static.springsource.org/spring-framework/docs/3.2.0.RC2_to_3.2.0.RELEASE" target="_top">
+      3.2.0.RC2 to 3.2.0.RELEASE</a>.
+      </p>
+    </div>
+
+    <div class="section" title="C.12.2&nbsp;Deprecations"><div class="titlepage"><div><div><h3 class="title"><a name="migration-3.2-removals-and-deprecations"></a>C.12.2&nbsp;Deprecations</h3></div></div></div>
+      
+      <p>The following packages and types have been wholly or partially deprecated
+      in Spring Framework 3.2 and may be removed in a future version. Click through
+      to the linked Javadoc for each item for exact details. See also the
+      <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/deprecated-list.html" target="_top">
+      complete list of deprecations</a> in the framework.</p>
+      <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/orm/ibatis/package-summary.html" target="_top">
+          org.springframework.orm.ibatis</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/scheduling/backportconcurrent/package-summary.html" target="_top">
+          org.springframework.scheduling.backportconcurrent</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/ejb/support/package-summary.html" target="_top">
+          org.springframework.ejb.support</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/http/converter/xml/XmlAwareFormHttpMessageConverter.html" target="_top">
+          org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/jsf/DelegatingVariableResolver.html" target="_top">
+          org.springframework.web.jsf.DelegatingVariableResolver</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/jsf/SpringBeanVariableResolver.html" target="_top">
+          org.springframework.web.jsf.SpringBeanVariableResolver</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/ui/velocity/CommonsLoggingLogSystem.html" target="_top">
+          org.springframework.ui.velocity.CommonsLoggingLogSystem</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/ui/velocity/VelocityEngineUtils.html" target="_top">
+          org.springframework.ui.velocity.VelocityEngineUtils</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/config/BeanReferenceFactoryBean.html" target="_top">
+          org.springframework.beans.factory.config.BeanReferenceFactoryBean</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/config/CommonsLogFactoryBean.html" target="_top">
+          org.springframework.beans.factory.config.CommonsLogFactoryBean</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/instrument/classloading/oc4j/OC4JLoadTimeWeaver.html" target="_top">
+          org.springframework.beans.instrument.classloading.oc4j.OC4JLoadTimeWeaver</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/transaction/jta/OC4JJtaTransactionManager.html" target="_top">
+          org.springframework.transaction.jta.OC4JJtaTransactionManager</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/util/ExpressionEvaluationUtils.html" target="_top">
+          org.springframework.web.util.ExpressionEvaluationUtils</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/mvc/annotation/AnnotationMethodHandlerAdapter.html" target="_top">
+          org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/mvc/annotation/AnnotationMethodHandlerExceptionResolver.html" target="_top">
+          org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/mvc/annotation/DefaultAnnotationHandlerMapping.html" target="_top">
+          org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/mvc/annotation/ServletAnnotationMappingUtils.html" target="_top">
+          org.springframework.web.servlet.mvc.annotation.ServletAnnotationMappingUtils</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/jmx/support/MBeanRegistrationSupport.html" target="_top">
+          org.springframework.jmx.support.MBeanRegistrationSupport</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/test/context/ContextConfigurationAttributes.html" target="_top">
+          org.springframework.test.context.ContextConfigurationAttributes</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/test/context/junit4/AbstractTransactionalJUnit4SpringContextTests.html" target="_top">
+          org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests</a>:
+          use of the <code class="varname">simpleJdbcTemplate</code> instance variable has been deprecated
+          in favor of the new <code class="varname">jdbcTemplate</code> instance variable.</p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/test/context/testng/AbstractTransactionalTestNGSpringContextTests.html" target="_top">
+          org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests</a>:
+          use of the <code class="varname">simpleJdbcTemplate</code> instance variable has been deprecated
+          in favor of the new <code class="varname">jdbcTemplate</code> instance variable.</p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/test/jdbc/SimpleJdbcTestUtils.html" target="_top">
+          org.springframework.test.jdbc.SimpleJdbcTestUtils</a> has been deprecated in
+          favor of <code class="classname">JdbcTestUtils</code> which now contains all of the
+          functionality previously available in <code class="classname">SimpleJdbcTestUtils</code>.</p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/view/ContentNegotiatingViewResolver.html" target="_top">
+          org.springframework.web.servlet.view.ContentNegotiatingViewResolver</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/transaction/interceptor/TransactionAspectUtils.html" target="_top">
+          org.springframework.transaction.interceptor.TransactionAspectUtils</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/http/HttpStatus.html" target="_top">
+          org.springframework.http.HttpStatus</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/web/util/UriUtils.html" target="_top">
+          org.springframework.web.util.UriUtils</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/orm/jpa/vendor/TopLinkJpaDialect.html" target="_top">
+          org.springframework.orm.jpa.vendor.TopLinkJpaDialect</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/orm/jpa/vendor/TopLinkJpaVendorAdapter.html" target="_top">
+          org.springframework.orm.jpa.vendor.TopLinkJpaVendorAdapter</a>
+          </p>
+        </li><li class="listitem">
+          <p>
+          <a class="ulink" href="http://static.springsource.org/spring-framework/docs/current/javadoc-api/org/springframework/util/CachingMapDecorator.html" target="_top">
+          org.springframework.orm.util.CachingMapDecorator</a>
+          </p>
+        </li></ul></div>
+    </div>
+  </div>
+</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="classic-aop-spring.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="spring-appendices.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="xsd-config.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Appendix&nbsp;B.&nbsp;Classic Spring AOP Usage&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Appendix&nbsp;D.&nbsp;XML Schema-based configuration</td></tr></table></div></body></html>

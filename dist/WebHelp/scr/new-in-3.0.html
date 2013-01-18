@@ -1,0 +1,448 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0014)about:internet -->
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title>2. New Features and Enhancements in Spring Framework 3.0</title><link rel="stylesheet" href="css/manual-multipage.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Spring Framework Reference Documentation"><link rel="up" href="spring-whats-new.html" title="Part&nbsp;II.&nbsp;What's New in Spring 3"><link rel="prev" href="spring-whats-new.html" title="Part&nbsp;II.&nbsp;What's New in Spring 3"><link rel="next" href="new-in-3.1.html" title="3.&nbsp;New Features and Enhancements in Spring Framework 3.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><script language="JavaScript" type="text/JavaScript">
+function syn(){
+if(parent.nav.tree){
+ if(parent.nav.tree.loaded){
+  parent.nav.tree.selectNode(19);
+ }else{
+  setTimeout("syn()",500);
+}
+  }else{
+  setTimeout("syn()",500);
+  }}
+if(parent!=self){
+  setTimeout("syn()",100);
+}else{
+  parent.location.href = "../index.htm#page=new-in-3.0.html";
+}
+originalOnload = window.onload;
+if(originalOnload==null){
+window.onload = function(){parent.contentLoaded = true;};
+}else{
+window.onload = function(){originalOnload();parent.contentLoaded = true;};
+}
+</script> 
+<div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">2.&nbsp;New Features and Enhancements in Spring Framework 3.0</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="spring-whats-new.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;II.&nbsp;What's New in Spring 3</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="new-in-3.1.html">Next</a></td></tr></table><hr></div><div class="chapter" title="2.&nbsp;New Features and Enhancements in Spring Framework 3.0"><div class="titlepage"><div><div><h2 class="title"><a name="new-in-3.0"></a>2.&nbsp;New Features and Enhancements in Spring Framework 3.0</h2></div></div></div>
+  
+
+  <p>If you have been using the Spring Framework for some time, you will be
+  aware that Spring has undergone two major revisions: Spring 2.0, released in
+  October 2006, and Spring 2.5, released in November 2007. It is now time for
+  a third overhaul resulting in Spring Framework 3.0.</p>
+
+  <div class="sidebar" title="Java SE and Java EE Support"><a name="new-in-3.0-intro-java"></a><p class="title"><b>Java SE and Java EE Support</b></p>
+    
+
+    <p>The Spring Framework is now based on Java 5, and Java 6 is fully
+    supported.</p>
+
+    <p>Furthermore, Spring is compatible with J2EE 1.4 and Java EE 5, while
+    at the same time introducing some early support for Java EE 6.</p>
+  </div>
+
+  <div class="section" title="2.1&nbsp;Java 5"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.0-intro"></a>2.1&nbsp;Java 5</h2></div></div></div>
+    
+
+    <p>The entire framework code has been revised to take advantage of Java
+    5 features like generics, varargs and other language improvements. We have
+    done our best to still keep the code backwards compatible. We now have
+    consistent use of generic Collections and Maps, consistent use of generic
+    FactoryBeans, and also consistent resolution of bridge methods in the
+    Spring AOP API. Generic ApplicationListeners automatically receive
+    specific event types only. All callback interfaces such as
+    TransactionCallback and HibernateCallback declare a generic result value
+    now. Overall, the Spring core codebase is now freshly revised and
+    optimized for Java 5.</p>
+
+    <p>Spring's TaskExecutor abstraction has been updated for close
+    integration with Java 5's java.util.concurrent facilities. We provide
+    first-class support for Callables and Futures now, as well as
+    ExecutorService adapters, ThreadFactory integration, etc. This has been
+    aligned with JSR-236 (Concurrency Utilities for Java EE 6) as far as
+    possible. Furthermore, we provide support for asynchronous method
+    invocations through the use of the new @Async annotation (or EJB 3.1's
+    @Asynchronous annotation).</p>
+  </div>
+
+  <div class="section" title="2.2&nbsp;Improved documentation"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.0-improved-docs"></a>2.2&nbsp;Improved documentation</h2></div></div></div>
+    
+
+    <p>The Spring reference documentation has also substantially been
+    updated to reflect all of the changes and new features for Spring Framework
+    3.0. While every effort has been made to ensure that there are no errors in
+    this documentation, some errors may nevertheless have crept in. If you do
+    spot any typos or even more serious errors, and you can spare a few cycles
+    during lunch, please do bring the error to the attention of the Spring
+    team by <a class="ulink" href="http://jira.springframework.org/" target="_top">raising an
+    issue</a>.</p>
+  </div>
+
+  <div class="section" title="2.3&nbsp;New articles and tutorials"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.0-new-tutorial"></a>2.3&nbsp;New articles and tutorials</h2></div></div></div>
+    
+
+    <p>
+        There are many excellent articles and tutorials that show how to get
+        started with Spring Framework 3 features. Read them at the
+        <a class="ulink" href="http://www.springsource.org/documentation" target="_top">Spring Documentation</a> page.
+      </p>
+      <p><a name="new-in-3.0-samples"></a>
+      The samples have been improved and updated to take advantage of the new features in Spring
+      Framework 3. Additionally, the samples have been moved out of the source tree into a dedicated SVN
+      <a class="ulink" href="https://anonsvn.springframework.org/svn/spring-samples/" target="_top">repository</a> available at:</p>
+
+    <p>
+      <code class="literal">https://anonsvn.springframework.org/svn/spring-samples/</code>
+      </p>
+
+      <p>As such, the samples are no longer distributed alongside Spring
+      Framework 3 and need to be downloaded separately from the repository
+      mentioned above. However, this documentation will continue to refer to
+      some samples (in particular Petclinic) to illustrate various features.</p>
+
+      <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>For more information on Subversion (or in short SVN), see the project homepage at:
+      <code class="literal">http://subversion.apache.org/</code></p>
+      </td></tr></table></div>
+
+  </div>
+
+  <div class="section" title="2.4&nbsp;New module organization and build system"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.0-modules-build"></a>2.4&nbsp;New module organization and build system</h2></div></div></div>
+    
+
+    <p>The framework modules have been revised and are now managed
+    separately with one source-tree per module jar:</p>
+
+    <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+        <p>org.springframework.aop</p>
+      </li><li class="listitem">
+        <p>org.springframework.beans</p>
+      </li><li class="listitem">
+        <p>org.springframework.context</p>
+      </li><li class="listitem">
+        <p>org.springframework.context.support</p>
+      </li><li class="listitem">
+        <p>org.springframework.expression</p>
+      </li><li class="listitem">
+        <p>org.springframework.instrument</p>
+      </li><li class="listitem">
+        <p>org.springframework.jdbc</p>
+      </li><li class="listitem">
+        <p>org.springframework.jms</p>
+      </li><li class="listitem">
+        <p>org.springframework.orm</p>
+      </li><li class="listitem">
+        <p>org.springframework.oxm</p>
+      </li><li class="listitem">
+        <p>org.springframework.test</p>
+      </li><li class="listitem">
+        <p>org.springframework.transaction</p>
+      </li><li class="listitem">
+        <p>org.springframework.web</p>
+      </li><li class="listitem">
+        <p>org.springframework.web.portlet</p>
+      </li><li class="listitem">
+        <p>org.springframework.web.servlet</p>
+      </li><li class="listitem">
+        <p>org.springframework.web.struts</p>
+      </li></ul></div>
+
+    <div class="sidebar" title="Note:"><a name="new-in-3.0-intro-spring-jar"></a><p class="title"><b>Note:</b></p>
+      
+
+      <p>The spring.jar artifact that contained almost the entire framework
+      is no longer provided.</p>
+    </div>
+
+    <p>We are now using a new Spring build system as known from Spring Web
+    Flow 2.0. This gives us:</p>
+
+    <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+        <p>Ivy-based "Spring Build" system</p>
+      </li><li class="listitem">
+        <p>consistent deployment procedure</p>
+      </li><li class="listitem">
+        <p>consistent dependency management</p>
+      </li><li class="listitem">
+        <p>consistent generation of OSGi manifests</p>
+      </li></ul></div>
+  </div>
+
+  <div class="section" title="2.5&nbsp;Overview of new features"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.0-features-overview"></a>2.5&nbsp;Overview of new features</h2></div></div></div>
+    
+
+    <p>This is a list of new features for Spring Framework 3.0. We will cover these
+    features in more detail later in this section.</p>
+
+    <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+        <p>Spring Expression Language</p>
+      </li><li class="listitem">
+        <p>IoC enhancements/Java based bean metadata</p>
+      </li><li class="listitem">
+        <p>General-purpose type conversion system and field formatting
+        system</p>
+      </li><li class="listitem">
+        <p>Object to XML mapping functionality (OXM) moved from Spring Web
+        Services project</p>
+      </li><li class="listitem">
+        <p>Comprehensive REST support</p>
+      </li><li class="listitem">
+        <p>@MVC additions</p>
+      </li><li class="listitem">
+        <p>Declarative model validation</p>
+      </li><li class="listitem">
+        <p>Early support for Java EE 6</p>
+      </li><li class="listitem">
+        <p>Embedded database support</p>
+      </li></ul></div>
+
+    <div class="section" title="2.5.1&nbsp;Core APIs updated for Java 5"><div class="titlepage"><div><div><h3 class="title"><a name="new-feature-java5"></a>2.5.1&nbsp;Core APIs updated for Java 5</h3></div></div></div>
+      
+
+      <p>BeanFactory interface returns typed bean instances as far as
+      possible: </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+            <p>T getBean(Class&lt;T&gt; requiredType)</p>
+          </li><li class="listitem">
+            <p>T getBean(String name, Class&lt;T&gt; requiredType)</p>
+          </li><li class="listitem">
+            <p>Map&lt;String, T&gt; getBeansOfType(Class&lt;T&gt;
+            type)</p>
+          </li></ul></div>
+
+      <p>Spring's TaskExecutor interface now extends
+      <code class="classname">java.util.concurrent.Executor</code>: </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+            <p>extended AsyncTaskExecutor supports standard Callables with
+            Futures</p>
+          </li></ul></div>
+
+      <p>New Java 5 based converter API and SPI: </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+            <p>stateless ConversionService and Converters</p>
+          </li><li class="listitem">
+            <p>superseding standard JDK PropertyEditors</p>
+          </li></ul></div>
+
+      <p>Typed ApplicationListener&lt;E&gt;</p>
+    </div>
+
+    <div class="section" title="2.5.2&nbsp;Spring Expression Language"><div class="titlepage"><div><div><h3 class="title"><a name="new-feature-el"></a>2.5.2&nbsp;Spring Expression Language</h3></div></div></div>
+      
+
+      <p>Spring introduces an expression language which is similar to
+      Unified EL in its syntax but offers significantly more features. The
+      expression language can be used when defining XML and Annotation based
+      bean definitions and also serves as the foundation for expression
+      language support across the Spring portfolio. Details of this new
+      functionality can be found in the chapter <a class="link" href="expressions.html" title="8.&nbsp;Spring Expression Language (SpEL)">Spring Expression Language (SpEL).</a></p>
+
+      <p>The Spring Expression Language was created to provide the Spring
+      community a single, well supported expression language that can be used
+      across all the products in the Spring portfolio. Its language features
+      are driven by the requirements of the projects in the Spring portfolio,
+      including tooling requirements for code completion support within the
+      Eclipse based <a class="ulink" href="http://www.springsource.com/products/sts" target="_top">SpringSource
+      Tool Suite</a>.</p>
+
+      <p>The following is an example of how the Expression Language can be
+      used to configure some properties of a database setup </p><pre class="programlisting"><span class="hl-tag">&lt;bean</span> <span class="hl-attribute">class</span>=<span class="hl-value">"mycompany.RewardsTestDatabase"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"databaseName"</span>
+        <span class="hl-attribute">value</span>=<span class="hl-value">"#{systemProperties.databaseName}"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"keyGenerator"</span>
+        <span class="hl-attribute">value</span>=<span class="hl-value">"#{strategyBean.databaseKeyGenerator}"</span><span class="hl-tag">/&gt;</span>
+<span class="hl-tag">&lt;/bean&gt;</span>
+</pre>
+
+      <p>This functionality is also available if you prefer to configure
+      your components using annotations: </p><pre class="programlisting"><i><span class="hl-annotation" style="color: gray">@Repository</span></i>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> RewardsTestDatabase {
+
+    <i><span class="hl-annotation" style="color: gray">@Value("#{systemProperties.databaseName}")</span></i>
+    <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDatabaseName(String dbName) { &#8230; }
+
+    <i><span class="hl-annotation" style="color: gray">@Value("#{strategyBean.databaseKeyGenerator}")</span></i>
+    <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setKeyGenerator(KeyGenerator kg) { &#8230; }
+}
+</pre>
+    </div>
+
+    <div class="section" title="2.5.3&nbsp;The Inversion of Control (IoC) container"><div class="titlepage"><div><div><h3 class="title"><a name="new-feature-java-config"></a>2.5.3&nbsp;The Inversion of Control (IoC) container</h3></div></div></div>
+      
+
+      <div class="section" title="Java based bean metadata"><div class="titlepage"><div><div><h4 class="title"><a name="new-java-configuration"></a>Java based bean metadata</h4></div></div></div>
+        
+
+        <p>Some core features from the <a class="ulink" href="http://www.springsource.org/javaconfig" target="_top">JavaConfig</a>
+        project have been added to the Spring Framework now. This means that
+        the following annotations are now directly supported: </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+              <p>@Configuration</p>
+            </li><li class="listitem">
+              <p>@Bean</p>
+            </li><li class="listitem">
+              <p>@DependsOn</p>
+            </li><li class="listitem">
+              <p>@Primary</p>
+            </li><li class="listitem">
+              <p>@Lazy</p>
+            </li><li class="listitem">
+              <p>@Import</p>
+            </li><li class="listitem">
+              <p>@ImportResource</p>
+            </li><li class="listitem">
+              <p>@Value</p>
+            </li></ul></div>
+
+        <p>Here is an example of a Java class providing basic configuration
+        using the new JavaConfig features: </p><pre class="programlisting"><span class="hl-keyword">package</span> org.example.config;
+
+<i><span class="hl-annotation" style="color: gray">@Configuration</span></i>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> AppConfig {
+    <span class="hl-keyword">private</span> <i><span class="hl-annotation" style="color: gray">@Value("#{jdbcProperties.url}")</span></i> String jdbcUrl;
+    <span class="hl-keyword">private</span> <i><span class="hl-annotation" style="color: gray">@Value("#{jdbcProperties.username}")</span></i> String username;
+    <span class="hl-keyword">private</span> <i><span class="hl-annotation" style="color: gray">@Value("#{jdbcProperties.password}")</span></i> String password;
+
+    <i><span class="hl-annotation" style="color: gray">@Bean</span></i>
+    <span class="hl-keyword">public</span> FooService fooService() {
+        <span class="hl-keyword">return</span> <span class="hl-keyword">new</span> FooServiceImpl(fooRepository());
+    }
+
+    <i><span class="hl-annotation" style="color: gray">@Bean</span></i>
+    <span class="hl-keyword">public</span> FooRepository fooRepository() {
+        <span class="hl-keyword">return</span> <span class="hl-keyword">new</span> HibernateFooRepository(sessionFactory());
+    }
+
+    <i><span class="hl-annotation" style="color: gray">@Bean</span></i>
+    <span class="hl-keyword">public</span> SessionFactory sessionFactory() {
+        <span class="hl-comment">// wire up a session factory</span>
+        AnnotationSessionFactoryBean asFactoryBean =
+            <span class="hl-keyword">new</span> AnnotationSessionFactoryBean();
+        asFactoryBean.setDataSource(dataSource());
+        <span class="hl-comment">// additional config</span>
+        <span class="hl-keyword">return</span> asFactoryBean.getObject();
+    }
+
+    <i><span class="hl-annotation" style="color: gray">@Bean</span></i>
+    <span class="hl-keyword">public</span> DataSource dataSource() {
+        <span class="hl-keyword">return</span> <span class="hl-keyword">new</span> DriverManagerDataSource(jdbcUrl, username, password);
+    }
+}
+</pre><p> To get this to work you need to add the following component
+        scanning entry in your minimal application context XML file.
+        </p><pre class="programlisting"><span class="hl-tag">&lt;context:component-scan</span> <span class="hl-attribute">base-package</span>=<span class="hl-value">"org.example.config"</span><span class="hl-tag">/&gt;</span>
+<span class="hl-tag">&lt;util:properties</span> <span class="hl-attribute">id</span>=<span class="hl-value">"jdbcProperties"</span> <span class="hl-attribute">location</span>=<span class="hl-value">"classpath:org/example/config/jdbc.properties"</span><span class="hl-tag">/&gt;</span>
+        </pre><p>
+        Or you can bootstrap a <code class="literal">@Configuration</code> class directly using
+        <code class="literal">AnnotationConfigApplicationContext</code>:
+        </p><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    ApplicationContext ctx = <span class="hl-keyword">new</span> AnnotationConfigApplicationContext(AppConfig.<span class="hl-keyword">class</span>);
+    FooService fooService = ctx.getBean(FooService.<span class="hl-keyword">class</span>);
+    fooService.doStuff();
+}</pre><p>
+        See <a class="xref" href="beans.html#beans-java-instantiating-container" title="5.12.2&nbsp;Instantiating the Spring container using AnnotationConfigApplicationContext">Section&nbsp;5.12.2, &#8220;Instantiating the Spring container using
+      <code class="literal">AnnotationConfigApplicationContext</code>&#8221;</a> for full information on
+        <code class="literal">AnnotationConfigApplicationContext</code>.</p>
+      </div>
+
+      <div class="section" title="Defining bean metadata within components"><div class="titlepage"><div><div><h4 class="title"><a name="new-bean-metadata-in-components"></a>Defining bean metadata within components</h4></div></div></div>
+        
+
+        <p><code class="literal">@Bean</code> annotated methods are also supported
+        inside Spring components. They contribute a factory bean definition to
+        the container. See <a class="link" href="beans.html#beans-factorybeans-annotations" title="5.10.4&nbsp;Defining bean metadata within components">Defining bean metadata within
+        components</a> for more information</p>
+      </div>
+    </div>
+
+    <div class="section" title="2.5.4&nbsp;General purpose type conversion system and field formatting system"><div class="titlepage"><div><div><h3 class="title"><a name="new-feature-convert-and-format"></a>2.5.4&nbsp;General purpose type conversion system and field formatting
+      system</h3></div></div></div>
+      
+
+      <p>A general purpose <a class="link" href="validation.html#core-convert" title="7.5&nbsp;Spring 3 Type Conversion">type conversion
+      system</a> has been introduced. The system is currently used by SpEL
+      for type conversion, and may also be used by a Spring Container and DataBinder when
+      binding bean property values.</p>
+
+      <p>In addition, a <a class="link" href="validation.html#format" title="7.6&nbsp;Spring 3 Field Formatting">formatter</a> SPI
+      has been introduced for formatting field values. This SPI provides
+      a simpler and more robust alternative to JavaBean PropertyEditors for use in client
+      environments such as Spring MVC.</p>
+    </div>
+
+    <div class="section" title="2.5.5&nbsp;The Data Tier"><div class="titlepage"><div><div><h3 class="title"><a name="new-feature-oxm"></a>2.5.5&nbsp;The Data Tier</h3></div></div></div>
+      
+
+      <p>Object to XML mapping functionality (OXM) from the Spring Web
+      Services project has been moved to the core Spring Framework now. The
+      functionality is found in the <code class="literal">org.springframework.oxm</code>
+      package. More information on the use of the <code class="literal">OXM</code>
+      module can be found in the <a class="link" href="oxm.html" title="16.&nbsp;Marshalling XML using O/X Mappers">Marshalling XML using O/X
+      Mappers</a> chapter.</p>
+    </div>
+
+    <div class="section" title="2.5.6&nbsp;The Web Tier"><div class="titlepage"><div><div><h3 class="title"><a name="new-feature-rest"></a>2.5.6&nbsp;The Web Tier</h3></div></div></div>
+      
+
+      <p>The most exciting new feature for the Web Tier is the support for
+      building RESTful web services and web applications. There are also some
+      new annotations that can be used in any web application.</p>
+
+      <div class="section" title="Comprehensive REST support"><div class="titlepage"><div><div><h4 class="title"><a name="new-feature-rest-support"></a>Comprehensive REST support</h4></div></div></div>
+        
+
+        <p>Server-side support for building RESTful applications has been
+        provided as an extension of the existing annotation driven MVC web
+        framework. Client-side support is provided by the
+        <code class="classname">RestTemplate</code> class in the spirit of other
+        template classes such as <code class="classname">JdbcTemplate</code> and
+        <code class="classname">JmsTemplate</code>. Both server and client side REST
+        functionality make use of
+        <code class="interfacename">HttpConverter</code>s to facilitate the
+        conversion between objects and their representation in HTTP requests
+        and responses.</p>
+
+        <p>The <code class="classname">MarshallingHttpMessageConverter</code> uses
+        the <span class="emphasis"><em>Object to XML mapping</em></span> functionality mentioned
+        earlier.</p>
+
+        <p>Refer to the sections on <a class="link" href="mvc.html" title="17.&nbsp;Web MVC framework">MVC</a> and <a class="link" href="remoting.html#rest-resttemplate" title="21.9.1&nbsp;RestTemplate">the RestTemplate</a> for more
+        information.</p>
+      </div>
+
+      <div class="section" title="@MVC additions"><div class="titlepage"><div><div><h4 class="title"><a name="new-feature-at-mvc"></a>@MVC additions</h4></div></div></div>
+        
+
+        <p>A <code class="literal">mvc</code> namespace has been introduced that greatly simplifies Spring MVC configuration.</p>
+
+        <p>Additional annotations such as
+        <code class="classname">@CookieValue</code> and
+        <code class="classname">@RequestHeaders</code> have been added. See <a class="link" href="mvc.html#mvc-ann-cookievalue" title="Mapping cookie values with the @CookieValue annotation">Mapping cookie values with the
+        @CookieValue annotation</a> and <a class="link" href="mvc.html#mvc-ann-requestheader" title="Mapping request header attributes with the @RequestHeader annotation">Mapping request header attributes with
+        the @RequestHeader annotation</a> for more information.</p>
+      </div>
+    </div>
+
+    <div class="section" title="2.5.7&nbsp;Declarative model validation"><div class="titlepage"><div><div><h3 class="title"><a name="new-feature-validation"></a>2.5.7&nbsp;Declarative model validation</h3></div></div></div>
+      
+
+      <p>Several <a class="link" href="validation.html#validation-beanvalidation" title="7.8&nbsp;Spring 3 Validation">validation enhancements</a>,
+      including JSR 303 support that uses Hibernate Validator as the default provider.</p>
+    </div>
+
+    <div class="section" title="2.5.8&nbsp;Early support for Java EE 6"><div class="titlepage"><div><div><h3 class="title"><a name="new-feature-jee-6"></a>2.5.8&nbsp;Early support for Java EE 6</h3></div></div></div>
+      
+
+      <p>We provide support for asynchronous method invocations through the
+      use of the new @Async annotation (or EJB 3.1's @Asynchronous
+      annotation).</p>
+
+      <p>JSR 303, JSF 2.0, JPA 2.0, etc</p>
+
+    </div>
+
+    <div class="section" title="2.5.9&nbsp;Support for embedded databases"><div class="titlepage"><div><div><h3 class="title"><a name="new-feature-embedded-databases"></a>2.5.9&nbsp;Support for embedded databases</h3></div></div></div>
+      
+
+      <p>Convenient support for <a class="link" href="jdbc.html#jdbc-embedded-database-support" title="14.8&nbsp;Embedded database support">embedded Java database
+      engines</a>, including HSQL, H2, and Derby, is now provided.</p>
+    </div>
+  </div>
+</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="spring-whats-new.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="spring-whats-new.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="new-in-3.1.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Part&nbsp;II.&nbsp;What's New in Spring 3&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;3.&nbsp;New Features and Enhancements in Spring Framework 3.1</td></tr></table></div></body></html>
