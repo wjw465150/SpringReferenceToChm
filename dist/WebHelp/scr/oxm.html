@@ -6,7 +6,7 @@
 function syn(){
 if(parent.nav.tree){
  if(parent.nav.tree.loaded){
-  parent.nav.tree.selectNode(563);
+  parent.nav.tree.selectNode(564);
  }else{
   setTimeout("syn()",500);
 }
@@ -301,6 +301,8 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
                 </li><li class="listitem">
                     <p><a class="link" href="oxm.html#oxm-xmlbeans-xsd" title="XML Schema-based Configuration"><code class="literal">xmlbeans-marshaller</code></a></p>
                 </li><li class="listitem">
+                    <p><a class="link" href="oxm.html#oxm-castor-xsd" title="XML Schema-based Configuration"><code class="literal">castor-marshaller</code></a></p>
+                </li><li class="listitem">
                     <p><a class="link" href="oxm.html#oxm-jibx-xsd" title="XML Schema-based Configuration"><code class="literal">jibx-marshaller</code></a></p>
                 </li></ul></div><p>
         </p>
@@ -382,7 +384,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
             though a mapping file can be used to have more control over the behavior of Castor.
         </p>
         <p>
-            For more information on Castor, refer to the <a class="ulink" href="http://castor.org/xml-framework.html" target="_top">
+            For more information on Castor, refer to the <a class="ulink" href="http://castor.codehaus.org/xml-framework.html" target="_top">
             <em class="citetitle">Castor web site</em></a>. The Spring integration classes reside in the
             <span class="package">org.springframework.oxm.castor</span> package.
         </p>
@@ -406,7 +408,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
             <p>
                 Although it is possible to rely on Castor's default marshalling behavior, it might be necessary to have
                 more control over it. This can be accomplished using a Castor mapping file. For more information, refer
-                to <a class="ulink" href="http://castor.org/xml-mapping.html" target="_top">Castor XML Mapping</a>.
+                to <a class="ulink" href="http://castor.codehaus.org/xml-mapping.html" target="_top">Castor XML Mapping</a>.
             </p>
             <p>
                 The mapping can be set using the <span class="property">mappingLocation</span> resource property, indicated
@@ -419,6 +421,48 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
     <span class="hl-tag">&lt;/bean&gt;</span>
 <span class="hl-tag">&lt;/beans&gt;</span>
 </pre>
+            <div class="section" title="XML Schema-based Configuration"><div class="titlepage"><div><div><h4 class="title"><a name="oxm-castor-xsd"></a>XML Schema-based Configuration</h4></div></div></div>
+                
+                <p>
+                    The <code class="literal">castor-marshaller</code> tag configures a
+                    <code class="classname">org.springframework.oxm.castor.CastorMarshaller</code>.
+                    Here is an example:
+                </p>
+
+                <pre class="programlisting">
+                    <span class="hl-tag">&lt;oxm:castor-marshaller</span> <span class="hl-attribute">id</span>=<span class="hl-value">"marshaller"</span> <span class="hl-attribute">mapping-location</span>=<span class="hl-value">"classpath:org/springframework/oxm/castor/mapping.xml"</span><span class="hl-tag">/&gt;</span></pre>
+
+                <p>
+                    The marshaller instance can be configured in two ways, by specifying either the location of
+                    a mapping file (through the <span class="property">mapping-location</span> property), or by
+                    identifying Java POJOs (through the <span class="property">target-class</span> or
+                    <span class="property">target-package</span> properties) for which there exist corresponding
+                    XML descriptor classes. The latter way is usually used in conjunction with XML code generation
+                    from XML schemas.
+                </p>
+
+                <p>
+                    Available attributes are:
+                    </p><div class="informaltable">
+                        <table style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; "><colgroup><col><col><col></colgroup><thead><tr><th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">Attribute</th><th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">Description</th><th style="border-bottom: 0.5pt solid ; ">Required</th></tr></thead><tbody><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">
+                                        <code class="literal">id</code>
+                                    </td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">the id of the marshaller</td><td style="border-bottom: 0.5pt solid ; ">no</td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">
+                                        <code class="literal">encoding</code>
+                                    </td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">the encoding to use for unmarshalling from XML</td><td style="border-bottom: 0.5pt solid ; ">no</td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">
+                                        <code class="literal">target-class</code>
+                                    </td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">a Java class name for a POJO for which an XML class descriptor is available (as
+                                        generated through code generation)
+                                    </td><td style="border-bottom: 0.5pt solid ; ">no</td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">
+                                        <code class="literal">target-package</code>
+                                    </td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">a Java package name that identifies a package that contains POJOs and their
+                                        corresponding Castor
+                                        XML descriptor classes (as generated through code generation from XML schemas)
+                                    </td><td style="border-bottom: 0.5pt solid ; ">no</td></tr><tr><td style="border-right: 0.5pt solid ; ">
+                                        <code class="literal">mapping-location</code>
+                                    </td><td style="border-right: 0.5pt solid ; ">location of a Castor XML mapping file</td><td style="">no</td></tr></tbody></table>
+                    </div><p>
+                </p>
+            </div>
         </div>
     </div>
 

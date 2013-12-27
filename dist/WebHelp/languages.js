@@ -8,7 +8,7 @@ if(navigator.browserLanguage){
 
 lang = lang.substr(0,2).toLowerCase();
 
-lang="cs";
+lang="en";
 
 if(lang=='de'){/////////////////////////////German////////////////////////////////////////////////////
 

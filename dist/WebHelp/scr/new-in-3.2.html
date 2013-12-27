@@ -29,7 +29,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
   
 
   <p>This section covers what's new in Spring Framework 3.2. See also
-  <a class="xref" href="migration-3.2.html" title="Appendix&nbsp;C.&nbsp;Migrating to Spring Framework 3.2">Appendix&nbsp;C, <i>Migrating to Spring Framework 3.2</i></a></p>
+  <a class="xref" href="migration-3.2.html" title="Appendix&nbsp;D.&nbsp;Migrating to Spring Framework 3.2">Appendix&nbsp;D, <i>Migrating to Spring Framework 3.2</i></a></p>
 
   <div class="section" title="4.1&nbsp;Support for Servlet 3 based asynchronous request processing"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-webmvc-async"></a>4.1&nbsp;Support for Servlet 3 based asynchronous request processing</h2></div></div></div>
     
@@ -69,7 +69,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
   <div class="section" title="4.3&nbsp;Content negotiation improvements"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="new-in-3.2-webmvc-content-negotiation"></a>4.3&nbsp;Content negotiation improvements</h2></div></div></div>
     
 
-    <p>A <code class="interfacename">ContentNeogtiationStrategy</code> is now
+    <p>A <code class="interfacename">ContentNegotiationStrategy</code> is now
     available for resolving the requested media types from an incoming
     request. The available implementations are based on the file extension,
     query parameter, the 'Accept' header, or a fixed content type.
@@ -131,7 +131,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
     <code class="interfacename">@ExceptionHandler</code> method that handles
     standard Spring MVC exceptions and returns a
     <code class="classname">ResponseEntity</code> that allowing customizing and
-    writing the response with HTTP message converters. This servers as an
+    writing the response with HTTP message converters. This serves as an
     alternative to the <code class="classname">DefaultHandlerExceptionResolver</code>,
     which does the same but returns a <code class="classname">ModelAndView</code>
     instead.</p>
@@ -279,6 +279,9 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
     <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
         <p>Configuring and <a class="link" href="testing.html#testcontext-ctx-management-web" title="Loading a WebApplicationContext">loading a
         WebApplicationContext</a> in integration tests</p>
+      </li><li class="listitem">
+        <p>Configuring <a class="link" href="testing.html#testcontext-ctx-management-ctx-hierarchies" title="Context hierarchies">context hierarchies</a>
+        in integration tests</p>
       </li><li class="listitem">
         <p>Testing <a class="link" href="testing.html#testcontext-web-scoped-beans" title="Testing request and session scoped beans">request and
         session scoped beans</a></p>

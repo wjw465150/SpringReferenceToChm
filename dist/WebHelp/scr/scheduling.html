@@ -6,7 +6,7 @@
 function syn(){
 if(parent.nav.tree){
  if(parent.nav.tree.loaded){
-  parent.nav.tree.selectNode(942);
+  parent.nav.tree.selectNode(945);
  }else{
   setTimeout("syn()",500);
 }
@@ -380,7 +380,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
 
       <pre class="programlisting"><i><span class="hl-annotation" style="color: gray">@Configuration</span></i>
 <i><span class="hl-annotation" style="color: gray">@EnableAsync</span></i>
-<i><span class="hl-annotation" style="color: gray">@EnableSCheduling</span></i>
+<i><span class="hl-annotation" style="color: gray">@EnableScheduling</span></i>
 <span class="hl-keyword">public</span> <span class="hl-keyword">class</span> AppConfig {
 }</pre>
 
@@ -836,9 +836,9 @@ Future&lt;String&gt; returnSomething(<span class="hl-keyword">int</span> i) {
       object. Of course, we still need to schedule the jobs themselves. This
       is done using triggers and a
       <code class="classname">SchedulerFactoryBean</code>. Several triggers are
-      available within Quartz. Spring offers two subclassed triggers with
-      convenient defaults: <code class="classname">CronTriggerBean</code> and
-      <code class="classname">SimpleTriggerBean</code>.</p>
+      available within Quartz and Spring offers two Quartz <code class="interfacename">FactoryBean</code>
+      implementations with convenient defaults: <code class="classname">CronTriggerFactoryBean</code> and
+      <code class="classname">SimpleTriggerFactoryBean</code>.</p>
 
       <p>Triggers need to be scheduled. Spring offers a
       <code class="classname">SchedulerFactoryBean</code> that exposes triggers to be
@@ -847,7 +847,7 @@ Future&lt;String&gt; returnSomething(<span class="hl-keyword">int</span> i) {
 
       <p>Find below a couple of examples:</p>
 
-      <pre class="programlisting"><span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"simpleTrigger"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"org.springframework.scheduling.quartz.SimpleTriggerBean"</span><span class="hl-tag">&gt;</span>
+      <pre class="programlisting"><span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"simpleTrigger"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"org.springframework.scheduling.quartz.SimpleTriggerFactoryBean"</span><span class="hl-tag">&gt;</span>
     <span class="hl-comment">&lt;!-- see the example of method invoking job above --&gt;</span>
     <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"jobDetail"</span> <span class="hl-attribute">ref</span>=<span class="hl-value">"jobDetail"</span><span class="hl-tag"> /&gt;</span>
     <span class="hl-comment">&lt;!-- 10 seconds --&gt;</span>
@@ -856,7 +856,7 @@ Future&lt;String&gt; returnSomething(<span class="hl-keyword">int</span> i) {
     <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"repeatInterval"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"50000"</span><span class="hl-tag"> /&gt;</span>
 <span class="hl-tag">&lt;/bean&gt;</span>
 
-<span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"cronTrigger"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"org.springframework.scheduling.quartz.CronTriggerBean"</span><span class="hl-tag">&gt;</span>
+<span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"cronTrigger"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"org.springframework.scheduling.quartz.CronTriggerFactoryBean"</span><span class="hl-tag">&gt;</span>
     <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"jobDetail"</span> <span class="hl-attribute">ref</span>=<span class="hl-value">"exampleJob"</span><span class="hl-tag"> /&gt;</span>
     <span class="hl-comment">&lt;!-- run every morning at 6 AM --&gt;</span>
     <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"cronExpression"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"0 0 6 * * ?"</span><span class="hl-tag"> /&gt;</span>

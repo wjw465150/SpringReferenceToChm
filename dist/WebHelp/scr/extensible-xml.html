@@ -2,11 +2,11 @@
 <!-- saved from url=(0014)about:internet -->
 <html><head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-   <title>E. Extensible XML authoring</title><link rel="stylesheet" href="css/manual-multipage.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Spring Framework Reference Documentation"><link rel="up" href="spring-appendices.html" title="Part&nbsp;VII.&nbsp;Appendices"><link rel="prev" href="xsd-config.html" title="Appendix&nbsp;D.&nbsp;XML Schema-based configuration"><link rel="next" href="spring.tld.html" title="Appendix&nbsp;F.&nbsp;spring.tld"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><script language="JavaScript" type="text/JavaScript">
+   <title>F. Extensible XML authoring</title><link rel="stylesheet" href="css/manual-multipage.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Spring Framework Reference Documentation"><link rel="up" href="spring-appendices.html" title="Part&nbsp;VII.&nbsp;Appendices"><link rel="prev" href="xsd-config.html" title="Appendix&nbsp;E.&nbsp;XML Schema-based configuration"><link rel="next" href="spring.tld.html" title="Appendix&nbsp;G.&nbsp;spring.tld"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><script language="JavaScript" type="text/JavaScript">
 function syn(){
 if(parent.nav.tree){
  if(parent.nav.tree.loaded){
-  parent.nav.tree.selectNode(1112);
+  parent.nav.tree.selectNode(1118);
  }else{
   setTimeout("syn()",500);
 }
@@ -25,9 +25,9 @@ window.onload = function(){parent.contentLoaded = true;};
 window.onload = function(){originalOnload();parent.contentLoaded = true;};
 }
 </script> 
-<div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Appendix&nbsp;E.&nbsp;Extensible XML authoring</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="xsd-config.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;VII.&nbsp;Appendices</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="spring.tld.html">Next</a></td></tr></table><hr></div><div class="appendix" title="Appendix&nbsp;E.&nbsp;Extensible XML authoring"><div class="titlepage"><div><div><h2 class="title"><a name="extensible-xml"></a>Appendix&nbsp;E.&nbsp;Extensible XML authoring</h2></div></div></div>
+<div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Appendix&nbsp;F.&nbsp;Extensible XML authoring</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="xsd-config.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;VII.&nbsp;Appendices</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="spring.tld.html">Next</a></td></tr></table><hr></div><div class="appendix" title="Appendix&nbsp;F.&nbsp;Extensible XML authoring"><div class="titlepage"><div><div><h2 class="title"><a name="extensible-xml"></a>Appendix&nbsp;F.&nbsp;Extensible XML authoring</h2></div></div></div>
     
-    <div class="section" title="E.1&nbsp;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-introduction"></a>E.1&nbsp;Introduction</h2></div></div></div>
+    <div class="section" title="F.1&nbsp;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-introduction"></a>F.1&nbsp;Introduction</h2></div></div></div>
         
         <p>Since version 2.0, Spring has featured a mechanism for schema-based extensions
         to the basic Spring XML format for defining and configuring beans. This section is
@@ -37,20 +37,20 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         Spring's extensible XML configuration mechanism is based on XML Schema. If you are
         not familiar with Spring's current XML configuration extensions that come with the
         standard Spring distribution, please first read the appendix entitled
-        <a class="xref" href="xsd-config.html" title="Appendix&nbsp;D.&nbsp;XML Schema-based configuration">Appendix&nbsp;D, <i>XML Schema-based configuration</i></a>.</p>
+        <a class="xref" href="xsd-config.html" title="Appendix&nbsp;E.&nbsp;XML Schema-based configuration">Appendix&nbsp;E, <i>XML Schema-based configuration</i></a>.</p>
         <p>Creating new XML configuration extensions can be done by following these (relatively)
         simple steps:</p>
         <p>
             </p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-                    <p><a class="link" href="extensible-xml.html#extensible-xml-schema" title="E.2&nbsp;Authoring the schema">Authoring</a> an XML schema to describe your custom element(s).</p>
+                    <p><a class="link" href="extensible-xml.html#extensible-xml-schema" title="F.2&nbsp;Authoring the schema">Authoring</a> an XML schema to describe your custom element(s).</p>
                 </li><li class="listitem">
-                    <p><a class="link" href="extensible-xml.html#extensible-xml-namespacehandler" title="E.3&nbsp;Coding a NamespaceHandler">Coding</a> a custom <code class="interfacename">NamespaceHandler</code>
+                    <p><a class="link" href="extensible-xml.html#extensible-xml-namespacehandler" title="F.3&nbsp;Coding a NamespaceHandler">Coding</a> a custom <code class="interfacename">NamespaceHandler</code>
                     implementation (this is an easy step, don't worry).</p>
                 </li><li class="listitem">
-                    <p><a class="link" href="extensible-xml.html#extensible-xml-parser" title="E.4&nbsp;Coding a BeanDefinitionParser">Coding</a> one or more <code class="interfacename">BeanDefinitionParser</code>
+                    <p><a class="link" href="extensible-xml.html#extensible-xml-parser" title="F.4&nbsp;Coding a BeanDefinitionParser">Coding</a> one or more <code class="interfacename">BeanDefinitionParser</code>
                     implementations (this is where the real work is done).</p>
                 </li><li class="listitem">
-                    <p><a class="link" href="extensible-xml.html#extensible-xml-registration" title="E.5&nbsp;Registering the handler and the schema">Registering</a> the above artifacts with Spring (this too is an easy step).</p>
+                    <p><a class="link" href="extensible-xml.html#extensible-xml-registration" title="F.5&nbsp;Registering the handler and the schema">Registering</a> the above artifacts with Spring (this too is an easy step).</p>
                 </li></ol></div><p>
         </p>
         <p>What follows is a description of each of these steps. For the example, we will create
@@ -66,7 +66,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         detailed examples follow afterwards. The intent in this first simple example is to walk
         you through the basic steps involved.)</em></span></p>
     </div>
-    <div class="section" title="E.2&nbsp;Authoring the schema"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-schema"></a>E.2&nbsp;Authoring the schema</h2></div></div></div>
+    <div class="section" title="F.2&nbsp;Authoring the schema"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-schema"></a>F.2&nbsp;Authoring the schema</h2></div></div></div>
         
         <p>Creating an XML configuration extension for use with Spring's IoC container
         starts with authoring an XML Schema to describe the extension. What follows
@@ -124,7 +124,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
             configuration options defined in the enumeration.</p>
         </td></tr></table></div>
     </div>
-    <div class="section" title="E.3&nbsp;Coding a NamespaceHandler"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-namespacehandler"></a>E.3&nbsp;Coding a <code class="interfacename">NamespaceHandler</code></h2></div></div></div>
+    <div class="section" title="F.3&nbsp;Coding a NamespaceHandler"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-namespacehandler"></a>F.3&nbsp;Coding a <code class="interfacename">NamespaceHandler</code></h2></div></div></div>
         
         <p>In addition to the schema, we need a <code class="interfacename">NamespaceHandler</code>
         that will parse all elements of this specific namespace Spring encounters
@@ -180,7 +180,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         XML parsing; this means that each <code class="interfacename">BeanDefinitionParser</code> will
         contain just the logic for parsing a single custom element, as we can see in the next step</p>
     </div>
-    <div class="section" title="E.4&nbsp;Coding a BeanDefinitionParser"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-parser"></a>E.4&nbsp;Coding a <code class="interfacename">BeanDefinitionParser</code></h2></div></div></div>
+    <div class="section" title="F.4&nbsp;Coding a BeanDefinitionParser"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-parser"></a>F.4&nbsp;Coding a <code class="interfacename">BeanDefinitionParser</code></h2></div></div></div>
         
         <p>A <code class="interfacename">BeanDefinitionParser</code> will be used if the
         <code class="interfacename">NamespaceHandler</code> encounters an XML element of the type
@@ -228,7 +228,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         <code class="interfacename">BeanDefinition</code> is handled by the <code class="classname">AbstractSingleBeanDefinitionParser</code>
         superclass, as is the extraction and setting of the bean definition's unique identifier.</p>
     </div>
-    <div class="section" title="E.5&nbsp;Registering the handler and the schema"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-registration"></a>E.5&nbsp;Registering the handler and the schema</h2></div></div></div>
+    <div class="section" title="F.5&nbsp;Registering the handler and the schema"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-registration"></a>F.5&nbsp;Registering the handler and the schema</h2></div></div></div>
         
         <p>The coding is finished! All that remains to be done is to somehow make the Spring XML
         parsing infrastructure aware of our custom element; we do this by registering our custom
@@ -238,7 +238,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         example, be distributed alongside your binary classes in a JAR file. The Spring XML parsing
         infrastructure will automatically pick up your new extension by consuming these special
         properties files, the formats of which are detailed below.</p>
-        <div class="section" title="E.5.1&nbsp;'META-INF/spring.handlers'"><div class="titlepage"><div><div><h3 class="title"><a name="extensible-xml-registration-spring-handlers"></a>E.5.1&nbsp;<code class="filename">'META-INF/spring.handlers'</code></h3></div></div></div>
+        <div class="section" title="F.5.1&nbsp;'META-INF/spring.handlers'"><div class="titlepage"><div><div><h3 class="title"><a name="extensible-xml-registration-spring-handlers"></a>F.5.1&nbsp;<code class="filename">'META-INF/spring.handlers'</code></h3></div></div></div>
             
             <p>The properties file called <code class="filename">'spring.handlers'</code> contains a mapping
             of XML Schema URIs to namespace handler classes. So for our example, we need to write the
@@ -250,7 +250,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
             extension, and needs to <span class="emphasis"><em>match exactly</em></span> the value of the
             <code class="literal">'targetNamespace'</code> attribute as specified in your custom XSD schema.</p>
         </div>
-        <div class="section" title="E.5.2&nbsp;'META-INF/spring.schemas'"><div class="titlepage"><div><div><h3 class="title"><a name="extensible-xml-registration-spring-schemas"></a>E.5.2&nbsp;<code class="filename">'META-INF/spring.schemas'</code></h3></div></div></div>
+        <div class="section" title="F.5.2&nbsp;'META-INF/spring.schemas'"><div class="titlepage"><div><div><h3 class="title"><a name="extensible-xml-registration-spring-schemas"></a>F.5.2&nbsp;<code class="filename">'META-INF/spring.schemas'</code></h3></div></div></div>
             
             <p>The properties file called <code class="filename">'spring.schemas'</code> contains a mapping
             of XML Schema locations (referred to along with the schema declaration in XML files
@@ -266,7 +266,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
             classes on the classpath.</p>
         </div>
     </div>
-    <div class="section" title="E.6&nbsp;Using a custom extension in your Spring XML configuration"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-using"></a>E.6&nbsp;Using a custom extension in your Spring XML configuration</h2></div></div></div>
+    <div class="section" title="F.6&nbsp;Using a custom extension in your Spring XML configuration"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-using"></a>F.6&nbsp;Using a custom extension in your Spring XML configuration</h2></div></div></div>
         
         <p>Using a custom extension that you yourself have implemented is no different from
         using one of the 'custom' extensions that Spring provides straight out of the box. Find below
@@ -292,10 +292,10 @@ http://www.mycompany.com/schema/myns http://www.mycompany.com/schema/myns/myns.x
 
 <span class="hl-tag">&lt;/beans&gt;</span></pre>
     </div>
-    <div class="section" title="E.7&nbsp;Meatier examples"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-meat"></a>E.7&nbsp;Meatier examples</h2></div></div></div>
+    <div class="section" title="F.7&nbsp;Meatier examples"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-meat"></a>F.7&nbsp;Meatier examples</h2></div></div></div>
         
         <p>Find below some much meatier examples of custom XML extensions.</p>
-        <div class="section" title="E.7.1&nbsp;Nesting custom tags within custom tags"><div class="titlepage"><div><div><h3 class="title"><a name="extensible-xml-custom-nested"></a>E.7.1&nbsp;Nesting custom tags within custom tags</h3></div></div></div>
+        <div class="section" title="F.7.1&nbsp;Nesting custom tags within custom tags"><div class="titlepage"><div><div><h3 class="title"><a name="extensible-xml-custom-nested"></a>F.7.1&nbsp;Nesting custom tags within custom tags</h3></div></div></div>
             
             <p>This example illustrates how you might go about writing the various artifacts
             required to satisfy a target of the following configuration:</p>
@@ -390,7 +390,7 @@ http://www.foo.com/schema/component http://www.foo.com/schema/component/componen
 }</pre>
             <p>This is all very well, and does work nicely, but exposes a lot of Spring plumbing to the
             end user. What we are going to do is write a custom extension that hides away all of this
-            Spring plumbing. If we stick to <a class="link" href="extensible-xml.html#extensible-xml-introduction" title="E.1&nbsp;Introduction">the steps described
+            Spring plumbing. If we stick to <a class="link" href="extensible-xml.html#extensible-xml-introduction" title="F.1&nbsp;Introduction">the steps described
             previously</a>, we'll start off by creating the XSD schema to define the structure of
             our custom tag.</p>
             <pre class="programlisting"><span class="hl-directive" style="color: maroon">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;</span>
@@ -480,7 +480,7 @@ http\://www.foo.com/schema/component=com.foo.ComponentNamespaceHandler</pre>
             <pre class="programlisting"><em class="lineannotation"><span class="lineannotation"># in 'META-INF/spring.schemas'</span></em>
 http\://www.foo.com/schema/component/component.xsd=com/foo/component.xsd</pre>
         </div>
-        <div class="section" title="E.7.2&nbsp;Custom attributes on 'normal' elements"><div class="titlepage"><div><div><h3 class="title"><a name="extensible-xml-custom-just-attributes"></a>E.7.2&nbsp;Custom attributes on 'normal' elements</h3></div></div></div>
+        <div class="section" title="F.7.2&nbsp;Custom attributes on 'normal' elements"><div class="titlepage"><div><div><h3 class="title"><a name="extensible-xml-custom-just-attributes"></a>F.7.2&nbsp;Custom attributes on 'normal' elements</h3></div></div></div>
             
             <p>Writing your own custom parser and the associated artifacts isn't hard, but sometimes it
             is not the right thing to do. Consider the scenario where you need to add metadata to already
@@ -601,7 +601,7 @@ http\://www.foo.com/schema/jcache=com.foo.JCacheNamespaceHandler</pre>
 http\://www.foo.com/schema/jcache/jcache.xsd=com/foo/jcache.xsd</pre>
         </div>
     </div>
-    <div class="section" title="E.8&nbsp;Further Resources"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-resources"></a>E.8&nbsp;Further Resources</h2></div></div></div>
+    <div class="section" title="F.8&nbsp;Further Resources"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extensible-xml-resources"></a>F.8&nbsp;Further Resources</h2></div></div></div>
         
         <p>Find below links to further resources concerning XML Schema and the extensible XML support
         described in this chapter.</p>
@@ -611,4 +611,4 @@ http\://www.foo.com/schema/jcache/jcache.xsd=com/foo/jcache.xsd</pre>
                 <p>The <a class="ulink" href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/" target="_top">XML Schema Part 2: Datatypes Second Edition</a></p>
             </li></ul></div>
     </div>
-</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="xsd-config.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="spring-appendices.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="spring.tld.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Appendix&nbsp;D.&nbsp;XML Schema-based configuration&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Appendix&nbsp;F.&nbsp;spring.tld</td></tr></table></div></body></html>
+</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="xsd-config.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="spring-appendices.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="spring.tld.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Appendix&nbsp;E.&nbsp;XML Schema-based configuration&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Appendix&nbsp;G.&nbsp;spring.tld</td></tr></table></div></body></html>

@@ -6,7 +6,7 @@
 function syn(){
 if(parent.nav.tree){
  if(parent.nav.tree.loaded){
-  parent.nav.tree.selectNode(586);
+  parent.nav.tree.selectNode(588);
  }else{
   setTimeout("syn()",500);
 }
@@ -178,12 +178,12 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
           Spring tag library that provides support for features such as data
           binding and themes</em></span>. The custom tags allow for maximum
           flexibility in terms of markup code. For information on the tag
-          library descriptor, see the appendix entitled <a class="xref" href="spring.tld.html" title="Appendix&nbsp;F.&nbsp;spring.tld">Appendix&nbsp;F, <i>spring.tld</i></a></p>
+          library descriptor, see the appendix entitled <a class="xref" href="spring.tld.html" title="Appendix&nbsp;G.&nbsp;spring.tld">Appendix&nbsp;G, <i>spring.tld</i></a></p>
         </li><li class="listitem">
           <p><span class="emphasis"><em>A JSP form tag library, introduced in Spring 2.0,
           that makes writing forms in JSP pages much easier.</em></span> For
           information on the tag library descriptor, see the appendix entitled
-          <a class="xref" href="spring-form.tld.html" title="Appendix&nbsp;G.&nbsp;spring-form.tld">Appendix&nbsp;G, <i>spring-form.tld</i></a></p>
+          <a class="xref" href="spring-form.tld.html" title="Appendix&nbsp;H.&nbsp;spring-form.tld">Appendix&nbsp;H, <i>spring-form.tld</i></a></p>
         </li><li class="listitem">
           <p><span class="emphasis"><em>Beans whose lifecycle is scoped to the current HTTP
           request or HTTP <code class="interfacename">Session</code>.</em></span>
@@ -757,7 +757,10 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         <code class="interfacename">@Transactional</code> methods). Usually you
         will introduce an interface for the controller in order to use JDK
         dynamic proxies. To make this work you must move the
-        <code class="interfacename">@RequestMapping</code> annotations to the
+        <code class="interfacename">@RequestMapping</code> annotations, as well as
+        any other type and method-level annotations (e.g.
+        <code class="interfacename">@ModelAttribute</code>,
+        <code class="interfacename">@InitBinder</code>) to the
         interface as well as the mapping mechanism can only "see" the
         interface exposed by the proxy. Alternatively, you could activate
         <code class="code">proxy-target-class="true"</code> in the configuration for the
@@ -766,6 +769,10 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         that CGLIB-based subclass proxies should be used instead of
         interface-based JDK proxies. For more information on various proxying
         mechanisms see <a class="xref" href="aop.html#aop-proxying" title="9.6&nbsp;Proxying mechanisms">Section&nbsp;9.6, &#8220;Proxying mechanisms&#8221;</a>.</p>
+
+        <p>Note however that method argument annotations, e.g.
+        <code class="interfacename">@RequestParam</code>, must be present in
+        the method signatures of the controller class.</p>
       </td></tr></table></div>
 
       <div class="section" title="New Support Classes for @RequestMapping methods in Spring MVC 3.1"><div class="titlepage"><div><div><h4 class="title"><a name="mvc-ann-requestmapping-31-vs-30"></a>New Support Classes for <code class="classname">@RequestMapping</code> methods in Spring MVC 3.1</h4></div></div></div>
@@ -939,7 +946,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         example:</p>
 
         <pre class="programlisting">
-<i><span class="hl-annotation" style="color: gray">@RequestMapping("/spring-web/{symbolicName:[a-z-]+}-{version:\d\.\d\.\d}.{extension:\.[a-z]}")</span></i>
+<i><span class="hl-annotation" style="color: gray">@RequestMapping("/spring-web/{symbolicName:[a-z-]+}-{version:\\d\\.\\d\\.\\d}{extension:\\.[a-z]+}")</span></i>
   <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> handle(<i><span class="hl-annotation" style="color: gray">@PathVariable</span></i> String version, <i><span class="hl-annotation" style="color: gray">@PathVariable</span></i> String extension) {
     <span class="hl-comment">// ...</span>
   }
@@ -955,6 +962,18 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         <code class="filename">/myPath/*.do</code>). A combination of URI templates and
         Ant-style globs is also supported (for example,
         <code class="filename">/owners/*/pets/{petId}</code>).</p>
+      </div>
+
+      <div class="section" title="Patterns with Placeholders"><div class="titlepage"><div><div><h4 class="title"><a name="mvc-ann-requestmapping-placeholders"></a>Patterns with Placeholders</h4></div></div></div>
+        
+
+        <p>Patterns in <code class="interfacename">@RequestMapping</code> annotations
+        support ${...} placeholders against local properties and/or system properties
+        and environment variables. This may be useful in cases where the path a
+        controller is mapped to may need to be customized through configuration.
+        For more information on placeholders see the Javadoc for
+        <code class="classname">PropertyPlaceholderConfigurer</code>.</p>
+
       </div>
 
       <div class="section" title="Matrix Variables"><div class="titlepage"><div><div><h4 class="title"><a name="mvc-ann-matrix-variables"></a>Matrix Variables</h4></div></div></div>
@@ -1038,9 +1057,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         <p>Note that to enable the use of matrix variables, you must set the
         <code class="classname">removeSemicolonContent</code> property of
         <code class="classname">RequestMappingHandlerMapping</code> to <code class="code">false</code>.
-        By default it is set to <code class="code">true</code> with the exception of the
-        MVC namespace and the MVC Java config both of which automatically enable
-        the use of matrix variables.</p>
+        By default it is set to <code class="code">false</code>.</p>
 
       </div>
 
@@ -1308,7 +1325,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         a separate <code class="interfacename">BindingResult</code> instance for
         each of them so the following sample won't work:</p>
 
-        <div class="example"><a name="d4e13667"></a><p class="title"><b>Example&nbsp;17.1.&nbsp;Invalid ordering of BindingResult and @ModelAttribute</b></p><div class="example-contents">
+        <div class="example"><a name="d4e13872"></a><p class="title"><b>Example&nbsp;17.1.&nbsp;Invalid ordering of BindingResult and @ModelAttribute</b></p><div class="example-contents">
           
 
           <pre class="programlisting"><i><span class="hl-annotation" style="color: gray">@RequestMapping(method = RequestMethod.POST)</span></i>
@@ -1930,6 +1947,14 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         available through the
         <code class="literal">ServletRequest.getParameter*()</code> family of
         methods.</p>
+
+        <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+          <p>As <code class="classname">HttpPutFormContentFilter</code> consumes the body of the
+          request, it should not be configured for PUT or PATCH URLs that rely on other
+          converters for <code class="literal">application/x-www-form-urlencoded</code>. This includes
+          <code class="literal">@RequestBody MultiValueMap&lt;String, String&gt;</code> and
+          <code class="literal">HttpEntity&lt;MultiValueMap&lt;String, String&gt;&gt;</code>.</p>
+        </td></tr></table></div>
       </div>
 
       <div class="section" title="Mapping cookie values with the @CookieValue annotation"><div class="titlepage"><div><div><h4 class="title"><a name="mvc-ann-cookievalue"></a>Mapping cookie values with the @CookieValue annotation</h4></div></div></div>
@@ -2269,9 +2294,9 @@ deferredResult.setResult(data);
       resumes with the asynchronously produced result.
       </p>
 
-      <p>Explaining the motivation for async request processing, when or why to use it
-      is beyond the scope of this document. For further information you may wish to read
-      <a class="ulink" href="http://http://blog.springsource.org/2012/05/06/spring-mvc-3-2-preview-introducing-servlet-3-async-support/" target="_top"> this blog post series</a>.
+      <p>Explaining the motivation for async request processing and when or why to use it
+      are beyond the scope of this document. For further information you may wish to read
+      <a class="ulink" href="http://blog.springsource.org/2012/05/06/spring-mvc-3-2-preview-introducing-servlet-3-async-support/" target="_top">this blog post series</a>.
       </p>
 
       <div class="section" title="Exception Handling for Async Requests"><div class="titlepage"><div><div><h4 class="title"><a name="mvc-ann-async-exceptions"></a>Exception Handling for Async Requests</h4></div></div></div>
@@ -2360,7 +2385,7 @@ deferredResult.setResult(data);
 
     ...
 
-  <span class="hl-tag">&lt;web-app&gt;</span>
+  <span class="hl-tag">&lt;/web-app&gt;</span>
   </pre>
 
           <p>The <code class="classname">DispatcherServlet</code> and any
@@ -4562,7 +4587,7 @@ Content-Transfer-Encoding: 8bit
 
   <i><span class="hl-annotation" style="color: gray">@Override</span></i>
   <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-    configurer.setFavorPathExtension(false).setFavorParameter(true);
+    configurer.favorPathExtension(false).favorParameter(true);
   }
 }</pre>
 

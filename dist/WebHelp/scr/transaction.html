@@ -6,7 +6,7 @@
 function syn(){
 if(parent.nav.tree){
  if(parent.nav.tree.loaded){
-  parent.nav.tree.selectNode(428);
+  parent.nav.tree.selectNode(430);
  }else{
   setTimeout("syn()",500);
 }
@@ -380,9 +380,9 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
       <p>The above definition of the <code class="literal">dataSource</code> bean
       uses the <code class="literal">&lt;jndi-lookup/&gt;</code> tag from the
       <code class="literal">jee</code> namespace. For more information on schema-based
-      configuration, see <a class="xref" href="xsd-config.html" title="Appendix&nbsp;D.&nbsp;XML Schema-based configuration">Appendix&nbsp;D, <i>XML Schema-based configuration</i></a>, and for more
+      configuration, see <a class="xref" href="xsd-config.html" title="Appendix&nbsp;E.&nbsp;XML Schema-based configuration">Appendix&nbsp;E, <i>XML Schema-based configuration</i></a>, and for more
       information on the <code class="literal">&lt;jee/&gt;</code> tags see the section
-      entitled <a class="xref" href="xsd-config.html#xsd-config-body-schemas-jee" title="D.2.3&nbsp;The jee schema">Section&nbsp;D.2.3, &#8220;The <code class="literal">jee</code> schema&#8221;</a>.</p>
+      entitled <a class="xref" href="xsd-config.html#xsd-config-body-schemas-jee" title="E.2.3&nbsp;The jee schema">Section&nbsp;E.2.3, &#8220;The <code class="literal">jee</code> schema&#8221;</a>.</p>
     </td></tr></table></div>
 
     <p>You can also use Hibernate local transactions easily, as shown in
@@ -1438,12 +1438,12 @@ Exception in thread "main" java.lang.UnsupportedOperationException
                     Optional qualifier specifying the transaction manager to be used.
                   </td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; "><code class="literal"><a class="link" href="transaction.html#tx-propagation" title="12.5.7&nbsp;Transaction propagation">propagation</a></code></td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">enum: <code class="classname">Propagation</code></td><td style="border-bottom: 0.5pt solid ; ">Optional propagation setting.</td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; "><code class="literal">isolation</code></td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">enum: <code class="classname">Isolation</code></td><td style="border-bottom: 0.5pt solid ; ">Optional isolation level.</td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; "><code class="literal">readOnly</code></td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">boolean</td><td style="border-bottom: 0.5pt solid ; ">Read/write vs. read-only transaction</td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; "><code class="literal">timeout</code></td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">int (in seconds granularity)</td><td style="border-bottom: 0.5pt solid ; ">Transaction timeout.</td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; "><code class="literal">rollbackFor</code></td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">Array of <code class="classname">Class</code> objects, which
                   must be derived from
-                  <code class="classname">Throwable.</code></td><td style="border-bottom: 0.5pt solid ; ">Optional array of exception classes that <span class="bold"><strong>must</strong></span> cause rollback.</td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; "><code class="literal">rollbackForClassname</code></td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">Array of class names. Classes must be derived from
+                  <code class="classname">Throwable.</code></td><td style="border-bottom: 0.5pt solid ; ">Optional array of exception classes that <span class="bold"><strong>must</strong></span> cause rollback.</td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; "><code class="literal">rollbackForClassName</code></td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">Array of class names. Classes must be derived from
                   <code class="classname">Throwable.</code></td><td style="border-bottom: 0.5pt solid ; ">Optional array of names of exception classes that
                   <span class="bold"><strong>must</strong></span> cause
                   rollback.</td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; "><code class="literal">noRollbackFor</code></td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">Array of <code class="classname">Class</code> objects, which
                   must be derived from
-                  <code class="classname">Throwable.</code></td><td style="border-bottom: 0.5pt solid ; ">Optional array of exception classes that <span class="bold"><strong>must not</strong></span> cause rollback.</td></tr><tr><td style="border-right: 0.5pt solid ; "><code class="literal">noRollbackForClassname</code></td><td style="border-right: 0.5pt solid ; ">Array of <code class="classname">String</code> class names,
+                  <code class="classname">Throwable.</code></td><td style="border-bottom: 0.5pt solid ; ">Optional array of exception classes that <span class="bold"><strong>must not</strong></span> cause rollback.</td></tr><tr><td style="border-right: 0.5pt solid ; "><code class="literal">noRollbackForClassName</code></td><td style="border-right: 0.5pt solid ; ">Array of <code class="classname">String</code> class names,
                   which must be derived from
                   <code class="classname">Throwable.</code></td><td style="">Optional array of names of exception classes that
                   <span class="bold"><strong>must not</strong></span> cause

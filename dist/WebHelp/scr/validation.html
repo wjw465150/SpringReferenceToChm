@@ -6,7 +6,7 @@
 function syn(){
 if(parent.nav.tree){
  if(parent.nav.tree.loaded){
-  parent.nav.tree.selectNode(218);
+  parent.nav.tree.selectNode(220);
  }else{
   setTimeout("syn()",500);
 }
@@ -30,6 +30,24 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
 
   <div class="section" title="7.1&nbsp;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="validation-introduction"></a>7.1&nbsp;Introduction</h2></div></div></div>
     
+
+    <div class="sidebar" title="JSR-303 Bean Validation"><a name="validation-beanvalidation-vs-spring-validation"></a><p class="title"><b>JSR-303 Bean Validation</b></p>
+      
+
+      <p>The Spring Framework supports JSR-303 Bean Validation adapting
+      it to Spring's <code class="interfacename">Validator</code> interface.</p>
+
+      <p>An application can choose to enable JSR-303 Bean Validation once globally,
+      as described in <a class="xref" href="validation.html#validation-beanvalidation" title="7.8&nbsp;Spring 3 Validation">Section&nbsp;7.8, &#8220;Spring 3 Validation&#8221;</a>, and use it
+      exclusively for all validation needs.</p>
+
+      <p>An application can also register
+      additional Spring <code class="interfacename">Validator</code> instances
+      per <code class="classname">DataBinder</code> instance, as described in
+      <a class="xref" href="validation.html#validation-binder" title="7.8.3&nbsp;Configuring a DataBinder">Section&nbsp;7.8.3, &#8220;Configuring a DataBinder&#8221;</a>. This may be useful for
+      plugging in validation logic without the use of annotations.</p>
+
+    </div>
 
     <p>There are pros and cons for considering validation as business logic,
       and Spring offers a design for validation (and data binding) that does not
@@ -1654,6 +1672,16 @@ binder.validate();
 
 <em class="lineannotation"><span class="lineannotation">// get BindingResult that includes any validation errors</span></em>
 BindingResult results = binder.getBindingResult();</pre>
+
+      <p> A DataBinder can also be configured with multiple
+      <code class="interfacename">Validator</code> instances
+      via <code class="code">dataBinder.addValidators</code>
+      and <code class="code">dataBinder.replaceValidators</code>.
+      This is useful when combining globally configured JSR-303 Bean Validation
+      with a Spring <code class="interfacename">Validator</code> configured
+      locally on a DataBinder instance.
+      See <a class="xref" href="validation.html#validation-mvc-configuring" title="Configuring a Validator for use by Spring MVC">the section called &#8220;Configuring a Validator for use by Spring MVC&#8221;</a>.</p>
+
     </div>
 
     <div class="section" title="7.8.4&nbsp;Spring MVC 3 Validation"><div class="titlepage"><div><div><h3 class="title"><a name="validation-mvc"></a>7.8.4&nbsp;Spring MVC 3 Validation</h3></div></div></div>
@@ -1723,6 +1751,20 @@ BindingResult results = binder.getBindingResult();</pre>
     <span class="hl-tag">&lt;mvc:annotation-driven</span> <span class="hl-attribute">validator</span>=<span class="hl-value">"globalValidator"</span><span class="hl-tag">/&gt;</span>
 
 <span class="hl-tag">&lt;/beans&gt;</span></pre>
+
+        <p> To combine a global and a local validator, configure the
+        global validator as shown above and then add a local validator:</p>
+
+        <pre class="programlisting"><i><span class="hl-annotation" style="color: gray">@Controller</span></i>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> MyController {
+
+    <i><span class="hl-annotation" style="color: gray">@InitBinder</span></i>
+    <span class="hl-keyword">protected</span> <span class="hl-keyword">void</span> initBinder(WebDataBinder binder) {
+        binder.addValidators(<span class="hl-keyword">new</span> FooValidator());
+    }
+
+}</pre>
+
       </div>
 
       <div class="section" title="Configuring a JSR-303 Validator for use by Spring MVC"><div class="titlepage"><div><div><h4 class="title"><a name="validation-mvc-jsr303"></a>Configuring a JSR-303 Validator for use by Spring MVC</h4></div></div></div>

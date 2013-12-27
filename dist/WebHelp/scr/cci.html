@@ -6,7 +6,7 @@
 function syn(){
 if(parent.nav.tree){
  if(parent.nav.tree.loaded){
-  parent.nav.tree.selectNode(908);
+  parent.nav.tree.selectNode(911);
  }else{
   setTimeout("syn()",500);
 }
@@ -184,9 +184,9 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
       allows for specifying a <code class="interfacename">ConnectionSpec</code>
       instance to use for all operations on a given factory. If the adapter's
       <code class="literal">connectionSpec</code> property is specified, the adapter
-      uses the <code class="literal">getConnection</code> variant without argument, else
-      the one with the <code class="interfacename">ConnectionSpec</code>
-      argument.</p>
+      uses the <code class="literal">getConnection</code> variant with the
+      <code class="interfacename">ConnectionSpec</code> argument, otherwise
+	  the variant without argument.</p>
 
       <pre class="programlisting"><span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"managedConnectionFactory"</span>
     <span class="hl-attribute">class</span>=<span class="hl-value">"com.sun.connector.cciblackbox.CciLocalTxManagedConnectionFactory"</span><span class="hl-tag">&gt;</span>

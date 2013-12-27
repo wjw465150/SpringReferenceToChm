@@ -6,7 +6,7 @@
 function syn(){
 if(parent.nav.tree){
  if(parent.nav.tree.loaded){
-  parent.nav.tree.selectNode(880);
+  parent.nav.tree.selectNode(883);
  }else{
   setTimeout("syn()",500);
 }
@@ -872,7 +872,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
   <span class="hl-tag">&lt;/bean&gt;</span>
 
   <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"attributeSource"</span>
-      <span class="hl-attribute">class</span>=<span class="hl-value">"org.springframework.jmx.export.metadata.AttributesJmxAttributeSource"</span><span class="hl-tag">/&gt;</span>
+      <span class="hl-attribute">class</span>=<span class="hl-value">"org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource"</span><span class="hl-tag">/&gt;</span>
 
 <span class="hl-tag">&lt;/beans&gt;</span></pre>
 

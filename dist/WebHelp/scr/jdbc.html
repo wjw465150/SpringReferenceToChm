@@ -6,7 +6,7 @@
 function syn(){
 if(parent.nav.tree){
  if(parent.nav.tree.loaded){
-  parent.nav.tree.selectNode(471);
+  parent.nav.tree.selectNode(473);
  }else{
   setTimeout("syn()",500);
 }
@@ -36,7 +36,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
     The table shows what actions Spring will take care of and which actions
     are the responsibility of you, the application developer.</p>
 
-    <div class="table"><a name="d4e10828"></a><p class="title"><b>Table&nbsp;14.1.&nbsp;Spring JDBC - who does what?</b></p><div class="table-contents">
+    <div class="table"><a name="d4e11019"></a><p class="title"><b>Table&nbsp;14.1.&nbsp;Spring JDBC - who does what?</b></p><div class="table-contents">
       
 
       <table summary="Spring JDBC - who does what?" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; "><colgroup><col width="350"><col width="40"><col width="40"></colgroup><thead><tr><th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">Action</th><th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">Spring</th><th style="border-bottom: 0.5pt solid ; " align="center">You</th></tr></thead><tbody><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">Define connection parameters.</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center"><span class="bold"><strong></strong></span></td><td style="border-bottom: 0.5pt solid ; " align="center">X</td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">Open the connection.</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">X</td><td style="border-bottom: 0.5pt solid ; " align="center">&nbsp;</td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">Specify the SQL statement.</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">&nbsp;</td><td style="border-bottom: 0.5pt solid ; " align="center">X</td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">Declare parameters and provide parameter values</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">&nbsp;</td><td style="border-bottom: 0.5pt solid ; " align="center">X</td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">Prepare and execute the statement.</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">X</td><td style="border-bottom: 0.5pt solid ; " align="center">&nbsp;</td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">Set up the loop to iterate through the results (if
@@ -75,15 +75,11 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
           provides better documentation and ease of use when you have multiple
           parameters for an SQL statement.</p>
         </li><li class="listitem">
-          <p><span class="bold"><strong>SimpleJdbcTemplate</strong></span> combines
-          the most frequently used operations of JdbcTemplate and
-          NamedParameterJdbcTemplate.</p>
-        </li><li class="listitem">
           <p><span class="bold"><strong>SimpleJdbcInsert and
           SimpleJdbcCall</strong></span> optimize database metadata to limit the
           amount of necessary configuration. This approach simplifies coding
           so that you only need to provide the name of the table or procedure
-          and provide a map of parameters matching the column names. 
+          and provide a map of parameters matching the column names.
           This only works if the database provides adequate metadata. If the
           database doesn't provide this metadata, you will have to provide
           explicit configuration of the parameters.</p>
@@ -110,8 +106,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
       contains the <code class="classname">JdbcTemplate</code> class and its various
       callback interfaces, plus a variety of related classes. A subpackage
       named <code class="literal">org.springframework.jdbc.core.simple</code> contains
-      the <code class="classname">SimpleJdbcTemplate</code> class and the related
-      <code class="classname">SimpleJdbcInsert</code> and
+      the <code class="classname">SimpleJdbcInsert</code> and
       <code class="classname">SimpleJdbcCall</code> classes. Another subpackage named
       <code class="literal">org.springframework.jdbc.core.namedparam</code> contains the
       <code class="classname">NamedParameterJdbcTemplate</code> class and the related
@@ -146,7 +141,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
       does not need to implement JDBC or RDBMS-specific error handling. All
       translated exceptions are unchecked, which gives you the option of
       catching the exceptions from which you can recover while allowing other
-      exceptions to be propagated to the caller. See <a class="xref" href="jdbc.html#jdbc-SQLExceptionTranslator" title="14.2.4&nbsp;SQLExceptionTranslator">Section&nbsp;14.2.4, &#8220;<code class="interfacename">SQLExceptionTranslator</code>&#8221;</a>.</p>
+      exceptions to be propagated to the caller. See <a class="xref" href="jdbc.html#jdbc-SQLExceptionTranslator" title="14.2.3&nbsp;SQLExceptionTranslator">Section&nbsp;14.2.3, &#8220;<code class="interfacename">SQLExceptionTranslator</code>&#8221;</a>.</p>
     </div>
   </div>
 
@@ -218,12 +213,12 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
           <p>Here is a simple query for getting the number of rows in a
           relation:</p>
 
-          <pre class="programlisting"><span class="hl-keyword">int</span> rowCount = <span class="hl-keyword">this</span>.jdbcTemplate.queryForInt(<span class="hl-string">"select count(*) from t_actor"</span>);</pre>
+          <pre class="programlisting"><span class="hl-keyword">int</span> rowCount = <span class="hl-keyword">this</span>.jdbcTemplate.queryForObject(<span class="hl-string">"select count(*) from t_actor"</span>, <span class="hl-keyword">int</span>.<span class="hl-keyword">class</span>);</pre>
 
           <p>A simple query using a bind variable:</p>
 
-          <pre class="programlisting"><span class="hl-keyword">int</span> countOfActorsNamedJoe = <span class="hl-keyword">this</span>.jdbcTemplate.queryForInt(
-        <span class="hl-string">"select count(*) from t_actor where first_name = ?"</span>, <span class="hl-string">"Joe"</span>);</pre>
+          <pre class="programlisting"><span class="hl-keyword">int</span> countOfActorsNamedJoe = <span class="hl-keyword">this</span>.jdbcTemplate.queryForObject(
+        <span class="hl-string">"select count(*) from t_actor where first_name = ?"</span>, <span class="hl-keyword">int</span>.<span class="hl-keyword">class</span>, <span class="hl-string">"Joe"</span>);</pre>
 
           <p>Querying for a <code class="classname">String</code>:</p>
 
@@ -297,7 +292,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         <span class="hl-string">"Leonor"</span>, <span class="hl-string">"Watling"</span>);</pre>
 
           <pre class="programlisting"><span class="hl-keyword">this</span>.jdbcTemplate.update(
-        <span class="hl-string">"update t_actor set = ? where id = ?"</span>,
+        <span class="hl-string">"update t_actor set last_name = ? where id = ?"</span>,
         <span class="hl-string">"Banjo"</span>, <span class="hl-number">5276L</span>);</pre>
 
           <pre class="programlisting"><span class="hl-keyword">this</span>.jdbcTemplate.update(
@@ -338,8 +333,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         <span class="emphasis"><em>not</em></span> conversational state.</p>
 
         <p>A common practice when using the
-        <code class="classname">JdbcTemplate</code> class (and the associated <a class="link" href="jdbc.html#jdbc-SimpleJdbcTemplate" title="14.2.3&nbsp;SimpleJdbcTemplate"><code class="classname">SimpleJdbcTemplate</code></a>
-        and <a class="link" href="jdbc.html#jdbc-NamedParameterJdbcTemplate" title="14.2.2&nbsp;NamedParameterJdbcTemplate"><code class="classname">NamedParameterJdbcTemplate</code></a>
+        <code class="classname">JdbcTemplate</code> class (and the associated <a class="link" href="jdbc.html#jdbc-NamedParameterJdbcTemplate" title="14.2.2&nbsp;NamedParameterJdbcTemplate"><code class="classname">NamedParameterJdbcTemplate</code></a>
         classes) is to configure a <code class="interfacename">DataSource</code>
         in your Spring configuration file, and then dependency-inject that
         shared <code class="interfacename">DataSource</code> bean into your DAO
@@ -480,7 +474,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
 
     SqlParameterSource namedParameters = <span class="hl-keyword">new</span> MapSqlParameterSource(<span class="hl-string">"first_name"</span>, firstName);
 
-    <span class="hl-keyword">return</span> namedParameterJdbcTemplate.queryForInt(sql, namedParameters);
+    <span class="hl-keyword">return</span> <span class="hl-keyword">this</span>.namedParameterJdbcTemplate.queryForObject(sql, <span class="hl-keyword">int</span>.<span class="hl-keyword">class</span>, namedParameters);
 }</pre>
 
       <p>Notice the use of the named parameter notation in the value
@@ -511,9 +505,9 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
 
     String sql = <span class="hl-string">"select count(*) from T_ACTOR where first_name = :first_name"</span>;
 
-    Map namedParameters = Collections.singletonMap(<span class="hl-string">"first_name"</span>, firstName);
+    Map&lt;String, String&gt; namedParameters = Collections.singletonMap(<span class="hl-string">"first_name"</span>, firstName);
 
-    <span class="hl-keyword">return</span> <span class="hl-keyword">this</span>.namedParameterJdbcTemplate.queryForInt(sql, namedParameters);
+    <span class="hl-keyword">return</span> <span class="hl-keyword">this</span>.namedParameterJdbcTemplate.queryForObject(sql, <span class="hl-keyword">int</span>.<span class="hl-keyword">class</span>, namedParameters);
 }</pre>
 
       <p>One nice feature related to the
@@ -576,7 +570,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
 
     SqlParameterSource namedParameters = <span class="hl-keyword">new</span> BeanPropertySqlParameterSource(exampleActor);
 
-    <span class="hl-keyword">return</span> <span class="hl-keyword">this</span>.namedParameterJdbcTemplate.queryForInt(sql, namedParameters);
+    <span class="hl-keyword">return</span> <span class="hl-keyword">this</span>.namedParameterJdbcTemplate.queryForObject(sql, <span class="hl-keyword">int</span>.<span class="hl-keyword">class</span>, namedParameters);
 }</pre>
 
       <p>Remember that the
@@ -595,107 +589,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
       of an application.</p>
     </div>
 
-    <div class="section" title="14.2.3&nbsp;SimpleJdbcTemplate"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-SimpleJdbcTemplate"></a>14.2.3&nbsp;<code class="classname">SimpleJdbcTemplate</code></h3></div></div></div>
-      
-
-      <p>The <code class="classname">SimpleJdbcTemplate</code> class wraps the
-      classic <code class="classname">JdbcTemplate</code> and leverages Java 5
-      language features such as varargs and autoboxing.</p>
-
-      <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
-        <p>In Spring 3.0, the original <code class="classname">JdbcTemplate</code>
-        also supports Java 5-enhanced syntax with generics and varargs.
-        However, the <code class="classname">SimpleJdbcTemplate</code> provides a
-        simpler API that works best when you do not need access to all the
-        methods that the JdbcTemplate offers. Also, because the
-        <code class="classname">SimpleJdbcTemplate</code> was designed for Java 5, it
-        has more methods that take advantage of varargs due to different
-        ordering of the parameters.</p>
-      </td></tr></table></div>
-
-      <p>The value-add of the <code class="classname">SimpleJdbcTemplate</code>
-      class in the area of syntactic-sugar is best illustrated with a
-      before-and-after example. The next code snippet shows data access code
-      that uses the classic <code class="classname">JdbcTemplate</code>, followed by a
-      code snippet that does the same job with the
-      <code class="classname">SimpleJdbcTemplate</code>.</p>
-
-      <pre class="programlisting"><em class="lineannotation"><span class="lineannotation">// classic JdbcTemplate-style...</span></em>
-<span class="hl-keyword">private</span> JdbcTemplate jdbcTemplate;
-
-<span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDataSource(DataSource dataSource) {
-    <span class="hl-keyword">this</span>.jdbcTemplate = <span class="hl-keyword">new</span> JdbcTemplate(dataSource);
-}
-
-<span class="hl-keyword">public</span> Actor findActor(String specialty, <span class="hl-keyword">int</span> age) {
-
-    String sql = <span class="hl-string">"select id, first_name, last_name from T_ACTOR"</span> +
-            <span class="hl-string">" where specialty = ? and age = ?"</span>;
-
-    RowMapper&lt;Actor&gt; mapper = <span class="hl-keyword">new</span> RowMapper&lt;Actor&gt;() {
-        <span class="hl-keyword">public</span> Actor mapRow(ResultSet rs, <span class="hl-keyword">int</span> rowNum) <span class="hl-keyword">throws</span> SQLException {
-            Actor actor = <span class="hl-keyword">new</span> Actor();
-            actor.setId(rs.getLong(<span class="hl-string">"id"</span>));
-            actor.setFirstName(rs.getString(<span class="hl-string">"first_name"</span>));
-            actor.setLastName(rs.getString(<span class="hl-string">"last_name"</span>));
-            <span class="hl-keyword">return</span> actor;
-        }
-    };
-
-
-    <em class="lineannotation"><span class="lineannotation">// notice the wrapping up of the arguments in an array</span></em>
-    <span class="hl-keyword">return</span> (Actor) jdbcTemplate.queryForObject(sql, <span class="hl-keyword">new</span> Object[] {specialty, age}, mapper);
-}</pre>
-
-      <p>Here is the same method, with the
-      <code class="classname">SimpleJdbcTemplate</code>.</p>
-
-      <pre class="programlisting"><em class="lineannotation"><span class="lineannotation">// SimpleJdbcTemplate-style...</span></em>
-<span class="hl-keyword">private</span> SimpleJdbcTemplate simpleJdbcTemplate;
-
-<span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDataSource(DataSource dataSource) {
-    <span class="hl-keyword">this</span>.simpleJdbcTemplate = <span class="hl-keyword">new</span> SimpleJdbcTemplate(dataSource);
-}
-
-<span class="hl-keyword">public</span> Actor findActor(String specialty, <span class="hl-keyword">int</span> age) {
-
-    String sql = <span class="hl-string">"select id, first_name, last_name from T_ACTOR"</span> +
-            <span class="hl-string">" where specialty = ? and age = ?"</span>;
-    RowMapper&lt;Actor&gt; mapper = <span class="hl-keyword">new</span> RowMapper&lt;Actor&gt;() {
-        <span class="hl-keyword">public</span> Actor mapRow(ResultSet rs, <span class="hl-keyword">int</span> rowNum) <span class="hl-keyword">throws</span> SQLException {
-            Actor actor = <span class="hl-keyword">new</span> Actor();
-            actor.setId(rs.getLong(<span class="hl-string">"id"</span>));
-            actor.setFirstName(rs.getString(<span class="hl-string">"first_name"</span>));
-            actor.setLastName(rs.getString(<span class="hl-string">"last_name"</span>));
-            <span class="hl-keyword">return</span> actor;
-        }
-    };
-
-    <em class="lineannotation"><span class="lineannotation">// notice the use of varargs since the parameter values now come
-    // after the RowMapper parameter</span></em>
-    <span class="hl-keyword">return</span> <span class="hl-keyword">this</span>.simpleJdbcTemplate.queryForObject(sql, mapper, specialty, age);
-}</pre>
-
-      <p>See <a class="xref" href="jdbc.html#jdbc-JdbcTemplate-idioms" title="JdbcTemplate best practices">the section called &#8220;<code class="classname">JdbcTemplate</code> best practices&#8221;</a> for guidelines on
-      how to use the <code class="classname">SimpleJdbcTemplate</code> class in the
-      context of an application.</p>
-
-      <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
-        <p>The <code class="classname">SimpleJdbcTemplate</code> class only offers
-        a subset of the methods exposed on the
-        <code class="classname">JdbcTemplate</code> class. If you need to use a method
-        from the <code class="classname">JdbcTemplate</code> that is not defined on
-        the <code class="classname">SimpleJdbcTemplate</code>, you can always access
-        the underlying <code class="classname">JdbcTemplate</code> by calling the
-        <code class="methodname">getJdbcOperations()</code> method on the
-        <code class="classname">SimpleJdbcTemplate</code>, which then allows you to
-        invoke the method that you want. The only downside is that the methods
-        on the <code class="interfacename">JdbcOperations</code> interface are not
-        generic, so you are back to casting and so on.</p>
-      </td></tr></table></div>
-    </div>
-
-    <div class="section" title="14.2.4&nbsp;SQLExceptionTranslator"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-SQLExceptionTranslator"></a>14.2.4&nbsp;<code class="interfacename">SQLExceptionTranslator</code></h3></div></div></div>
+    <div class="section" title="14.2.3&nbsp;SQLExceptionTranslator"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-SQLExceptionTranslator"></a>14.2.3&nbsp;<code class="interfacename">SQLExceptionTranslator</code></h3></div></div></div>
       
 
       <p><code class="interfacename">SQLExceptionTranslator</code> is an
@@ -805,7 +699,7 @@ public void setDataSource(DataSource dataSource) {
       the error codes in <code class="literal">sql-error-codes.xml</code>.</p>
     </div>
 
-    <div class="section" title="14.2.5&nbsp;Executing statements"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-statements-executing"></a>14.2.5&nbsp;Executing statements</h3></div></div></div>
+    <div class="section" title="14.2.4&nbsp;Executing statements"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-statements-executing"></a>14.2.4&nbsp;Executing statements</h3></div></div></div>
       
 
       <p>Executing an SQL statement requires very little code. You need a
@@ -833,13 +727,11 @@ public void setDataSource(DataSource dataSource) {
 }</pre>
     </div>
 
-    <div class="section" title="14.2.6&nbsp;Running queries"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-statements-querying"></a>14.2.6&nbsp;Running queries</h3></div></div></div>
+    <div class="section" title="14.2.5&nbsp;Running queries"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-statements-querying"></a>14.2.5&nbsp;Running queries</h3></div></div></div>
       
 
-      <p>Some query methods return a single value. To retrieve a count or a
-      specific value from one row, use
-      <code class="methodname">queryForInt(..)</code>,
-      <code class="methodname">queryForLong(..)</code> or
+      <p>Some query methods return a single value. To retrieve a count or
+      a specific value from one row, use
       <code class="methodname">queryForObject(..)</code>. The latter converts the
       returned JDBC <code class="classname">Type</code> to the Java class that is
       passed in as an argument. If the type conversion is invalid, then an
@@ -860,11 +752,11 @@ public void setDataSource(DataSource dataSource) {
     }
 
     <span class="hl-keyword">public</span> <span class="hl-keyword">int</span> getCount() {
-        <span class="hl-keyword">return</span> <span class="hl-keyword">this</span>.jdbcTemplate.queryForInt(<span class="hl-string">"select count(*) from mytable"</span>);
+        <span class="hl-keyword">return</span> <span class="hl-keyword">this</span>.jdbcTemplate.queryForObject(<span class="hl-string">"select count(*) from mytable"</span>, <span class="hl-keyword">int</span>.<span class="hl-keyword">class</span>);
     }
 
     <span class="hl-keyword">public</span> String getName() {
-        <span class="hl-keyword">return</span> (String) <span class="hl-keyword">this</span>.jdbcTemplate.queryForObject(<span class="hl-string">"select name from mytable"</span>, String.<span class="hl-keyword">class</span>);
+        <span class="hl-keyword">return</span> <span class="hl-keyword">this</span>.jdbcTemplate.queryForObject(<span class="hl-string">"select name from mytable"</span>, String.<span class="hl-keyword">class</span>);
     }
 
     <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDataSource(DataSource dataSource) {
@@ -897,7 +789,7 @@ public void setDataSource(DataSource dataSource) {
       <pre class="programlisting">[{name=Bob, id=1}, {name=Mary, id=2}]</pre>
     </div>
 
-    <div class="section" title="14.2.7&nbsp;Updating the database"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-updates"></a>14.2.7&nbsp;Updating the database</h3></div></div></div>
+    <div class="section" title="14.2.6&nbsp;Updating the database"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-updates"></a>14.2.6&nbsp;Updating the database</h3></div></div></div>
       
 
       <p>The following example shows a column updated for a certain primary
@@ -926,7 +818,7 @@ public void setDataSource(DataSource dataSource) {
 }</pre>
     </div>
 
-    <div class="section" title="14.2.8&nbsp;Retrieving auto-generated keys"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-auto-genereted-keys"></a>14.2.8&nbsp;Retrieving auto-generated keys</h3></div></div></div>
+    <div class="section" title="14.2.7&nbsp;Retrieving auto-generated keys"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-auto-genereted-keys"></a>14.2.7&nbsp;Retrieving auto-generated keys</h3></div></div></div>
       
 
       <p>An <code class="methodname">update()</code> convenience method
@@ -1242,9 +1134,7 @@ dataSource.setPassword(<span class="hl-string">""</span>);</pre>
 
     <p>Most JDBC drivers provide improved performance if you batch multiple
     calls to the same prepared statement. By grouping updates into batches you
-    limit the number of round trips to the database. This section covers batch
-    processing using both the <code class="classname">JdbcTemplate</code> and the
-    <code class="classname">SimpleJdbcTemplate</code>.</p>
+    limit the number of round trips to the database.</p>
 
     <div class="section" title="14.4.1&nbsp;Basic batch operations with the JdbcTemplate"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-batch-classic"></a>14.4.1&nbsp;Basic batch operations with the JdbcTemplate</h3></div></div></div>
       
@@ -1450,11 +1340,11 @@ dataSource.setPassword(<span class="hl-string">""</span>);</pre>
       you will see examples of multiple ones later.</p>
 
       <pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> JdbcActorDao <span class="hl-keyword">implements</span> ActorDao {
-    <span class="hl-keyword">private</span> SimpleJdbcTemplate simpleJdbcTemplate;
+    <span class="hl-keyword">private</span> JdbcTemplate jdbcTemplate;
     <span class="hl-keyword">private</span> SimpleJdbcInsert insertActor;
 
     <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDataSource(DataSource dataSource) {
-        <span class="hl-keyword">this</span>.simpleJdbcTemplate = <span class="hl-keyword">new</span> SimpleJdbcTemplate(dataSource);
+        <span class="hl-keyword">this</span>.jdbcTemplate = <span class="hl-keyword">new</span> JdbcTemplate(dataSource);
         <span class="hl-keyword">this</span>.insertActor =
                 <span class="hl-keyword">new</span> SimpleJdbcInsert(dataSource).withTableName(<span class="hl-string">"t_actor"</span>);
     }
@@ -1489,11 +1379,11 @@ dataSource.setPassword(<span class="hl-string">""</span>);</pre>
       <code class="classname">usingGeneratedKeyColumns</code> method.</p>
 
       <pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> JdbcActorDao <span class="hl-keyword">implements</span> ActorDao {
-    <span class="hl-keyword">private</span> SimpleJdbcTemplate simpleJdbcTemplate;
+    <span class="hl-keyword">private</span> JdbcTemplate jdbcTemplate;
     <span class="hl-keyword">private</span> SimpleJdbcInsert insertActor;
 
     <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDataSource(DataSource dataSource) {
-        <span class="hl-keyword">this</span>.simpleJdbcTemplate = <span class="hl-keyword">new</span> SimpleJdbcTemplate(dataSource);
+        <span class="hl-keyword">this</span>.jdbcTemplate = <span class="hl-keyword">new</span> JdbcTemplate(dataSource);
         <span class="hl-keyword">this</span>.insertActor =
                 <span class="hl-keyword">new</span> SimpleJdbcInsert(dataSource)
                         .withTableName(<span class="hl-string">"t_actor"</span>)
@@ -1529,11 +1419,11 @@ dataSource.setPassword(<span class="hl-string">""</span>);</pre>
       column names with the <code class="classname">usingColumns</code> method:</p>
 
       <pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> JdbcActorDao <span class="hl-keyword">implements</span> ActorDao {
-    <span class="hl-keyword">private</span> SimpleJdbcTemplate simpleJdbcTemplate;
+    <span class="hl-keyword">private</span> JdbcTemplate jdbcTemplate;
     <span class="hl-keyword">private</span> SimpleJdbcInsert insertActor;
 
     <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDataSource(DataSource dataSource) {
-        <span class="hl-keyword">this</span>.simpleJdbcTemplate = <span class="hl-keyword">new</span> SimpleJdbcTemplate(dataSource);
+        <span class="hl-keyword">this</span>.jdbcTemplate = <span class="hl-keyword">new</span> JdbcTemplate(dataSource);
         <span class="hl-keyword">this</span>.insertActor =
                 <span class="hl-keyword">new</span> SimpleJdbcInsert(dataSource)
                         .withTableName(<span class="hl-string">"t_actor"</span>)
@@ -1568,11 +1458,11 @@ dataSource.setPassword(<span class="hl-string">""</span>);</pre>
       to extract the parameter values. Here is an example:</p>
 
       <pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> JdbcActorDao <span class="hl-keyword">implements</span> ActorDao {
-    <span class="hl-keyword">private</span> SimpleJdbcTemplate simpleJdbcTemplate;
+    <span class="hl-keyword">private</span> JdbcTemplate jdbcTemplate;
     <span class="hl-keyword">private</span> SimpleJdbcInsert insertActor;
 
     <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDataSource(DataSource dataSource) {
-        <span class="hl-keyword">this</span>.simpleJdbcTemplate = <span class="hl-keyword">new</span> SimpleJdbcTemplate(dataSource);
+        <span class="hl-keyword">this</span>.jdbcTemplate = <span class="hl-keyword">new</span> JdbcTemplate(dataSource);
         <span class="hl-keyword">this</span>.insertActor =
                 <span class="hl-keyword">new</span> SimpleJdbcInsert(dataSource)
                         .withTableName(<span class="hl-string">"t_actor"</span>)
@@ -1592,11 +1482,11 @@ dataSource.setPassword(<span class="hl-string">""</span>);</pre>
       can be chained.</p>
 
       <pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> JdbcActorDao <span class="hl-keyword">implements</span> ActorDao {
-    <span class="hl-keyword">private</span> SimpleJdbcTemplate simpleJdbcTemplate;
+    <span class="hl-keyword">private</span> JdbcTemplate jdbcTemplate;
     <span class="hl-keyword">private</span> SimpleJdbcInsert insertActor;
 
     <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDataSource(DataSource dataSource) {
-        <span class="hl-keyword">this</span>.simpleJdbcTemplate = <span class="hl-keyword">new</span> SimpleJdbcTemplate(dataSource);
+        <span class="hl-keyword">this</span>.jdbcTemplate = <span class="hl-keyword">new</span> JdbcTemplate(dataSource);
         <span class="hl-keyword">this</span>.insertActor =
                 <span class="hl-keyword">new</span> SimpleJdbcInsert(dataSource)
                         .withTableName(<span class="hl-string">"t_actor"</span>)
@@ -1657,11 +1547,11 @@ END;</pre><p>The <code class="code">in_id</code> parameter contains the
       procedure.</p>
 
       <pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> JdbcActorDao <span class="hl-keyword">implements</span> ActorDao {
-    <span class="hl-keyword">private</span> SimpleJdbcTemplate simpleJdbcTemplate;
+    <span class="hl-keyword">private</span> JdbcTemplate jdbcTemplate;
     <span class="hl-keyword">private</span> SimpleJdbcCall procReadActor;
 
     <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDataSource(DataSource dataSource) {
-        <span class="hl-keyword">this</span>.simpleJdbcTemplate = <span class="hl-keyword">new</span> SimpleJdbcTemplate(dataSource);
+        <span class="hl-keyword">this</span>.jdbcTemplate = <span class="hl-keyword">new</span> JdbcTemplate(dataSource);
         <span class="hl-keyword">this</span>.procReadActor =
                 <span class="hl-keyword">new</span> SimpleJdbcCall(dataSource)
                         .withProcedureName(<span class="hl-string">"read_actor"</span>);
@@ -1874,11 +1764,11 @@ END;</pre>
       method.</p>
 
       <pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> JdbcActorDao <span class="hl-keyword">implements</span> ActorDao {
-    <span class="hl-keyword">private</span> SimpleJdbcTemplate simpleJdbcTemplate;
+    <span class="hl-keyword">private</span> JdbcTemplate jdbcTemplate;
     <span class="hl-keyword">private</span> SimpleJdbcCall funcGetActorName;
 
     <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDataSource(DataSource dataSource) {
-        <span class="hl-keyword">this</span>.simpleJdbcTemplate = <span class="hl-keyword">new</span> SimpleJdbcTemplate(dataSource);
+        <span class="hl-keyword">this</span>.jdbcTemplate = <span class="hl-keyword">new</span> JdbcTemplate(dataSource);
         JdbcTemplate jdbcTemplate = <span class="hl-keyword">new</span> JdbcTemplate(dataSource);
         jdbcTemplate.setResultsMapCaseInsensitive(true);
         <span class="hl-keyword">this</span>.funcGetActorName =
@@ -1932,11 +1822,9 @@ END;</pre><p>To call this procedure you declare the
       <code class="classname">newInstance</code> method.</p>
 
       <pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> JdbcActorDao <span class="hl-keyword">implements</span> ActorDao {
-    <span class="hl-keyword">private</span> SimpleJdbcTemplate simpleJdbcTemplate;
     <span class="hl-keyword">private</span> SimpleJdbcCall procReadAllActors;
 
     <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDataSource(DataSource dataSource) {
-        <span class="hl-keyword">this</span>.simpleJdbcTemplate = <span class="hl-keyword">new</span> SimpleJdbcTemplate(dataSource);
         JdbcTemplate jdbcTemplate = <span class="hl-keyword">new</span> JdbcTemplate(dataSource);
         jdbcTemplate.setResultsMapCaseInsensitive(true);
         <span class="hl-keyword">this</span>.procReadAllActors =
@@ -2518,7 +2406,7 @@ clobReader.close();</pre>
       or you need to generate the SQL string dynamically once you know how
       many placeholders are required. The named parameter support provided in
       the <code class="classname">NamedParameterJdbcTemplate</code> and
-      <code class="classname">SimpleJdbcTemplate</code> takes the latter approach.
+      <code class="classname">JdbcTemplate</code> takes the latter approach.
       Pass in the values as a <code class="classname">java.util.List</code> of
       primitive objects. This list will be used to insert the required
       placeholders and pass in the values during the statement

@@ -6,7 +6,7 @@
 function syn(){
 if(parent.nav.tree){
  if(parent.nav.tree.loaded){
-  parent.nav.tree.selectNode(984);
+  parent.nav.tree.selectNode(987);
  }else{
   setTimeout("syn()",500);
 }
@@ -73,7 +73,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
     <p>Note that just like other services in Spring Framework, the caching service is an abstraction (not a cache implementation) and requires
     the use of an actual storage to store the cache data - that is, the abstraction frees the developer from having to write the caching
     logic but does not provide the actual stores. There are two integrations available out of the box, for JDK <code class="literal">java.util.concurrent.ConcurrentMap</code>
-    and <a class="ulink" href="http://ehcache.org/" target="_top">Ehcache</a> - see <a class="xref" href="cache.html#cache-plug" title="29.6&nbsp;Plugging-in different back-end caches">Section&nbsp;29.6, &#8220;Plugging-in different back-end caches&#8221;</a> for more information on plugging in other cache stores/providers.</p>
+    and <a class="ulink" href="http://ehcache.org/" target="_top">EhCache</a> - see <a class="xref" href="cache.html#cache-plug" title="29.6&nbsp;Plugging-in different back-end caches">Section&nbsp;29.6, &#8220;Plugging-in different back-end caches&#8221;</a> for more information on plugging in other cache stores/providers.</p>
     </div>
 
     <div class="section" title="29.3&nbsp;Declarative annotation-based caching"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="cache-annotations"></a>29.3&nbsp;Declarative annotation-based caching</h2></div></div></div>
@@ -164,6 +164,13 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
 
             <pre class="programlisting"><i><span class="hl-annotation" style="color: gray">@Cacheable(value="book", condition="#name.length &lt; 32")</span></i>
 <span class="hl-keyword">public</span> Book findBook(String name)</pre>
+
+            <p>In addition the <code class="literal">conditional</code> parameter, the <code class="literal">unless</code> parameter can be used to veto the adding of a value to the cache. Unlike
+            <code class="literal">conditional</code>, <code class="literal">unless</code> <code class="literal">SpEL</code> expressions are evalulated <span class="emphasis"><em>after</em></span> the method has been called. Expanding
+            on the previous example - perhaps we only want to cache paperback books:</p>
+
+            <pre class="programlisting"><i><span class="hl-annotation" style="color: gray">@Cacheable(value="book", condition="#name.length &lt; 32", unless="#result.hardback")</span></i>
+<span class="hl-keyword">public</span> Book findBook(String name)</pre>
         </div>
 
         <div class="section" title="Available caching SpEL evaluation context"><div class="titlepage"><div><div><h4 class="title"><a name="cache-spel-context"></a>Available caching <code class="literal">SpEL</code> evaluation context</h4></div></div></div>
@@ -175,9 +182,10 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
 
             <div class="table"><a name="cache-spel-context-tbl"></a><p class="title"><b>Table&nbsp;29.1.&nbsp;Cache SpEL available metadata</b></p><div class="table-contents">
                     
-                    <table summary="Cache SpEL available metadata" width="100%" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; "><colgroup><col align="center"><col><col><col></colgroup><thead><tr><th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">Name</th><th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">Location</th><th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">Description</th><th style="border-bottom: 0.5pt solid ; ">Example</th></tr></thead><tbody><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">methodName</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">root object</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">The name of the method being invoked</td><td style="border-bottom: 0.5pt solid ; "><pre class="screen">#root.methodName</pre></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">method</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">root object</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">The method being invoked</td><td style="border-bottom: 0.5pt solid ; "><pre class="screen">#root.method.name</pre></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">target</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">root object</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">The target object being invoked</td><td style="border-bottom: 0.5pt solid ; "><pre class="screen">#root.target</pre></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">targetClass</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">root object</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">The class of the target being invoked</td><td style="border-bottom: 0.5pt solid ; "><pre class="screen">#root.targetClass</pre></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">args</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">root object</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">The arguments (as array) used for invoking the target</td><td style="border-bottom: 0.5pt solid ; "><pre class="screen">#root.args[0]</pre></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">caches</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">root object</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">Collection of caches against which the current method is executed</td><td style="border-bottom: 0.5pt solid ; "><pre class="screen">#root.caches[0].name</pre></td></tr><tr><td style="border-right: 0.5pt solid ; " align="center"><span class="emphasis"><em>argument name</em></span></td><td style="border-right: 0.5pt solid ; ">evaluation context</td><td style="border-right: 0.5pt solid ; ">Name of any of the method argument. If for some reason the names are not available (ex: no debug information),
+                    <table summary="Cache SpEL available metadata" width="100%" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; "><colgroup><col align="center"><col><col><col></colgroup><thead><tr><th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">Name</th><th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">Location</th><th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">Description</th><th style="border-bottom: 0.5pt solid ; ">Example</th></tr></thead><tbody><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">methodName</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">root object</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">The name of the method being invoked</td><td style="border-bottom: 0.5pt solid ; "><pre class="screen">#root.methodName</pre></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">method</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">root object</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">The method being invoked</td><td style="border-bottom: 0.5pt solid ; "><pre class="screen">#root.method.name</pre></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">target</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">root object</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">The target object being invoked</td><td style="border-bottom: 0.5pt solid ; "><pre class="screen">#root.target</pre></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">targetClass</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">root object</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">The class of the target being invoked</td><td style="border-bottom: 0.5pt solid ; "><pre class="screen">#root.targetClass</pre></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">args</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">root object</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">The arguments (as array) used for invoking the target</td><td style="border-bottom: 0.5pt solid ; "><pre class="screen">#root.args[0]</pre></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center">caches</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">root object</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">Collection of caches against which the current method is executed</td><td style="border-bottom: 0.5pt solid ; "><pre class="screen">#root.caches[0].name</pre></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="center"><span class="emphasis"><em>argument name</em></span></td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">evaluation context</td><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">Name of any of the method argument. If for some reason the names are not available (ex: no debug information),
                             the argument names are also available under the <code class="literal">a&lt;#arg&gt;</code> where
-                            <span class="emphasis"><em>#arg</em></span> stands for the argument index (starting from 0).</td><td style=""><pre class="screen">iban</pre> or <pre class="screen">a0</pre> (one can also use <pre class="screen">p0</pre> or <code class="literal">p&lt;#arg&gt;</code> notation as an alias).</td></tr></tbody></table>
+                            <span class="emphasis"><em>#arg</em></span> stands for the argument index (starting from 0).</td><td style="border-bottom: 0.5pt solid ; "><pre class="screen">iban</pre> or <pre class="screen">a0</pre> (one can also use <pre class="screen">p0</pre> or <code class="literal">p&lt;#arg&gt;</code> notation as an alias).</td></tr><tr><td style="border-right: 0.5pt solid ; " align="center">result</td><td style="border-right: 0.5pt solid ; ">evaluation context</td><td style="border-right: 0.5pt solid ; ">The result of the method call (the value to be cached). Only available in '<code class="literal">unless</code>' expressions and '<code class="literal">cache evict</code>'
+                            expression (when <code class="literal">beforeInvocation</code> is <code class="literal">false</code>).</td><td style=""><pre class="screen">#result</pre></td></tr></tbody></table>
             </div></div><br class="table-break">
         </div>
     </div>
@@ -449,22 +457,30 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         but it does not provide any management or persistence capabilities nor eviction contracts.</p>
     </div>
 
-    <div class="section" title="29.5.2&nbsp;Ehcache-based Cache"><div class="titlepage"><div><div><h3 class="title"><a name="cache-store-configuration-ehcache"></a>29.5.2&nbsp;Ehcache-based <code class="interfacename">Cache</code></h3></div></div></div>
+    <div class="section" title="29.5.2&nbsp;EhCache-based Cache"><div class="titlepage"><div><div><h3 class="title"><a name="cache-store-configuration-ehcache"></a>29.5.2&nbsp;EhCache-based <code class="interfacename">Cache</code></h3></div></div></div>
         
 
-        <p>The Ehcache implementation is located under <code class="literal">org.springframework.cache.ehcache</code> package. Again, to use it, one simply needs to declare the appropriate
+        <p>The EhCache implementation is located under <code class="literal">org.springframework.cache.ehcache</code> package. Again, to use it, one simply needs to declare the appropriate
         <code class="interfacename">CacheManager</code>:</p>
 
         <pre class="programlisting"><span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"cacheManager"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"org.springframework.cache.ehcache.EhCacheCacheManager"</span> <span class="hl-attribute">p:cache-manager-ref</span>=<span class="hl-value">"ehcache"</span><span class="hl-tag">/&gt;</span>
 
-<span class="hl-comment">&lt;!-- Ehcache library setup --&gt;</span>
+<span class="hl-comment">&lt;!-- EhCache library setup --&gt;</span>
 <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"ehcache"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"org.springframework.cache.ehcache.EhCacheManagerFactoryBean"</span> <span class="hl-attribute">p:config-location</span>=<span class="hl-value">"ehcache.xml"</span><span class="hl-tag">/&gt;</span></pre>
 
         <p>This setup bootstraps ehcache library inside Spring IoC (through bean <code class="literal">ehcache</code>) which is then wired into the dedicated <code class="interfacename">CacheManager</code>
         implementation. Note the entire ehcache-specific configuration is read from the resource <code class="literal">ehcache.xml</code>.</p>
     </div>
 
-    <div class="section" title="29.5.3&nbsp;Dealing with caches without a backing store"><div class="titlepage"><div><div><h3 class="title"><a name="cache-store-configuration-noop"></a>29.5.3&nbsp;Dealing with caches without a backing store</h3></div></div></div>
+    <div class="section" title="29.5.3&nbsp;GemFire-based Cache"><div class="titlepage"><div><div><h3 class="title"><a name="cache-store-configuration-gemfire"></a>29.5.3&nbsp;GemFire-based <code class="interfacename">Cache</code></h3></div></div></div>
+        
+
+        <p>GemFire is a memory-oriented/disk-backed, elastically scalable, continuously available, active (with built-in pattern-based subscription notifications),
+        globally replicated database and provides fully-featured edge caching. For further information on how to use GemFire as a CacheManager (and more), please refer
+        to the <a class="ulink" href="http://static.springsource.org/spring-gemfire/docs/1.0.0.RELEASE/reference/html/" target="_top">Spring GemFire reference documentation</a>.</p>
+    </div>
+
+    <div class="section" title="29.5.4&nbsp;Dealing with caches without a backing store"><div class="titlepage"><div><div><h3 class="title"><a name="cache-store-configuration-noop"></a>29.5.4&nbsp;Dealing with caches without a backing store</h3></div></div></div>
         
 
         <p>Sometimes when switching environments or doing testing, one might have cache declarations without an actual backing cache configured. As this is an invalid configuration, at runtime an
@@ -476,10 +492,10 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         <span class="hl-tag">&lt;ref</span> <span class="hl-attribute">bean</span>=<span class="hl-value">"jdkCache"</span><span class="hl-tag">/&gt;</span>
         <span class="hl-tag">&lt;ref</span> <span class="hl-attribute">bean</span>=<span class="hl-value">"gemfireCache"</span><span class="hl-tag">/&gt;</span>
     <span class="hl-tag">&lt;/list&gt;</span><span class="hl-tag">&lt;/property&gt;</span>
-    <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"addNoOpCache"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"true"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"fallbackToNoOpCache"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"true"</span><span class="hl-tag">/&gt;</span>
 <span class="hl-tag">&lt;/bean&gt;</span></pre>
 
-        <p>The <code class="literal">CompositeCacheManager</code> above chains multiple <code class="literal">CacheManager</code>s and additionally, through the <code class="literal">addNoOpManager</code> flag, adds a
+        <p>The <code class="literal">CompositeCacheManager</code> above chains multiple <code class="literal">CacheManager</code>s and additionally, through the <code class="literal">fallbackToNoOpCache</code> flag, adds a
         <span class="emphasis"><em>no op</em></span> cache that for all the definitions not handled by the configured cache managers. That is, every cache definition not found in either <code class="literal">jdkCache</code>
         or <code class="literal">gemfireCache</code> (configured above) will be handled by the no op cache, which will not store any information causing the target method to be executed every time.
         </p>

@@ -2,11 +2,11 @@
 <!-- saved from url=(0014)about:internet -->
 <html><head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-   <title>D. XML Schema-based configuration</title><link rel="stylesheet" href="css/manual-multipage.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Spring Framework Reference Documentation"><link rel="up" href="spring-appendices.html" title="Part&nbsp;VII.&nbsp;Appendices"><link rel="prev" href="migration-3.2.html" title="Appendix&nbsp;C.&nbsp;Migrating to Spring Framework 3.2"><link rel="next" href="extensible-xml.html" title="Appendix&nbsp;E.&nbsp;Extensible XML authoring"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><script language="JavaScript" type="text/JavaScript">
+   <title>E. XML Schema-based configuration</title><link rel="stylesheet" href="css/manual-multipage.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Spring Framework Reference Documentation"><link rel="up" href="spring-appendices.html" title="Part&nbsp;VII.&nbsp;Appendices"><link rel="prev" href="migration-3.2.html" title="Appendix&nbsp;D.&nbsp;Migrating to Spring Framework 3.2"><link rel="next" href="extensible-xml.html" title="Appendix&nbsp;F.&nbsp;Extensible XML authoring"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><script language="JavaScript" type="text/JavaScript">
 function syn(){
 if(parent.nav.tree){
  if(parent.nav.tree.loaded){
-  parent.nav.tree.selectNode(1078);
+  parent.nav.tree.selectNode(1084);
  }else{
   setTimeout("syn()",500);
 }
@@ -25,9 +25,9 @@ window.onload = function(){parent.contentLoaded = true;};
 window.onload = function(){originalOnload();parent.contentLoaded = true;};
 }
 </script> 
-<div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Appendix&nbsp;D.&nbsp;XML Schema-based configuration</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="migration-3.2.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;VII.&nbsp;Appendices</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="extensible-xml.html">Next</a></td></tr></table><hr></div><div class="appendix" title="Appendix&nbsp;D.&nbsp;XML Schema-based configuration"><div class="titlepage"><div><div><h2 class="title"><a name="xsd-config"></a>Appendix&nbsp;D.&nbsp;XML Schema-based configuration</h2></div></div></div>
+<div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Appendix&nbsp;E.&nbsp;XML Schema-based configuration</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="migration-3.2.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;VII.&nbsp;Appendices</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="extensible-xml.html">Next</a></td></tr></table><hr></div><div class="appendix" title="Appendix&nbsp;E.&nbsp;XML Schema-based configuration"><div class="titlepage"><div><div><h2 class="title"><a name="xsd-config"></a>Appendix&nbsp;E.&nbsp;XML Schema-based configuration</h2></div></div></div>
     
-    <div class="section" title="D.1&nbsp;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xsd-config-introduction"></a>D.1&nbsp;Introduction</h2></div></div></div>
+    <div class="section" title="E.1&nbsp;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xsd-config-introduction"></a>E.1&nbsp;Introduction</h2></div></div></div>
         
         <p>This appendix details the XML Schema-based configuration introduced in Spring 2.0 and enhanced and extended in Spring 2.5 and 3.0.</p>
         <div class="sidebar" title="DTD support?"><p class="title"><b>DTD support?</b></p>
@@ -67,11 +67,11 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         has been encouraging; also, please note the fact that this new configuration mechanism
         is totally customisable and extensible. This means you can write your own domain-specific
         configuration tags that would better represent your application's domain; the process
-        involved in doing so is covered in the appendix entitled <a class="xref" href="extensible-xml.html" title="Appendix&nbsp;E.&nbsp;Extensible XML authoring">Appendix&nbsp;E, <i>Extensible XML authoring</i></a>.</p>
+        involved in doing so is covered in the appendix entitled <a class="xref" href="extensible-xml.html" title="Appendix&nbsp;F.&nbsp;Extensible XML authoring">Appendix&nbsp;F, <i>Extensible XML authoring</i></a>.</p>
     </div>
-    <div class="section" title="D.2&nbsp;XML Schema-based configuration"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xsd-config-body"></a>D.2&nbsp;XML Schema-based configuration</h2></div></div></div>
+    <div class="section" title="E.2&nbsp;XML Schema-based configuration"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xsd-config-body"></a>E.2&nbsp;XML Schema-based configuration</h2></div></div></div>
         
-        <div class="section" title="D.2.1&nbsp;Referencing the schemas"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-referencing"></a>D.2.1&nbsp;Referencing the schemas</h3></div></div></div>
+        <div class="section" title="E.2.1&nbsp;Referencing the schemas"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-referencing"></a>E.2.1&nbsp;Referencing the schemas</h3></div></div></div>
             
             <p>To switch over from the DTD-style to the new XML Schema-style, you need
             to make the following change.</p>
@@ -105,7 +105,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
             (!) and then plug <code class="literal">&lt;bean/&gt;</code> definitions into like you have always
             done. However, the entire point of switching over is to
             take advantage of the new Spring 2.0 XML tags since they make configuration easier. The
-            section entitled <a class="xref" href="xsd-config.html#xsd-config-body-schemas-util" title="D.2.2&nbsp;The util schema">Section&nbsp;D.2.2, &#8220;The <code class="literal">util</code> schema&#8221;</a> demonstrates how you can
+            section entitled <a class="xref" href="xsd-config.html#xsd-config-body-schemas-util" title="E.2.2&nbsp;The util schema">Section&nbsp;E.2.2, &#8220;The <code class="literal">util</code> schema&#8221;</a> demonstrates how you can
             start immediately by using some of the more common utility tags.</p>
             <p>The rest of this chapter is devoted to showing examples of the new Spring XML Schema
             based configuration, with at least one example for every new tag. The format follows
@@ -114,7 +114,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
             by an <span class="emphasis"><em>after</em></span> example showing the equivalent in the new XML Schema-based
             style.</p>
         </div>
-        <div class="section" title="D.2.2&nbsp;The util schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-util"></a>D.2.2&nbsp;The <code class="literal">util</code> schema</h3></div></div></div>
+        <div class="section" title="E.2.2&nbsp;The util schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-util"></a>E.2.2&nbsp;The <code class="literal">util</code> schema</h3></div></div></div>
             
             <p>First up is coverage of the <code class="literal">util</code> tags. As the name
             implies, the <code class="literal">util</code> tags deal with common, <span class="emphasis"><em>utility</em></span>
@@ -472,7 +472,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
                 
             </div>
         </div>
-        <div class="section" title="D.2.3&nbsp;The jee schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-jee"></a>D.2.3&nbsp;The <code class="literal">jee</code> schema</h3></div></div></div>
+        <div class="section" title="E.2.3&nbsp;The jee schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-jee"></a>E.2.3&nbsp;The <code class="literal">jee</code> schema</h3></div></div></div>
             
             <p>The <code class="literal">jee</code> tags deal with Java EE (Java Enterprise Edition)-related
             configuration issues, such as looking up a JNDI object and defining EJB references.</p>
@@ -625,7 +625,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <span class="hl-attribute">refresh-home-on-connect-failure</span>=<span class="hl-value">"true"</span><span class="hl-tag">&gt;</span></pre>
             </div>
         </div>
-        <div class="section" title="D.2.4&nbsp;The lang schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-lang"></a>D.2.4&nbsp;The <code class="literal">lang</code> schema</h3></div></div></div>
+        <div class="section" title="E.2.4&nbsp;The lang schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-lang"></a>E.2.4&nbsp;The <code class="literal">lang</code> schema</h3></div></div></div>
             
             <p>The <code class="literal">lang</code> tags deal with exposing objects that have been
             written in a dynamic language such as JRuby or Groovy as beans in the Spring
@@ -651,7 +651,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 
 <span class="hl-tag">&lt;/beans&gt;</span></pre>
         </div>
-        <div class="section" title="D.2.5&nbsp;The jms schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-jms"></a>D.2.5&nbsp;The <code class="literal">jms</code> schema</h3></div></div></div>
+        <div class="section" title="E.2.5&nbsp;The jms schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-jms"></a>E.2.5&nbsp;The <code class="literal">jms</code> schema</h3></div></div></div>
             
             <p>The <code class="literal">jms</code> tags deal with configuring JMS-related
             beans such as Spring's <a class="link" href="jms.html#jms-mdp" title="23.2.4&nbsp;Message Listener Containers">MessageListenerContainers</a>.
@@ -676,14 +676,14 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 
 <span class="hl-tag">&lt;/beans&gt;</span></pre>
         </div>
-        <div class="section" title="D.2.6&nbsp;The tx (transaction) schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-tx"></a>D.2.6&nbsp;The <code class="literal">tx</code> (transaction) schema</h3></div></div></div>
+        <div class="section" title="E.2.6&nbsp;The tx (transaction) schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-tx"></a>E.2.6&nbsp;The <code class="literal">tx</code> (transaction) schema</h3></div></div></div>
             
             <p>The <code class="literal">tx</code> tags deal with configuring all of those
             beans in Spring's comprehensive support for transactions. These tags are
             covered in the chapter entitled <a class="xref" href="transaction.html" title="12.&nbsp;Transaction Management">Chapter&nbsp;12, <i>Transaction Management</i></a>.</p>
             <div class="tip" title="Tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top">
                 <p>You are strongly encouraged to look at the
-                <code class="filename">'spring-tx-3.0.xsd'</code> file that ships with the Spring
+                <code class="filename">'spring-tx.xsd'</code> file that ships with the Spring
                 distribution. This file is (of course), the XML Schema for Spring's
                 transaction configuration, and covers all of the various tags in the
                 <code class="literal">tx</code> namespace, including attribute defaults and
@@ -716,7 +716,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 so that the tags in the <code class="literal">aop</code> namespace are available to you.</p>
             </td></tr></table></div>
         </div>
-        <div class="section" title="D.2.7&nbsp;The aop schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-aop"></a>D.2.7&nbsp;The <code class="literal">aop</code> schema</h3></div></div></div>
+        <div class="section" title="E.2.7&nbsp;The aop schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-aop"></a>E.2.7&nbsp;The <code class="literal">aop</code> schema</h3></div></div></div>
             
             <p>The <code class="literal">aop</code> tags deal with configuring all things
             AOP in Spring: this includes Spring's own proxy-based AOP framework and Spring's
@@ -740,7 +740,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 <span class="hl-tag">&lt;/beans&gt;</span></pre>
         </div>
 
-        <div class="section" title="D.2.8&nbsp;The context schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-context"></a>D.2.8&nbsp;The <code class="literal">context</code> schema</h3></div></div></div>
+        <div class="section" title="E.2.8&nbsp;The context schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-context"></a>E.2.8&nbsp;The <code class="literal">context</code> schema</h3></div></div></div>
             
             <p>The <code class="literal">context</code> tags deal with <code class="interfacename">ApplicationContext</code>
             configuration that relates to plumbing - that is, not usually beans that are important to an end-user
@@ -807,7 +807,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
             </div>
         </div>
 
-        <div class="section" title="D.2.9&nbsp;The tool schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-tool"></a>D.2.9&nbsp;The <code class="literal">tool</code> schema</h3></div></div></div>
+        <div class="section" title="E.2.9&nbsp;The tool schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-tool"></a>E.2.9&nbsp;The <code class="literal">tool</code> schema</h3></div></div></div>
             
             <p>The <code class="literal">tool</code> tags are for use when you want to add
             tooling-specific metadata to your custom configuration elements. This metadata
@@ -817,12 +817,12 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
             Spring as they are currently undergoing review. If you are a third party tool
             vendor and you would like to contribute to this review process, then do mail
             the Spring mailing list. The currently supported <code class="literal">tool</code>
-            tags can be found in the file <code class="literal">'spring-tool-3.0.xsd'</code> in the
+            tags can be found in the file <code class="literal">'spring-tool.xsd'</code> in the
             <code class="literal">'src/org/springframework/beans/factory/xml'</code> directory of the
             Spring source distribution.</p>
         </div>
 
-        <div class="section" title="D.2.10&nbsp;The jdbc schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-jdbc"></a>D.2.10&nbsp;The <code class="literal">jdbc</code> schema</h3></div></div></div>
+        <div class="section" title="E.2.10&nbsp;The jdbc schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-jdbc"></a>E.2.10&nbsp;The <code class="literal">jdbc</code> schema</h3></div></div></div>
             
             <p>The <code class="literal">jdbc</code> tags allow you to quickly configure an
             embedded database or initialize an existing data source. These tags are
@@ -846,7 +846,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 <span class="hl-tag">&lt;/beans&gt;</span></pre>
         </div>
 
-        <div class="section" title="D.2.11&nbsp;The cache schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-cache"></a>D.2.11&nbsp;The <code class="literal">cache</code> schema</h3></div></div></div>
+        <div class="section" title="E.2.11&nbsp;The cache schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-cache"></a>E.2.11&nbsp;The <code class="literal">cache</code> schema</h3></div></div></div>
             
             <p>The <code class="literal">cache</code> tags can be used to enable support for Spring's
             <code class="interfacename">@CacheEvict</code>, <code class="interfacename">@CachePut</code>
@@ -871,7 +871,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 <span class="hl-tag">&lt;/beans&gt;</span></pre>
         </div>
 
-        <div class="section" title="D.2.12&nbsp;The beans schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-beans"></a>D.2.12&nbsp;The <code class="literal">beans</code> schema</h3></div></div></div>
+        <div class="section" title="E.2.12&nbsp;The beans schema"><div class="titlepage"><div><div><h3 class="title"><a name="xsd-config-body-schemas-beans"></a>E.2.12&nbsp;The <code class="literal">beans</code> schema</h3></div></div></div>
             
             <p>Last but not least we have the tags in the <code class="literal">beans</code> schema.
             These are the same tags that have been in Spring since the very dawn of the framework.
@@ -883,7 +883,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
             key / value pairs to <code class="literal">&lt;bean/&gt;</code> XML definitions. What, if
             anything, is done with this extra metadata is totally up to your own custom logic (and
             so is typically only of use if you are writing your own custom tags as described in
-            the appendix entitled <a class="xref" href="extensible-xml.html" title="Appendix&nbsp;E.&nbsp;Extensible XML authoring">Appendix&nbsp;E, <i>Extensible XML authoring</i></a>).</p>
+            the appendix entitled <a class="xref" href="extensible-xml.html" title="Appendix&nbsp;F.&nbsp;Extensible XML authoring">Appendix&nbsp;F, <i>Extensible XML authoring</i></a>).</p>
             <p>Find below an example of the <code class="literal">&lt;meta/&gt;</code> tag in the context
             of a surrounding <code class="literal">&lt;bean/&gt;</code> (please note that without any logic
             to interpret it the metadata is effectively useless as-is).</p>
@@ -905,4 +905,4 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         </div>
     </div>
     
-</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="migration-3.2.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="spring-appendices.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="extensible-xml.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Appendix&nbsp;C.&nbsp;Migrating to Spring Framework 3.2&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Appendix&nbsp;E.&nbsp;Extensible XML authoring</td></tr></table></div></body></html>
+</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="migration-3.2.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="spring-appendices.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="extensible-xml.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Appendix&nbsp;D.&nbsp;Migrating to Spring Framework 3.2&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Appendix&nbsp;F.&nbsp;Extensible XML authoring</td></tr></table></div></body></html>

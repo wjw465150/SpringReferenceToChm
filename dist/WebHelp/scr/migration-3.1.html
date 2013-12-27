@@ -1,0 +1,55 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0014)about:internet -->
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title>C. Migrating to Spring Framework 3.1</title><link rel="stylesheet" href="css/manual-multipage.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Spring Framework Reference Documentation"><link rel="up" href="spring-appendices.html" title="Part&nbsp;VII.&nbsp;Appendices"><link rel="prev" href="classic-aop-spring.html" title="Appendix&nbsp;B.&nbsp;Classic Spring AOP Usage"><link rel="next" href="migration-3.2.html" title="Appendix&nbsp;D.&nbsp;Migrating to Spring Framework 3.2"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><script language="JavaScript" type="text/JavaScript">
+function syn(){
+if(parent.nav.tree){
+ if(parent.nav.tree.loaded){
+  parent.nav.tree.selectNode(1067);
+ }else{
+  setTimeout("syn()",500);
+}
+  }else{
+  setTimeout("syn()",500);
+  }}
+if(parent!=self){
+  setTimeout("syn()",100);
+}else{
+  parent.location.href = "../index.htm#page=migration-3.1.html";
+}
+originalOnload = window.onload;
+if(originalOnload==null){
+window.onload = function(){parent.contentLoaded = true;};
+}else{
+window.onload = function(){originalOnload();parent.contentLoaded = true;};
+}
+</script> 
+<div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Appendix&nbsp;C.&nbsp;Migrating to Spring Framework 3.1</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="classic-aop-spring.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;VII.&nbsp;Appendices</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="migration-3.2.html">Next</a></td></tr></table><hr></div><div class="appendix" title="Appendix&nbsp;C.&nbsp;Migrating to Spring Framework 3.1"><div class="titlepage"><div><div><h2 class="title"><a name="migration-3.1"></a>Appendix&nbsp;C.&nbsp;Migrating to Spring Framework 3.1</h2></div></div></div>
+  
+
+  <p>In this appendix we discuss what users will want to know when upgrading to
+  Spring Framework 3.1. For a general overview of features, please see
+  <a class="xref" href="new-in-3.1.html" title="3.&nbsp;New Features and Enhancements in Spring Framework 3.1">Chapter&nbsp;3, <i>New Features and Enhancements in Spring Framework 3.1</i></a></p>
+
+  <div class="section" title="C.1&nbsp;Component scanning against the &#34;org&#34; base package"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="migration-3.1-component-scan"></a>C.1&nbsp;Component scanning against the "org" base package</h2></div></div></div>
+    
+    <p>Spring Framework 3.1 introduces a number of <code class="literal">@Configuration</code>
+    classes such as <code class="literal">org.springframework.cache.annotation.ProxyCachingConfiguration
+    </code> and
+    <code class="literal">org.springframework.scheduling.annotation.ProxyAsyncConfiguration</code>.
+    Because <code class="literal">@Configuration</code> is ultimately meta-annotated with Spring's
+    <code class="literal">@Component</code> annotation, these classes will inadvertently be scanned
+    and processed by the container for any component-scanning directive against the
+    unqualified "org" package, e.g.:
+    </p><pre class="programlisting">
+        <span class="hl-tag">&lt;context:component-scan</span> <span class="hl-attribute">base-package</span>=<span class="hl-value">"org"</span><span class="hl-tag">/&gt;</span></pre><p>
+    Therefore, in order to avoid errors like the one reported in <a class="ulink" href="https://jira.springsource.org/browse/SPR-9843" target="_top">SPR-9843</a>,
+    any such directives should be updated to at least one more level of qualification e.g.:
+    </p><pre class="programlisting">
+      <span class="hl-tag">&lt;context:component-scan</span> <span class="hl-attribute">base-package</span>=<span class="hl-value">"org.xyz"</span><span class="hl-tag">/&gt;</span></pre><p>
+    Alternatively, an <code class="literal">exclude-filter</code> may be used. See
+    <a class="link" href="beans.html#beans-scanning-filters" title="5.10.3&nbsp;Using filters to customize scanning"><code class="literal">context:component-scan</code></a>
+    documentation for details.</p>
+  </div>
+</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="classic-aop-spring.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="spring-appendices.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="migration-3.2.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Appendix&nbsp;B.&nbsp;Classic Spring AOP Usage&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Appendix&nbsp;D.&nbsp;Migrating to Spring Framework 3.2</td></tr></table></div></body></html>

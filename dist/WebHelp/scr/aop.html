@@ -6,7 +6,7 @@
 function syn(){
 if(parent.nav.tree){
  if(parent.nav.tree.loaded){
-  parent.nav.tree.selectNode(286);
+  parent.nav.tree.selectNode(288);
  }else{
   setTimeout("syn()",500);
 }
@@ -345,7 +345,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
         <pre class="programlisting"><span class="hl-tag">&lt;aop:aspectj-autoproxy/&gt;</span></pre>
 
         <p>This assumes that you are using schema support as described in
-        <a class="xref" href="xsd-config.html" title="Appendix&nbsp;D.&nbsp;XML Schema-based configuration">Appendix&nbsp;D, <i>XML Schema-based configuration</i></a>. See <a class="xref" href="xsd-config.html#xsd-config-body-schemas-aop" title="D.2.7&nbsp;The aop schema">Section&nbsp;D.2.7, &#8220;The <code class="literal">aop</code> schema&#8221;</a> for how to import the tags in
+        <a class="xref" href="xsd-config.html" title="Appendix&nbsp;E.&nbsp;XML Schema-based configuration">Appendix&nbsp;E, <i>XML Schema-based configuration</i></a>. See <a class="xref" href="xsd-config.html#xsd-config-body-schemas-aop" title="E.2.7&nbsp;The aop schema">Section&nbsp;E.2.7, &#8220;The <code class="literal">aop</code> schema&#8221;</a> for how to import the tags in
         the aop namespace.</p>
 
         <p>If you are using the DTD, it is still possible to enable @AspectJ
@@ -1635,7 +1635,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
     expressions and the binding of advice parameters.</p>
 
     <p>To use the aop namespace tags described in this section, you need to
-    import the spring-aop schema as described in <a class="xref" href="xsd-config.html" title="Appendix&nbsp;D.&nbsp;XML Schema-based configuration">Appendix&nbsp;D, <i>XML Schema-based configuration</i></a>. See <a class="xref" href="xsd-config.html#xsd-config-body-schemas-aop" title="D.2.7&nbsp;The aop schema">Section&nbsp;D.2.7, &#8220;The <code class="literal">aop</code> schema&#8221;</a> for how to import the tags in the
+    import the spring-aop schema as described in <a class="xref" href="xsd-config.html" title="Appendix&nbsp;E.&nbsp;XML Schema-based configuration">Appendix&nbsp;E, <i>XML Schema-based configuration</i></a>. See <a class="xref" href="xsd-config.html#xsd-config-body-schemas-aop" title="E.2.7&nbsp;The aop schema">Section&nbsp;E.2.7, &#8220;The <code class="literal">aop</code> schema&#8221;</a> for how to import the tags in the
     aop namespace.</p>
 
     <p>Within your Spring configurations, all aspect and advisor elements
@@ -1648,7 +1648,7 @@ window.onload = function(){originalOnload();parent.contentLoaded = true;};
 
     <div class="warning" title="Warning" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Warning"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="images/warning.png"></td><th align="left">Warning</th></tr><tr><td align="left" valign="top">
       <p>The <code class="literal">&lt;aop:config&gt;</code> style of configuration
-      makes heavy use of Spring's <a class="link" href="aop-api.html#aop-autoproxy" title="10.9&nbsp;Using the &#34;autoproxy&#34; facility">auto-proxying</a> mechanism. This can cause
+      makes heavy use of Spring's <a class="link" href="aop-api.html#aop-autoproxy" title="10.9&nbsp;Using the &#34;auto-proxy&#34; facility">auto-proxying</a> mechanism. This can cause
       issues (such as advice not being woven) if you are already using
       explicit auto-proxying via the use of
       <code class="classname">BeanNameAutoProxyCreator</code> or suchlike. The
@@ -2733,8 +2733,8 @@ MyInterfaceType proxy = factory.getProxy();</pre>
 
       <p>When used as a marker interface in this way, Spring will configure
       new instances of the annotated type (<code class="classname">Account</code> in
-      this case) using a prototype-scoped bean definition with the same name
-      as the fully-qualified type name
+      this case) using a bean definition (typically prototype-scoped) with the
+      same name as the fully-qualified type name
       (<code class="classname">com.xyz.myapp.domain.Account</code>). Since the default
       name for a bean is the fully-qualified name of its type, a convenient
       way to declare the prototype definition is simply to omit the
@@ -2761,7 +2761,7 @@ MyInterfaceType proxy = factory.getProxy();</pre>
       new <code class="classname">Account</code> instances.</p>
 
       <p>You can also use autowiring to avoid having to specify a
-      prototype-scoped bean definition at all. To have Spring apply autowiring
+      dedicated bean definition at all. To have Spring apply autowiring
       use the '<code class="literal">autowire</code>' property of the
       <code class="interfacename">@Configurable</code> annotation: specify either
       <code class="literal">@Configurable(autowire=Autowire.BY_TYPE)</code> or
@@ -2833,7 +2833,7 @@ MyInterfaceType proxy = factory.getProxy();</pre>
 
 }</pre>
 
-      <p>If you prefer XML based configuration, the Spring <a class="link" href="xsd-config.html#xsd-config-body-schemas-context" title="D.2.8&nbsp;The context schema"><code class="literal">context</code>
+      <p>If you prefer XML based configuration, the Spring <a class="link" href="xsd-config.html#xsd-config-body-schemas-context" title="E.2.8&nbsp;The context schema"><code class="literal">context</code>
       namespace</a> defines a convenient
       <code class="literal">context:spring-configured</code> element:</p>
 
@@ -2848,8 +2848,8 @@ MyInterfaceType proxy = factory.getProxy();</pre>
 
       <p>Instances of <code class="interfacename">@Configurable</code> objects
       created <span class="emphasis"><em>before</em></span> the aspect has been configured will
-      result in a warning being issued to the log and no configuration of the
-      object taking place. An example might be a bean in the Spring
+      result in a message being issued to the debug log and no configuration
+      of the object taking place. An example might be a bean in the Spring
       configuration that creates domain objects when it is initialized by
       Spring. In this case you can use the "depends-on" bean attribute to
       manually specify that the bean depends on the configuration

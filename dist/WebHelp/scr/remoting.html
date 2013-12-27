@@ -6,7 +6,7 @@
 function syn(){
 if(parent.nav.tree){
  if(parent.nav.tree.loaded){
-  parent.nav.tree.selectNode(806);
+  parent.nav.tree.selectNode(809);
  }else{
   setTimeout("syn()",500);
 }
@@ -1255,7 +1255,7 @@ if (HttpStatus.SC_CREATED == post.getStatusCode()) {
       of the six main HTTP methods that make invoking many RESTful services a
       one-liner and enforce REST best practices.</p>
 
-      <div class="table"><a name="d4e17966"></a><p class="title"><b>Table&nbsp;21.1.&nbsp;Overview of RestTemplate methods</b></p><div class="table-contents">
+      <div class="table"><a name="d4e18177"></a><p class="title"><b>Table&nbsp;21.1.&nbsp;Overview of RestTemplate methods</b></p><div class="table-contents">
         
 
         <table summary="Overview of RestTemplate methods" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; "><colgroup><col><col></colgroup><tbody><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; "><span class="bold"><strong>HTTP Method</strong></span></td><td style="border-bottom: 0.5pt solid ; "><span class="bold"><strong>RestTemplate
@@ -1328,6 +1328,12 @@ String result =
       <code class="classname">org.apache.http.client.HttpClient</code> which
       can in turn be configured with credentials information or connection
       pooling functionality.</p>
+
+      <div class="tip" title="Tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>Note that the <code class="literal">java.net</code> implementation for
+      HTTP requests may raise an exception when accessing the status of a response
+      that represents an error (e.g. 401). If this is an issue, switch to
+      <code class="classname">HttpComponentsClientHttpRequestFactory</code> instead.
+      </p></td></tr></table></div>
 
       <p>The previous example using Apache HttpComponents
       <code class="classname">HttpClient</code> directly rewritten to use the
